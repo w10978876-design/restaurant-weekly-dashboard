@@ -141,60 +141,102 @@ def _inject_style() -> None:
     st.markdown(
         """
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 :root{
-  --bg:#f4f6fb;
-  --ink:#0f172a;
-  --muted:#64748b;
-  --card:#ffffff;
-  --line:#e2e8f0;
-  --brand:#2563eb;
+  --dash-bg: #f8f9fa;
+  --dash-surface: #ffffff;
+  --dash-ink: #1a1a1a;
+  --dash-muted: #6c757d;
+  --dash-border: #e9ecef;
+  --dash-accent: #0066ff;
+  --dash-accent-soft: #e8f1ff;
+  --dash-success: #28a745;
+  --dash-danger: #dc3545;
+  --dash-radius-card: 10px;
+  --dash-radius-control: 8px;
+  --dash-shadow-card: 0 1px 2px rgba(26, 26, 26, 0.04), 0 1px 3px rgba(26, 26, 26, 0.06);
 }
-.stApp { background: var(--bg); }
+.stApp, body {
+  background: var(--dash-bg);
+  color: var(--dash-ink);
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
 section.main > div.block-container {
-  max-width: 1220px;
-  padding-top: 1.1rem;
-  padding-bottom: 2rem;
+  max-width: 1152px;
+  padding-top: 0.7rem;
+  padding-bottom: 1.8rem;
 }
 #MainMenu, header[data-testid="stHeader"], footer {visibility: hidden;}
-.dash-wrap {padding-top: 0.2rem;}
+.dash-wrap {padding-top: 0.15rem;}
 .dash-head{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;
-  background:linear-gradient(135deg,#ffffff 0%,#f8fbff 100%);
-  border:1px solid var(--line);border-radius:14px;padding:16px 18px;
-  box-shadow:0 1px 2px rgba(15,23,42,0.04),0 8px 20px rgba(15,23,42,0.03);
+  display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;
+  background: var(--dash-surface);
+  border:1px solid var(--dash-border);border-radius:var(--dash-radius-card);padding:14px 16px;
+  box-shadow: var(--dash-shadow-card);
 }
-.dash-head h2{margin:0;color:var(--ink);font-size:24px;letter-spacing:-0.01em}
+.dash-head h2{
+  margin:0;
+  color:var(--dash-ink);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size:22px;
+  line-height:1.1;
+  font-weight:600;
+  letter-spacing:-0.01em;
+}
 .dash-card {
-  border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--card);
-  box-shadow:0 1px 2px rgba(15,23,42,0.04),0 4px 12px rgba(15,23,42,0.03);
+  border:1px solid var(--dash-border);border-radius:var(--dash-radius-card);padding:14px;background:var(--dash-surface);
+  box-shadow: var(--dash-shadow-card);
 }
 .dash-kpi {
-  border:1px solid #dbe5ff;border-radius:10px;padding:12px;background:#f8fbff;
+  border:1px solid var(--dash-border);border-radius:var(--dash-radius-control);padding:10px 12px;background:var(--dash-surface);
 }
-.dash-muted {color:var(--muted);font-size:12px}
-.dash-title {font-weight:700;color:var(--ink)}
-.dash-chip-good {background:#e8f5e9;border:1px solid #b7dfbe;color:#166534;border-radius:999px;padding:4px 10px;font-size:12px;display:inline-block;margin:2px;}
-.dash-chip-bad {background:#fdecea;border:1px solid #f0b8be;color:#991b1b;border-radius:999px;padding:4px 10px;font-size:12px;display:inline-block;margin:2px;}
+.dash-muted {color:var(--dash-muted);font-size:11px}
+.dash-title {font-weight:700;color:var(--dash-ink)}
+.dash-chip-good {background:#e8f5e9;border:1px solid #c8e6c9;color:#1f7a34;border-radius:6px;padding:4px 9px;font-size:12px;display:inline-block;margin:2px;}
+.dash-chip-bad {background:#fdecea;border:1px solid #f5c6cb;color:#b42318;border-radius:6px;padding:4px 9px;font-size:12px;display:inline-block;margin:2px;}
 .dash-subtitle {
-  font-size:13px; font-weight:700; color:#334155; margin:4px 0 8px;
+  font-size:13px; font-weight:600; color:#334155; margin:2px 0 8px;
 }
 h3 {
-  color:#0f172a !important;
-  font-size: 1.15rem !important;
-  border-left:4px solid var(--brand);
-  padding-left:8px;
-  margin-top: 18px !important;
+  color:var(--dash-ink) !important;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif !important;
+  font-size: 1.125rem !important;
+  margin-top: 12px !important;
+  border-left:none;
+  padding-left:0;
 }
 div[data-testid="stDataFrame"] {
-  border:1px solid var(--line);
-  border-radius:10px;
+  border:1px solid var(--dash-border);
+  border-radius:var(--dash-radius-card);
   overflow:hidden;
+  box-shadow: var(--dash-shadow-card);
+}
+div[data-testid="stDataFrame"] [role="columnheader"] {
+  background: #f1f3f5 !important;
+  color: var(--dash-muted) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+div[data-testid="stDataFrame"] [role="gridcell"] {
+  font-size: 13px !important;
+  color: var(--dash-ink) !important;
 }
 div[data-testid="stMetric"] {
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:8px 10px;
-  background:#fff;
+  border:1px solid var(--dash-border);
+  border-radius:var(--dash-radius-control);
+  padding:6px 10px;
+  background:var(--dash-surface);
+}
+div[data-testid="stMetricLabel"] {
+  font-size: 11px !important;
+  color: var(--dash-muted) !important;
+}
+div[data-testid="stMetricValue"] {
+  font-size: 18px !important;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace !important;
+}
+[data-testid="stSidebar"] * {
+  font-size: 13px !important;
 }
 </style>
         """,
