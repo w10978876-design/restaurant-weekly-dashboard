@@ -1,0 +1,5 @@
+{
+  "name": "餐厅周度经营看板",
+  "description": "周维度的餐厅经营数据分析与体检看板，涵盖核心指标、品类分析、时段分析及外部环境影响。",
+  "requestFramePermissions": []
+}

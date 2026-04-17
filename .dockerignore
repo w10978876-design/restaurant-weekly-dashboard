@@ -1,0 +1,15 @@
+node_modules
+dist
+.git
+.gitignore
+.DS_Store
+*.log
+data/warehouse/backups
+__pycache__
+**/__pycache__
+*.pyc
+*.pyo
+*.pyd
+.venv
+venv
+.cursor
