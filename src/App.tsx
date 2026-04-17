@@ -3,6 +3,52 @@ import { AlertCircle, Calendar, CheckCircle2, Cloud, CloudRain, Star, Sun, Utens
 
 type DashboardData = any;
 const cls = (...s: string[]) => s.filter(Boolean).join(" ");
+const ACTIONS_STORAGE_KEY = "restaurant-dashboard-actions-v1";
+
+function loadLocalActions() {
+  try {
+    const raw = localStorage.getItem(ACTIONS_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveLocalActions(storeId: string, weekId: string, actions: string[]) {
+  const bucket = loadLocalActions();
+  bucket[`${storeId}::${weekId}`] = actions;
+  localStorage.setItem(ACTIONS_STORAGE_KEY, JSON.stringify(bucket));
+}
+
+function buildDashboardData(payload: any, storeId?: string, weekId?: string): DashboardData | null {
+  const stores = payload?.stores ?? {};
+  const storeKeys = Object.keys(stores).sort();
+  if (!storeKeys.length) return null;
+  const resolvedStoreId = storeId && stores[storeId] ? storeId : storeKeys[0];
+  const store = stores[resolvedStoreId];
+  const weeks = store?.weeks ?? {};
+  const weekKeys = Object.keys(weeks).sort();
+  if (!weekKeys.length) return null;
+  const resolvedWeekId = weekId && weeks[weekId] ? weekId : weekKeys[weekKeys.length - 1];
+  const week = weeks[resolvedWeekId];
+  const localActions = loadLocalActions();
+  const localKey = `${resolvedStoreId}::${resolvedWeekId}`;
+  const mergedSummary = {
+    ...(week?.summary ?? {}),
+    actions: localActions[localKey] ?? week?.summary?.actions ?? [],
+  };
+  return {
+    ...week,
+    summary: mergedSummary,
+    selectedStore: { id: resolvedStoreId, name: resolvedStoreId },
+    selectedWeek: { id: resolvedWeekId, range: week?.weekRange ?? "" },
+    availableStores: storeKeys.map((id) => ({ id, name: id })),
+    availableWeeks: weekKeys.map((id) => ({ id, range: weeks[id]?.weekRange ?? id })),
+    weekRange: week?.weekRange ?? "",
+  };
+}
 
 export default function App() {
   const [data, setData] = useState<DashboardData | null>(null);
@@ -11,27 +57,27 @@ export default function App() {
   const [selectedStoreId, setSelectedStoreId] = useState("");
   const [isEditingActions, setIsEditingActions] = useState(false);
   const [editedActions, setEditedActions] = useState<string[]>([]);
+  const [payload, setPayload] = useState<any>(null);
 
   const load = async (storeId?: string, weekId?: string) => {
     setLoading(true);
     try {
-      const qs = new URLSearchParams();
-      if (storeId || selectedStoreId) qs.set("storeId", storeId ?? selectedStoreId);
-      if (weekId || selectedWeekId) qs.set("weekId", weekId ?? selectedWeekId);
-      const res = await fetch(`/api/dashboard-data?${qs.toString()}`);
-      const d = await res.json();
-      if (!res.ok) {
-        setData(null);
-        return;
+      let sourcePayload = payload;
+      if (!sourcePayload) {
+        const url = `${import.meta.env.BASE_URL}data/warehouse/ui_payload.json`;
+        const res = await fetch(url);
+        if (!res.ok) {
+          setData(null);
+          return;
+        }
+        sourcePayload = await res.json();
+        setPayload(sourcePayload);
       }
+      const d = buildDashboardData(sourcePayload, storeId ?? selectedStoreId, weekId ?? selectedWeekId);
+      if (!d) return;
       setData(d);
       setSelectedStoreId(d.selectedStore?.id ?? "");
-      const wk =
-        d.selectedWeek?.id ??
-        d.availableWeeks?.find((x: any) => x.range === d.weekRange)?.id ??
-        d.availableWeeks?.[d.availableWeeks.length - 1]?.id ??
-        "";
-      setSelectedWeekId(wk);
+      setSelectedWeekId(d.selectedWeek?.id ?? "");
       setEditedActions(d.summary?.actions ?? []);
     } finally {
       setLoading(false);
@@ -43,17 +89,13 @@ export default function App() {
   }, []);
 
   const handleSaveActions = async () => {
-    await fetch("/api/save-actions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ storeId: selectedStoreId, weekId: selectedWeekId, actions: editedActions }),
-    });
+    saveLocalActions(selectedStoreId, selectedWeekId, editedActions.filter(Boolean).slice(0, 3));
     await load(selectedStoreId, selectedWeekId);
     setIsEditingActions(false);
   };
 
   if (loading) return <div className="min-h-screen flex items-center justify-center dash-page">加载中...</div>;
-  if (!data?.coreMetrics) return <div className="min-h-screen flex flex-col items-center justify-center gap-3 dash-page text-sm text-[var(--dash-muted)]">暂无看板数据。请确认 data 下门店 Excel 齐全后，访问 <code className="font-mono text-xs bg-white px-2 py-1 rounded border">/api/refresh-excel</code> 或带 <code className="font-mono text-xs">?refresh=1</code> 重新加载。</div>;
+  if (!data?.coreMetrics) return <div className="min-h-screen flex flex-col items-center justify-center gap-3 dash-page text-sm text-[var(--dash-muted)]">暂无看板数据。请确认仓库中存在 <code className="font-mono text-xs bg-white px-2 py-1 rounded border">data/warehouse/ui_payload.json</code>。</div>;
 
   return (
     <div className="min-h-screen pb-20 dash-page">
