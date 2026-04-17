@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import html
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -205,21 +206,25 @@ h3 {
   border-left:none;
   padding-left:0;
 }
-div[data-testid="stDataFrame"] {
-  border:1px solid var(--dash-border);
-  border-radius:var(--dash-radius-card);
-  overflow:hidden;
-  box-shadow: var(--dash-shadow-card);
+.dash-html-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
 }
-div[data-testid="stDataFrame"] [role="columnheader"] {
-  background: #f1f3f5 !important;
-  color: var(--dash-muted) !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
+.dash-html-table thead th {
+  background: #f1f3f5;
+  color: var(--dash-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--dash-border);
 }
-div[data-testid="stDataFrame"] [role="gridcell"] {
-  font-size: 13px !important;
-  color: var(--dash-ink) !important;
+.dash-html-table tbody td {
+  padding: 10px 12px;
+  border-top: 1px solid var(--dash-border);
+  color: var(--dash-ink);
+  vertical-align: top;
 }
 div[data-testid="stMetric"] {
   border:1px solid var(--dash-border);
@@ -260,10 +265,31 @@ def _show_kpi_cards(core: list[dict[str, Any]]) -> None:
 
 def _show_table(title: str, rows: list[dict[str, Any]]) -> None:
     st.markdown(f"<div class='dash-subtitle'>{title}</div>", unsafe_allow_html=True)
-    if rows:
-        st.dataframe(rows, use_container_width=True, hide_index=True)
-    else:
+    if not rows:
         st.caption("暂无数据")
+        return
+    columns = list(rows[0].keys())
+    thead = "".join(f"<th>{html.escape(str(c))}</th>" for c in columns)
+    body_rows = []
+    for row in rows:
+        tds = []
+        for col in columns:
+            val = row.get(col, "")
+            if isinstance(val, float):
+                text = f"{val:,.2f}".rstrip("0").rstrip(".")
+            else:
+                text = str(val)
+            tds.append(f"<td>{html.escape(text)}</td>")
+        body_rows.append(f"<tr>{''.join(tds)}</tr>")
+    table_html = f"""
+    <div class="dash-card" style="padding:0">
+      <table class="dash-html-table">
+        <thead><tr>{thead}</tr></thead>
+        <tbody>{''.join(body_rows)}</tbody>
+      </table>
+    </div>
+    """
+    st.markdown(table_html, unsafe_allow_html=True)
 
 
 def main() -> None:
