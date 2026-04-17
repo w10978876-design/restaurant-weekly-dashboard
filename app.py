@@ -150,6 +150,7 @@ def _inject_style() -> None:
 .dash-title {font-weight:700;color:#0F172A}
 .dash-chip-good {background:#e8f5e9;border:1px solid #c8e6c9;color:#1f7a34;border-radius:8px;padding:4px 8px;font-size:12px;display:inline-block;margin:2px;}
 .dash-chip-bad {background:#fdecea;border:1px solid #f5c6cb;color:#b42318;border-radius:8px;padding:4px 8px;font-size:12px;display:inline-block;margin:2px;}
+.dash-subtitle {font-size: 13px; font-weight: 600; color: #334155; margin: 2px 0 8px;}
 </style>
         """,
         unsafe_allow_html=True,
@@ -168,6 +169,14 @@ def _show_kpi_cards(core: list[dict[str, Any]]) -> None:
                 unsafe_allow_html=True,
             )
             st.markdown("</div>", unsafe_allow_html=True)
+
+
+def _show_table(title: str, rows: list[dict[str, Any]]) -> None:
+    st.markdown(f"<div class='dash-subtitle'>{title}</div>", unsafe_allow_html=True)
+    if rows:
+        st.dataframe(rows, use_container_width=True, hide_index=True)
+    else:
+        st.caption("暂无数据")
 
 
 def main() -> None:
@@ -209,7 +218,7 @@ def main() -> None:
 
     # 二、菜品品类分析
     st.markdown("### 二、菜品品类分析")
-    st.dataframe(week.get("categoryAnalysis", []), use_container_width=True, hide_index=True)
+    _show_table("菜品品类明细", week.get("categoryAnalysis", []))
 
     # 三、产品销售明细
     st.markdown("### 三、产品销售明细")
@@ -240,19 +249,21 @@ def main() -> None:
     # 四、时段销售分析
     st.markdown("### 四、时段销售分析")
     t = week.get("timeAnalysis", {})
-    st.dataframe(t.get("table", []), use_container_width=True, hide_index=True)
+    _show_table("时段销售表", t.get("table", []))
     abn = t.get("abnormalSummary", [])
     if abn:
         st.markdown("**本周时段异常汇总**")
         for x in abn:
             st.write(f"- {x.get('type','')}｜{x.get('day','')}｜{x.get('period','')}：{x.get('reason','')}")
+    else:
+        st.caption("本周无异常时段命中")
     if t.get("lowestOrderDay"):
         low = t["lowestOrderDay"]
         st.warning(f"周内订单最低日：{low.get('day','')}（{low.get('orders','')}单）{low.get('reason','')}")
 
     # 五、渠道与营销
     st.markdown("### 五、渠道与营销")
-    st.dataframe(week.get("marketing", []), use_container_width=True, hide_index=True)
+    _show_table("渠道与营销指标", week.get("marketing", []))
 
     # 六、服务与质量
     st.markdown("### 六、服务与质量")
@@ -267,11 +278,17 @@ def main() -> None:
     ckg, ckb = st.columns(2)
     with ckg:
         st.markdown("**好评关键词 TOP3**")
-        for k in service.get("goodKeywords", []):
+        gks = service.get("goodKeywords", [])
+        if not gks:
+            st.caption("本周暂无命中")
+        for k in gks:
             st.markdown(f"<span class='dash-chip-good'>{k}</span>", unsafe_allow_html=True)
     with ckb:
         st.markdown("**差评关键词 TOP3**")
-        for k in service.get("badKeywords", []):
+        bks = service.get("badKeywords", [])
+        if not bks:
+            st.caption("本周暂无命中")
+        for k in bks:
             st.markdown(f"<span class='dash-chip-bad'>{k}</span>", unsafe_allow_html=True)
     with st.expander("查看关键词证据句（核验）", expanded=False):
         st.markdown("**好评证据**")
@@ -284,13 +301,22 @@ def main() -> None:
     # 七、外部与环境
     st.markdown("### 七、外部与环境")
     ext = week.get("externalAndWeather", {})
-    st.markdown("**节假日/特殊日期统计**")
-    st.dataframe(ext.get("specialDates", []), use_container_width=True, hide_index=True)
+    _show_table("节假日/特殊日期统计", ext.get("specialDates", []))
     weather = ext.get("weather", {})
-    st.markdown("**异常天气影响分析（日明细）**")
-    st.dataframe(weather.get("daily", []), use_container_width=True, hide_index=True)
+    _show_table("异常天气影响分析（日明细）", weather.get("daily", []))
     if weather.get("summary"):
-        st.json(weather.get("summary"))
+        s = weather.get("summary", {})
+        wc1, wc2, wc3, wc4 = st.columns(4)
+        with wc1:
+            st.metric("异常天气天数", f"{s.get('abnormalDays', '-')}")
+        with wc2:
+            st.metric("异常天气日均营收", f"¥{_fmt_num(s.get('abnormalAvgRev', 0))}")
+        with wc3:
+            st.metric("正常天气日均营收", f"¥{_fmt_num(s.get('normalAvgRev', 0))}")
+        with wc4:
+            st.metric("天气是否显著影响", str(s.get("isImpacted", "-")))
+    else:
+        st.caption("天气汇总暂无数据")
 
     # 八、综合结论与下周行动
     st.markdown("### 八、综合结论与下周行动")
