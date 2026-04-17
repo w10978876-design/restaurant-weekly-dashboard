@@ -141,16 +141,61 @@ def _inject_style() -> None:
     st.markdown(
         """
 <style>
-.dash-wrap {padding-top: 0.5rem;}
-.dash-head {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;}
-.dash-card {border:1px solid #E2E8F0;border-radius:12px;padding:14px;background:#fff;}
-.dash-section {margin-top:18px;}
-.dash-kpi {border:1px solid #E2E8F0;border-radius:10px;padding:10px 12px;background:#fff;}
-.dash-muted {color:#64748B;font-size:12px}
-.dash-title {font-weight:700;color:#0F172A}
-.dash-chip-good {background:#e8f5e9;border:1px solid #c8e6c9;color:#1f7a34;border-radius:8px;padding:4px 8px;font-size:12px;display:inline-block;margin:2px;}
-.dash-chip-bad {background:#fdecea;border:1px solid #f5c6cb;color:#b42318;border-radius:8px;padding:4px 8px;font-size:12px;display:inline-block;margin:2px;}
-.dash-subtitle {font-size: 13px; font-weight: 600; color: #334155; margin: 2px 0 8px;}
+:root{
+  --bg:#f4f6fb;
+  --ink:#0f172a;
+  --muted:#64748b;
+  --card:#ffffff;
+  --line:#e2e8f0;
+  --brand:#2563eb;
+}
+.stApp { background: var(--bg); }
+section.main > div.block-container {
+  max-width: 1220px;
+  padding-top: 1.1rem;
+  padding-bottom: 2rem;
+}
+#MainMenu, header[data-testid="stHeader"], footer {visibility: hidden;}
+.dash-wrap {padding-top: 0.2rem;}
+.dash-head{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;
+  background:linear-gradient(135deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+  box-shadow:0 1px 2px rgba(15,23,42,0.04),0 8px 20px rgba(15,23,42,0.03);
+}
+.dash-head h2{margin:0;color:var(--ink);font-size:24px;letter-spacing:-0.01em}
+.dash-card {
+  border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--card);
+  box-shadow:0 1px 2px rgba(15,23,42,0.04),0 4px 12px rgba(15,23,42,0.03);
+}
+.dash-kpi {
+  border:1px solid #dbe5ff;border-radius:10px;padding:12px;background:#f8fbff;
+}
+.dash-muted {color:var(--muted);font-size:12px}
+.dash-title {font-weight:700;color:var(--ink)}
+.dash-chip-good {background:#e8f5e9;border:1px solid #b7dfbe;color:#166534;border-radius:999px;padding:4px 10px;font-size:12px;display:inline-block;margin:2px;}
+.dash-chip-bad {background:#fdecea;border:1px solid #f0b8be;color:#991b1b;border-radius:999px;padding:4px 10px;font-size:12px;display:inline-block;margin:2px;}
+.dash-subtitle {
+  font-size:13px; font-weight:700; color:#334155; margin:4px 0 8px;
+}
+h3 {
+  color:#0f172a !important;
+  font-size: 1.15rem !important;
+  border-left:4px solid var(--brand);
+  padding-left:8px;
+  margin-top: 18px !important;
+}
+div[data-testid="stDataFrame"] {
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+}
+div[data-testid="stMetric"] {
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:8px 10px;
+  background:#fff;
+}
 </style>
         """,
         unsafe_allow_html=True,
@@ -206,7 +251,7 @@ def main() -> None:
     week = weeks_map[week_id]
 
     st.markdown(
-        f"<div class='dash-head'><h2 style='margin:0'>餐厅周度体检表</h2><div class='dash-muted'>{store_id} ｜ {week_id} ｜ {week.get('weekRange','')}</div></div>",
+        f"<div class='dash-head'><h2>餐厅周度体检表</h2><div class='dash-muted'>门店：{store_id} ｜ 周：{week_id} ｜ {week.get('weekRange','')}</div></div>",
         unsafe_allow_html=True,
     )
 
@@ -225,19 +270,22 @@ def main() -> None:
     pdetail = week.get("productDetails", {})
     ctop1, ctop2, ctop3 = st.columns(3)
     with ctop1:
-        st.markdown("**销量 Top5 菜品**")
+        st.markdown("<div class='dash-card'><div class='dash-subtitle'>销量 Top5 菜品</div>", unsafe_allow_html=True)
         for i, x in enumerate(pdetail.get("topSales", []), 1):
             st.write(f"{i}. {x.get('name','')} - {x.get('value','')} 份")
+        st.markdown("</div>", unsafe_allow_html=True)
     with ctop2:
-        st.markdown("**销售额 Top5 菜品**")
+        st.markdown("<div class='dash-card'><div class='dash-subtitle'>销售额 Top5 菜品</div>", unsafe_allow_html=True)
         for i, x in enumerate(pdetail.get("topRevenue", []), 1):
             st.write(f"{i}. {x.get('name','')} - ¥{_fmt_num(x.get('value',0))}")
+        st.markdown("</div>", unsafe_allow_html=True)
     with ctop3:
-        st.markdown("**滞销 Bottom5 菜品**")
+        st.markdown("<div class='dash-card'><div class='dash-subtitle'>滞销 Bottom5 菜品</div>", unsafe_allow_html=True)
         for i, x in enumerate(pdetail.get("bottomSales", []), 1):
             st.write(f"{i}. {x.get('name','')} - {x.get('value','')} 份")
             if x.get("note"):
                 st.caption(x.get("note"))
+        st.markdown("</div>", unsafe_allow_html=True)
     rc, lc = st.columns(2)
     with rc:
         r = pdetail.get("returns", {})
@@ -321,10 +369,15 @@ def main() -> None:
     # 八、综合结论与下周行动
     st.markdown("### 八、综合结论与下周行动")
     summary = _merge_actions(week.get("summary", {}), store_id, week_id)
-    st.markdown("**本周核心亮点**")
-    st.write(summary.get("highlight", ""))
-    st.markdown("**本周核心问题**")
-    st.write(summary.get("problem", ""))
+    hc1, hc2 = st.columns(2)
+    with hc1:
+        st.markdown("<div class='dash-card'><div class='dash-subtitle'>本周核心亮点</div>", unsafe_allow_html=True)
+        st.write(summary.get("highlight", ""))
+        st.markdown("</div>", unsafe_allow_html=True)
+    with hc2:
+        st.markdown("<div class='dash-card'><div class='dash-subtitle'>本周核心问题</div>", unsafe_allow_html=True)
+        st.write(summary.get("problem", ""))
+        st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("### 本周行动计划（最多3条）")
     current_actions = list(summary.get("actions", []))[:3]
