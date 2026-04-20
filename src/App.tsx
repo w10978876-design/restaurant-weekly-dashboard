@@ -99,29 +99,34 @@ async function writeActionItemsToGithub(cfg: SyncConfig, items: ActionPlanItem[]
     Accept: "application/vnd.github+json",
     "Content-Type": "application/json",
   };
-  const getRes = await fetch(`${api}?ref=${encodeURIComponent(cfg.branch)}`, { headers });
-  if (!getRes.ok) {
-    throw new Error(`GITHUB_GET_${getRes.status}`);
-  }
-  const getData = await getRes.json();
-  const sha = getData?.sha;
-  const payload = {
-    version: 1,
-    saved_at: toIso(),
-    items,
-  };
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
-  const putRes = await fetch(api, {
-    method: "PUT",
-    headers,
-    body: JSON.stringify({
-      message: `update action plans at ${toIso()}`,
-      content,
-      sha,
-      branch: cfg.branch,
-    }),
-  });
-  if (!putRes.ok) {
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const getRes = await fetch(`${api}?ref=${encodeURIComponent(cfg.branch)}`, { headers });
+    if (!getRes.ok) {
+      throw new Error(`GITHUB_GET_${getRes.status}`);
+    }
+    const getData = await getRes.json();
+    const sha = getData?.sha;
+    const payload = {
+      version: 1,
+      saved_at: toIso(),
+      items,
+    };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+    const putRes = await fetch(api, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({
+        message: `update action plans at ${toIso()}`,
+        content,
+        sha,
+        branch: cfg.branch,
+      }),
+    });
+    if (putRes.ok) return;
+    if (putRes.status === 409 && attempt === 0) {
+      // Remote changed between GET and PUT; retry once with newest sha.
+      continue;
+    }
     throw new Error(`GITHUB_PUT_${putRes.status}`);
   }
 }
@@ -131,6 +136,7 @@ function humanizeSyncError(err: unknown) {
   if (msg.includes("GITHUB_GET_401") || msg.includes("GITHUB_PUT_401")) return "同步失败：Token 无效或已过期（401）。";
   if (msg.includes("GITHUB_GET_403") || msg.includes("GITHUB_PUT_403")) return "同步失败：权限不足（403），请确认 token 具有 repo/workflow 权限。";
   if (msg.includes("GITHUB_GET_404") || msg.includes("GITHUB_PUT_404")) return "同步失败：仓库或文件路径不存在（404）。";
+  if (msg.includes("GITHUB_PUT_409")) return "同步失败：仓库文件有并发更新冲突（409），请点一次刷新后重试。";
   if (msg.includes("Failed to fetch") || msg.includes("NetworkError")) return "同步失败：网络连接异常，请稍后重试。";
   return `同步失败：${msg || "未知错误"}`;
 }
