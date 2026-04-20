@@ -228,12 +228,20 @@ export default function App() {
       }
       const d = buildDashboardData(sourcePayload, storeId ?? selectedStoreId, weekId ?? selectedWeekId);
       if (!d) return;
-      setData(d);
-      setSelectedStoreId(d.selectedStore?.id ?? "");
-      setSelectedWeekId(d.selectedWeek?.id ?? "");
       const repoIndex = indexActions(repoItems ?? repoActions);
       const repoActs = repoIndex[`${d.selectedStore?.id}::${d.selectedWeek?.id}`] ?? [];
-      setEditedActions((repoActs.length ? repoActs : d.summary?.actions ?? []).slice(0, 3));
+      const resolvedActions = (repoActs.length ? repoActs : d.summary?.actions ?? []).slice(0, 3);
+      const resolvedData = {
+        ...d,
+        summary: {
+          ...(d.summary ?? {}),
+          actions: resolvedActions,
+        },
+      };
+      setData(resolvedData);
+      setSelectedStoreId(d.selectedStore?.id ?? "");
+      setSelectedWeekId(d.selectedWeek?.id ?? "");
+      setEditedActions(resolvedActions);
     } finally {
       setLoading(false);
     }
