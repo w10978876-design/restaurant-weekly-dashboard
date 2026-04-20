@@ -174,7 +174,12 @@ function humanizeSyncError(err: unknown) {
 
 function buildDashboardData(payload: any, storeId?: string, weekId?: string): DashboardData | null {
   const stores = payload?.stores ?? {};
-  const storeKeys = Object.keys(stores).sort();
+  const storeKeys = Object.keys(stores)
+    .filter((id) => {
+      const weeks = stores?.[id]?.weeks ?? {};
+      return Object.keys(weeks).length > 0;
+    })
+    .sort();
   if (!storeKeys.length) return null;
   const resolvedStoreId = storeId && stores[storeId] ? storeId : storeKeys[0];
   const store = stores[resolvedStoreId];
