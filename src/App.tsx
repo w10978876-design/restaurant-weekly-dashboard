@@ -101,7 +101,7 @@ async function writeActionItemsToGithub(cfg: SyncConfig, items: ActionPlanItem[]
   };
   const getRes = await fetch(`${api}?ref=${encodeURIComponent(cfg.branch)}`, { headers });
   if (!getRes.ok) {
-    throw new Error(`读取远端失败：${getRes.status}`);
+    throw new Error(`GITHUB_GET_${getRes.status}`);
   }
   const getData = await getRes.json();
   const sha = getData?.sha;
@@ -122,8 +122,17 @@ async function writeActionItemsToGithub(cfg: SyncConfig, items: ActionPlanItem[]
     }),
   });
   if (!putRes.ok) {
-    throw new Error(`写入远端失败：${putRes.status}`);
+    throw new Error(`GITHUB_PUT_${putRes.status}`);
   }
+}
+
+function humanizeSyncError(err: unknown) {
+  const msg = String((err as any)?.message ?? err ?? "");
+  if (msg.includes("GITHUB_GET_401") || msg.includes("GITHUB_PUT_401")) return "同步失败：Token 无效或已过期（401）。";
+  if (msg.includes("GITHUB_GET_403") || msg.includes("GITHUB_PUT_403")) return "同步失败：权限不足（403），请确认 token 具有 repo/workflow 权限。";
+  if (msg.includes("GITHUB_GET_404") || msg.includes("GITHUB_PUT_404")) return "同步失败：仓库或文件路径不存在（404）。";
+  if (msg.includes("Failed to fetch") || msg.includes("NetworkError")) return "同步失败：网络连接异常，请稍后重试。";
+  return `同步失败：${msg || "未知错误"}`;
 }
 
 function buildDashboardData(payload: any, storeId?: string, weekId?: string): DashboardData | null {
@@ -166,7 +175,7 @@ export default function App() {
   const [syncCfg, setSyncCfg] = useState<SyncConfig>(loadSyncConfig());
   const [syncMsg, setSyncMsg] = useState("");
 
-  const load = async (storeId?: string, weekId?: string) => {
+  const load = async (storeId?: string, weekId?: string, repoItems?: ActionPlanItem[]) => {
     setLoading(true);
     try {
       let sourcePayload = payload;
@@ -185,7 +194,7 @@ export default function App() {
       setData(d);
       setSelectedStoreId(d.selectedStore?.id ?? "");
       setSelectedWeekId(d.selectedWeek?.id ?? "");
-      const repoIndex = indexActions(repoActions);
+      const repoIndex = indexActions(repoItems ?? repoActions);
       const repoActs = repoIndex[`${d.selectedStore?.id}::${d.selectedWeek?.id}`] ?? [];
       setEditedActions((repoActs.length ? repoActs : d.summary?.actions ?? []).slice(0, 3));
     } finally {
@@ -195,10 +204,11 @@ export default function App() {
 
   useEffect(() => {
     loadRepoActionItems()
-      .then((items) => setRepoActions(items))
-      .finally(() => {
-        load().catch(() => setLoading(false));
-      });
+      .then((items) => {
+        setRepoActions(items);
+        return load(undefined, undefined, items);
+      })
+      .catch(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -208,32 +218,50 @@ export default function App() {
   const handleSaveActions = async () => {
     const cleanActions = editedActions.filter(Boolean).slice(0, 3);
     saveLocalActions(selectedStoreId, selectedWeekId, cleanActions);
-    setSyncMsg("已保存到当前浏览器。");
-
-    if (syncCfg.token.trim()) {
-      try {
-        const now = toIso();
-        const next = repoActions.filter((x) => !(x.store_id === selectedStoreId && x.week_id === selectedWeekId));
-        const merged = next.concat(
-          cleanActions.map((detail, i) => ({
-            id: `${selectedStoreId}-${selectedWeekId}-${i + 1}-${Date.now()}`,
-            store_id: selectedStoreId,
-            week_id: selectedWeekId,
-            title: `行动${i + 1}`,
-            detail,
-            status: "待办",
-            created_at: now,
-            updated_at: now,
-          })),
-        );
-        await writeActionItemsToGithub(syncCfg, merged);
-        setRepoActions(merged);
-        setSyncMsg("已同步到团队仓库。");
-      } catch (err: any) {
-        setSyncMsg(`仓库同步失败：${err?.message ?? "未知错误"}`);
+    let syncedWithRepo = false;
+    let token = syncCfg.token.trim();
+    if (!token) {
+      const input = window.prompt("请输入 GitHub PAT（仅本机保存，用于“保存到团队”）");
+      token = String(input ?? "").trim();
+      if (!token) {
+        const warning = "未提供 Token，仅保存到本机浏览器。";
+        setSyncMsg(warning);
+        window.alert(warning);
+        await load(selectedStoreId, selectedWeekId);
+        setIsEditingActions(false);
+        return;
       }
+      setSyncCfg({ ...syncCfg, token });
     }
-    await load(selectedStoreId, selectedWeekId);
+    try {
+      const now = toIso();
+      const next = repoActions.filter((x) => !(x.store_id === selectedStoreId && x.week_id === selectedWeekId));
+      const merged = next.concat(
+        cleanActions.map((detail, i) => ({
+          id: `${selectedStoreId}-${selectedWeekId}-${i + 1}-${Date.now()}`,
+          store_id: selectedStoreId,
+          week_id: selectedWeekId,
+          title: `行动${i + 1}`,
+          detail,
+          status: "待办",
+          created_at: now,
+          updated_at: now,
+        })),
+      );
+      await writeActionItemsToGithub({ ...syncCfg, token }, merged);
+      setRepoActions(merged);
+      setSyncMsg("已同步到团队仓库。");
+      window.alert("保存成功：已同步到团队仓库。");
+      await load(selectedStoreId, selectedWeekId, merged);
+      syncedWithRepo = true;
+    } catch (err: any) {
+      const friendly = humanizeSyncError(err);
+      setSyncMsg(friendly);
+      window.alert(friendly);
+    }
+    if (!syncedWithRepo) {
+      await load(selectedStoreId, selectedWeekId);
+    }
     setIsEditingActions(false);
   };
 
@@ -456,7 +484,7 @@ export default function App() {
             </div>
           </div>
         </section>
-        <section className="dash-card p-5"><div className="flex justify-between items-center mb-4 gap-3"><h2 className="dash-title text-[1.35rem] font-semibold flex items-center gap-2"><CheckCircle2 size={20} className="text-[var(--dash-accent)]" /> 综合结论与下周行动</h2><button type="button" className="dash-btn-ghost shrink-0" onClick={() => setIsEditingActions((v) => !v)}>{isEditingActions ? "取消编辑" : "人工填写行动计划"}</button></div><div className="grid grid-cols-1 lg:grid-cols-2 gap-5"><div className="border border-[var(--dash-border)] rounded-[var(--dash-radius-card)] p-4 bg-white"><p className="text-[12px] text-[var(--dash-success)] font-semibold mb-2">本周核心亮点</p><p className="text-[13px] leading-relaxed">{data.summary.highlight}</p><p className="text-[12px] text-[var(--dash-danger)] font-semibold mt-5 mb-2">本周核心问题</p><p className="text-[13px] leading-relaxed">{data.summary.problem}</p></div><div className="dash-panel-accent p-4"><p className="text-[13px] font-semibold text-[var(--dash-accent)] mb-3">下周重点行动计划（不超过3条）</p>{(isEditingActions ? editedActions : data.summary.actions).map((a: string, i: number) => <div key={i} className="flex gap-3 mb-3"><div className="w-7 h-7 rounded-[6px] bg-[var(--dash-accent)] text-white text-[12px] font-semibold flex items-center justify-center shrink-0">{i + 1}</div>{isEditingActions ? <textarea className="flex-1 border border-[var(--dash-border)] rounded-[var(--dash-radius-control)] p-2 text-[13px] h-20 font-sans" value={a} onChange={(e) => { const n = [...editedActions]; n[i] = e.target.value; setEditedActions(n); }} /> : <p className="text-[13px] pt-1 leading-relaxed">{a}</p>}</div>)}{isEditingActions && editedActions.length < 3 && <button type="button" className="dash-btn-dashed mb-2" onClick={() => setEditedActions([...editedActions, ""])}>+ 添加行动项</button>}{isEditingActions && <button type="button" className="dash-btn-primary" onClick={handleSaveActions}>保存记录</button>}{isEditingActions && <div className="mt-3 text-[12px] text-[var(--dash-muted)]">可选团队同步（填 GitHub Token 后启用）</div>}{isEditingActions && <input className="w-full mt-2 px-2 py-1.5 rounded border border-[var(--dash-border)] text-[12px]" placeholder="owner（默认 w10978876-design）" value={syncCfg.owner} onChange={(e) => setSyncCfg({ ...syncCfg, owner: e.target.value })} />}{isEditingActions && <input className="w-full mt-2 px-2 py-1.5 rounded border border-[var(--dash-border)] text-[12px]" placeholder="repo（默认 restaurant-weekly-dashboard）" value={syncCfg.repo} onChange={(e) => setSyncCfg({ ...syncCfg, repo: e.target.value })} />}{isEditingActions && <input className="w-full mt-2 px-2 py-1.5 rounded border border-[var(--dash-border)] text-[12px]" placeholder="branch（默认 main）" value={syncCfg.branch} onChange={(e) => setSyncCfg({ ...syncCfg, branch: e.target.value })} />}{isEditingActions && <input className="w-full mt-2 px-2 py-1.5 rounded border border-[var(--dash-border)] text-[12px]" placeholder="GitHub PAT（可空；填了就同步到仓库）" value={syncCfg.token} onChange={(e) => setSyncCfg({ ...syncCfg, token: e.target.value })} />}{syncMsg && <p className="text-[12px] mt-2 text-[var(--dash-muted)]">{syncMsg}</p>}</div></div></section>
+        <section className="dash-card p-5"><div className="flex justify-between items-center mb-4 gap-3"><h2 className="dash-title text-[1.35rem] font-semibold flex items-center gap-2"><CheckCircle2 size={20} className="text-[var(--dash-accent)]" /> 综合结论与下周行动</h2><button type="button" className="dash-btn-ghost shrink-0" onClick={() => setIsEditingActions((v) => !v)}>{isEditingActions ? "取消编辑" : "人工填写行动计划"}</button></div><div className="grid grid-cols-1 lg:grid-cols-2 gap-5"><div className="border border-[var(--dash-border)] rounded-[var(--dash-radius-card)] p-4 bg-white"><p className="text-[12px] text-[var(--dash-success)] font-semibold mb-2">本周核心亮点</p><p className="text-[13px] leading-relaxed">{data.summary.highlight}</p><p className="text-[12px] text-[var(--dash-danger)] font-semibold mt-5 mb-2">本周核心问题</p><p className="text-[13px] leading-relaxed">{data.summary.problem}</p></div><div className="dash-panel-accent p-4"><p className="text-[13px] font-semibold text-[var(--dash-accent)] mb-3">下周重点行动计划（不超过3条）</p>{(isEditingActions ? editedActions : data.summary.actions).map((a: string, i: number) => <div key={i} className="flex gap-3 mb-3"><div className="w-7 h-7 rounded-[6px] bg-[var(--dash-accent)] text-white text-[12px] font-semibold flex items-center justify-center shrink-0">{i + 1}</div>{isEditingActions ? <textarea className="flex-1 border border-[var(--dash-border)] rounded-[var(--dash-radius-control)] p-2 text-[13px] h-20 font-sans" value={a} onChange={(e) => { const n = [...editedActions]; n[i] = e.target.value; setEditedActions(n); }} /> : <p className="text-[13px] pt-1 leading-relaxed">{a}</p>}</div>)}{isEditingActions && editedActions.length < 3 && <button type="button" className="dash-btn-dashed mb-2" onClick={() => setEditedActions([...editedActions, ""])}>+ 添加行动项</button>}{isEditingActions && <button type="button" className="dash-btn-primary" onClick={handleSaveActions}>保存到团队</button>}{isEditingActions && <div className="mt-3 text-[12px] text-[var(--dash-muted)]">首次保存会提示输入 GitHub Token（仅本机保存）。</div>}{syncMsg && <p className="text-[12px] mt-2 text-[var(--dash-muted)]">{syncMsg}</p>}</div></div></section>
       </main>
     </div>
   );
