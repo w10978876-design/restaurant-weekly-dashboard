@@ -4,6 +4,26 @@ import { AlertCircle, Calendar, CheckCircle2, Cloud, CloudRain, Star, Sun, Utens
 type DashboardData = any;
 const cls = (...s: string[]) => s.filter(Boolean).join(" ");
 const ACTIONS_STORAGE_KEY = "restaurant-dashboard-actions-v1";
+const GITHUB_SYNC_CFG_KEY = "restaurant-dashboard-github-sync-v1";
+const ACTION_PLAN_REPO_PATH = "data/warehouse/action_plans.json";
+
+type SyncConfig = {
+  owner: string;
+  repo: string;
+  branch: string;
+  token: string;
+};
+
+type ActionPlanItem = {
+  id: string;
+  store_id: string;
+  week_id: string;
+  title: string;
+  detail: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+};
 
 function loadLocalActions() {
   try {
@@ -20,6 +40,90 @@ function saveLocalActions(storeId: string, weekId: string, actions: string[]) {
   const bucket = loadLocalActions();
   bucket[`${storeId}::${weekId}`] = actions;
   localStorage.setItem(ACTIONS_STORAGE_KEY, JSON.stringify(bucket));
+}
+
+function loadSyncConfig(): SyncConfig {
+  try {
+    const raw = localStorage.getItem(GITHUB_SYNC_CFG_KEY);
+    const parsed = raw ? JSON.parse(raw) : {};
+    return {
+      owner: String(parsed?.owner ?? "w10978876-design"),
+      repo: String(parsed?.repo ?? "restaurant-weekly-dashboard"),
+      branch: String(parsed?.branch ?? "main"),
+      token: String(parsed?.token ?? ""),
+    };
+  } catch {
+    return { owner: "w10978876-design", repo: "restaurant-weekly-dashboard", branch: "main", token: "" };
+  }
+}
+
+function saveSyncConfig(cfg: SyncConfig) {
+  localStorage.setItem(GITHUB_SYNC_CFG_KEY, JSON.stringify(cfg));
+}
+
+function toIso() {
+  return new Date().toISOString();
+}
+
+function asActionItems(input: any): ActionPlanItem[] {
+  const items = input?.items;
+  return Array.isArray(items) ? items : [];
+}
+
+function indexActions(items: ActionPlanItem[]) {
+  const out: Record<string, string[]> = {};
+  for (const row of items) {
+    const key = `${row.store_id}::${row.week_id}`;
+    if (!out[key]) out[key] = [];
+    if (row?.detail?.trim()) out[key].push(String(row.detail).trim());
+  }
+  return out;
+}
+
+async function loadRepoActionItems(): Promise<ActionPlanItem[]> {
+  try {
+    const url = `${import.meta.env.BASE_URL}${ACTION_PLAN_REPO_PATH}`;
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const payload = await res.json();
+    return asActionItems(payload);
+  } catch {
+    return [];
+  }
+}
+
+async function writeActionItemsToGithub(cfg: SyncConfig, items: ActionPlanItem[]) {
+  const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${ACTION_PLAN_REPO_PATH}`;
+  const headers = {
+    Authorization: `Bearer ${cfg.token}`,
+    Accept: "application/vnd.github+json",
+    "Content-Type": "application/json",
+  };
+  const getRes = await fetch(`${api}?ref=${encodeURIComponent(cfg.branch)}`, { headers });
+  if (!getRes.ok) {
+    throw new Error(`读取远端失败：${getRes.status}`);
+  }
+  const getData = await getRes.json();
+  const sha = getData?.sha;
+  const payload = {
+    version: 1,
+    saved_at: toIso(),
+    items,
+  };
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+  const putRes = await fetch(api, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({
+      message: `update action plans at ${toIso()}`,
+      content,
+      sha,
+      branch: cfg.branch,
+    }),
+  });
+  if (!putRes.ok) {
+    throw new Error(`写入远端失败：${putRes.status}`);
+  }
 }
 
 function buildDashboardData(payload: any, storeId?: string, weekId?: string): DashboardData | null {
@@ -58,6 +162,9 @@ export default function App() {
   const [isEditingActions, setIsEditingActions] = useState(false);
   const [editedActions, setEditedActions] = useState<string[]>([]);
   const [payload, setPayload] = useState<any>(null);
+  const [repoActions, setRepoActions] = useState<ActionPlanItem[]>([]);
+  const [syncCfg, setSyncCfg] = useState<SyncConfig>(loadSyncConfig());
+  const [syncMsg, setSyncMsg] = useState("");
 
   const load = async (storeId?: string, weekId?: string) => {
     setLoading(true);
@@ -78,18 +185,54 @@ export default function App() {
       setData(d);
       setSelectedStoreId(d.selectedStore?.id ?? "");
       setSelectedWeekId(d.selectedWeek?.id ?? "");
-      setEditedActions(d.summary?.actions ?? []);
+      const repoIndex = indexActions(repoActions);
+      const repoActs = repoIndex[`${d.selectedStore?.id}::${d.selectedWeek?.id}`] ?? [];
+      setEditedActions((repoActs.length ? repoActs : d.summary?.actions ?? []).slice(0, 3));
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    load().catch(() => setLoading(false));
+    loadRepoActionItems()
+      .then((items) => setRepoActions(items))
+      .finally(() => {
+        load().catch(() => setLoading(false));
+      });
   }, []);
 
+  useEffect(() => {
+    saveSyncConfig(syncCfg);
+  }, [syncCfg]);
+
   const handleSaveActions = async () => {
-    saveLocalActions(selectedStoreId, selectedWeekId, editedActions.filter(Boolean).slice(0, 3));
+    const cleanActions = editedActions.filter(Boolean).slice(0, 3);
+    saveLocalActions(selectedStoreId, selectedWeekId, cleanActions);
+    setSyncMsg("已保存到当前浏览器。");
+
+    if (syncCfg.token.trim()) {
+      try {
+        const now = toIso();
+        const next = repoActions.filter((x) => !(x.store_id === selectedStoreId && x.week_id === selectedWeekId));
+        const merged = next.concat(
+          cleanActions.map((detail, i) => ({
+            id: `${selectedStoreId}-${selectedWeekId}-${i + 1}-${Date.now()}`,
+            store_id: selectedStoreId,
+            week_id: selectedWeekId,
+            title: `行动${i + 1}`,
+            detail,
+            status: "待办",
+            created_at: now,
+            updated_at: now,
+          })),
+        );
+        await writeActionItemsToGithub(syncCfg, merged);
+        setRepoActions(merged);
+        setSyncMsg("已同步到团队仓库。");
+      } catch (err: any) {
+        setSyncMsg(`仓库同步失败：${err?.message ?? "未知错误"}`);
+      }
+    }
     await load(selectedStoreId, selectedWeekId);
     setIsEditingActions(false);
   };
@@ -313,7 +456,7 @@ export default function App() {
             </div>
           </div>
         </section>
-        <section className="dash-card p-5"><div className="flex justify-between items-center mb-4 gap-3"><h2 className="dash-title text-[1.35rem] font-semibold flex items-center gap-2"><CheckCircle2 size={20} className="text-[var(--dash-accent)]" /> 综合结论与下周行动</h2><button type="button" className="dash-btn-ghost shrink-0" onClick={() => setIsEditingActions((v) => !v)}>{isEditingActions ? "取消编辑" : "人工填写行动计划"}</button></div><div className="grid grid-cols-1 lg:grid-cols-2 gap-5"><div className="border border-[var(--dash-border)] rounded-[var(--dash-radius-card)] p-4 bg-white"><p className="text-[12px] text-[var(--dash-success)] font-semibold mb-2">本周核心亮点</p><p className="text-[13px] leading-relaxed">{data.summary.highlight}</p><p className="text-[12px] text-[var(--dash-danger)] font-semibold mt-5 mb-2">本周核心问题</p><p className="text-[13px] leading-relaxed">{data.summary.problem}</p></div><div className="dash-panel-accent p-4"><p className="text-[13px] font-semibold text-[var(--dash-accent)] mb-3">下周重点行动计划（不超过3条）</p>{(isEditingActions ? editedActions : data.summary.actions).map((a: string, i: number) => <div key={i} className="flex gap-3 mb-3"><div className="w-7 h-7 rounded-[6px] bg-[var(--dash-accent)] text-white text-[12px] font-semibold flex items-center justify-center shrink-0">{i + 1}</div>{isEditingActions ? <textarea className="flex-1 border border-[var(--dash-border)] rounded-[var(--dash-radius-control)] p-2 text-[13px] h-20 font-sans" value={a} onChange={(e) => { const n = [...editedActions]; n[i] = e.target.value; setEditedActions(n); }} /> : <p className="text-[13px] pt-1 leading-relaxed">{a}</p>}</div>)}{isEditingActions && editedActions.length < 3 && <button type="button" className="dash-btn-dashed mb-2" onClick={() => setEditedActions([...editedActions, ""])}>+ 添加行动项</button>}{isEditingActions && <button type="button" className="dash-btn-primary" onClick={handleSaveActions}>保存记录</button>}</div></div></section>
+        <section className="dash-card p-5"><div className="flex justify-between items-center mb-4 gap-3"><h2 className="dash-title text-[1.35rem] font-semibold flex items-center gap-2"><CheckCircle2 size={20} className="text-[var(--dash-accent)]" /> 综合结论与下周行动</h2><button type="button" className="dash-btn-ghost shrink-0" onClick={() => setIsEditingActions((v) => !v)}>{isEditingActions ? "取消编辑" : "人工填写行动计划"}</button></div><div className="grid grid-cols-1 lg:grid-cols-2 gap-5"><div className="border border-[var(--dash-border)] rounded-[var(--dash-radius-card)] p-4 bg-white"><p className="text-[12px] text-[var(--dash-success)] font-semibold mb-2">本周核心亮点</p><p className="text-[13px] leading-relaxed">{data.summary.highlight}</p><p className="text-[12px] text-[var(--dash-danger)] font-semibold mt-5 mb-2">本周核心问题</p><p className="text-[13px] leading-relaxed">{data.summary.problem}</p></div><div className="dash-panel-accent p-4"><p className="text-[13px] font-semibold text-[var(--dash-accent)] mb-3">下周重点行动计划（不超过3条）</p>{(isEditingActions ? editedActions : data.summary.actions).map((a: string, i: number) => <div key={i} className="flex gap-3 mb-3"><div className="w-7 h-7 rounded-[6px] bg-[var(--dash-accent)] text-white text-[12px] font-semibold flex items-center justify-center shrink-0">{i + 1}</div>{isEditingActions ? <textarea className="flex-1 border border-[var(--dash-border)] rounded-[var(--dash-radius-control)] p-2 text-[13px] h-20 font-sans" value={a} onChange={(e) => { const n = [...editedActions]; n[i] = e.target.value; setEditedActions(n); }} /> : <p className="text-[13px] pt-1 leading-relaxed">{a}</p>}</div>)}{isEditingActions && editedActions.length < 3 && <button type="button" className="dash-btn-dashed mb-2" onClick={() => setEditedActions([...editedActions, ""])}>+ 添加行动项</button>}{isEditingActions && <button type="button" className="dash-btn-primary" onClick={handleSaveActions}>保存记录</button>}{isEditingActions && <div className="mt-3 text-[12px] text-[var(--dash-muted)]">可选团队同步（填 GitHub Token 后启用）</div>}{isEditingActions && <input className="w-full mt-2 px-2 py-1.5 rounded border border-[var(--dash-border)] text-[12px]" placeholder="owner（默认 w10978876-design）" value={syncCfg.owner} onChange={(e) => setSyncCfg({ ...syncCfg, owner: e.target.value })} />}{isEditingActions && <input className="w-full mt-2 px-2 py-1.5 rounded border border-[var(--dash-border)] text-[12px]" placeholder="repo（默认 restaurant-weekly-dashboard）" value={syncCfg.repo} onChange={(e) => setSyncCfg({ ...syncCfg, repo: e.target.value })} />}{isEditingActions && <input className="w-full mt-2 px-2 py-1.5 rounded border border-[var(--dash-border)] text-[12px]" placeholder="branch（默认 main）" value={syncCfg.branch} onChange={(e) => setSyncCfg({ ...syncCfg, branch: e.target.value })} />}{isEditingActions && <input className="w-full mt-2 px-2 py-1.5 rounded border border-[var(--dash-border)] text-[12px]" placeholder="GitHub PAT（可空；填了就同步到仓库）" value={syncCfg.token} onChange={(e) => setSyncCfg({ ...syncCfg, token: e.target.value })} />}{syncMsg && <p className="text-[12px] mt-2 text-[var(--dash-muted)]">{syncMsg}</p>}</div></div></section>
       </main>
     </div>
   );
