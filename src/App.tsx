@@ -92,25 +92,55 @@ async function loadRepoActionItems(): Promise<ActionPlanItem[]> {
   }
 }
 
-async function writeActionItemsToGithub(cfg: SyncConfig, items: ActionPlanItem[]) {
+async function readRemoteActionPlan(cfg: SyncConfig) {
   const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${ACTION_PLAN_REPO_PATH}`;
   const headers = {
     Authorization: `Bearer ${cfg.token}`,
     Accept: "application/vnd.github+json",
     "Content-Type": "application/json",
   };
-  for (let attempt = 0; attempt < 2; attempt += 1) {
-    const getRes = await fetch(`${api}?ref=${encodeURIComponent(cfg.branch)}`, { headers });
-    if (!getRes.ok) {
-      throw new Error(`GITHUB_GET_${getRes.status}`);
-    }
-    const getData = await getRes.json();
-    const sha = getData?.sha;
-    const payload = {
-      version: 1,
-      saved_at: toIso(),
-      items,
-    };
+  const getRes = await fetch(`${api}?ref=${encodeURIComponent(cfg.branch)}`, { headers });
+  if (!getRes.ok) {
+    throw new Error(`GITHUB_GET_${getRes.status}`);
+  }
+  const getData = await getRes.json();
+  let remoteItems: ActionPlanItem[] = [];
+  try {
+    const content = String(getData?.content ?? "").replace(/\n/g, "");
+    const decoded = decodeURIComponent(escape(atob(content)));
+    remoteItems = asActionItems(JSON.parse(decoded));
+  } catch {
+    remoteItems = [];
+  }
+  return { api, headers, sha: getData?.sha as string, remoteItems };
+}
+
+function upsertWeekActions(
+  base: ActionPlanItem[],
+  storeId: string,
+  weekId: string,
+  actions: string[],
+): ActionPlanItem[] {
+  const now = toIso();
+  const keep = base.filter((x) => !(x.store_id === storeId && x.week_id === weekId));
+  const next = actions.map((detail, i) => ({
+    id: `${storeId}-${weekId}-${i + 1}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    store_id: storeId,
+    week_id: weekId,
+    title: `行动${i + 1}`,
+    detail,
+    status: "待办",
+    created_at: now,
+    updated_at: now,
+  }));
+  return keep.concat(next);
+}
+
+async function writeActionItemsToGithub(cfg: SyncConfig, storeId: string, weekId: string, actions: string[]) {
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const { api, headers, sha, remoteItems } = await readRemoteActionPlan(cfg);
+    const mergedItems = upsertWeekActions(remoteItems, storeId, weekId, actions);
+    const payload = { version: 1, saved_at: toIso(), items: mergedItems };
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
     const putRes = await fetch(api, {
       method: "PUT",
@@ -122,13 +152,14 @@ async function writeActionItemsToGithub(cfg: SyncConfig, items: ActionPlanItem[]
         branch: cfg.branch,
       }),
     });
-    if (putRes.ok) return;
-    if (putRes.status === 409 && attempt === 0) {
-      // Remote changed between GET and PUT; retry once with newest sha.
+    if (putRes.ok) return mergedItems;
+    if (putRes.status === 409 && attempt < 3) {
+      // Another commit landed between read/write; refetch and retry merge.
       continue;
     }
     throw new Error(`GITHUB_PUT_${putRes.status}`);
   }
+  throw new Error("GITHUB_PUT_409");
 }
 
 function humanizeSyncError(err: unknown) {
@@ -240,21 +271,7 @@ export default function App() {
       setSyncCfg({ ...syncCfg, token });
     }
     try {
-      const now = toIso();
-      const next = repoActions.filter((x) => !(x.store_id === selectedStoreId && x.week_id === selectedWeekId));
-      const merged = next.concat(
-        cleanActions.map((detail, i) => ({
-          id: `${selectedStoreId}-${selectedWeekId}-${i + 1}-${Date.now()}`,
-          store_id: selectedStoreId,
-          week_id: selectedWeekId,
-          title: `行动${i + 1}`,
-          detail,
-          status: "待办",
-          created_at: now,
-          updated_at: now,
-        })),
-      );
-      await writeActionItemsToGithub({ ...syncCfg, token }, merged);
+      const merged = await writeActionItemsToGithub({ ...syncCfg, token }, selectedStoreId, selectedWeekId, cleanActions);
       setRepoActions(merged);
       setSyncMsg("已同步到团队仓库。");
       window.alert("保存成功：已同步到团队仓库。");
