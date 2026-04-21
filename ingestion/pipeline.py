@@ -11,6 +11,7 @@ from core.weeks import parse_business_date, week_id_for_date
 from ingestion.category_mapping import load_category_mapping, load_class_category_mapping
 from ingestion.excel_reader import (
     drop_placeholder_tail,
+    list_sheet_names,
     pick_menu_sheet,
     read_sheet,
     to_number,
@@ -75,9 +76,39 @@ def _safe_read_payments(path: str) -> pd.DataFrame | None:
     return df
 
 
+def _normalize_sales_revenue_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """兼容「菜品销售明细」与「品项销售明细」收入列，统一到菜品收入（元）。"""
+    out = df
+    revenue_src = None
+    for cand in ("菜品收入（元）", "菜品收入(元)", "品项收入(元)", "销售金额(元)", "营业额(元)"):
+        if cand in out.columns:
+            revenue_src = cand
+            break
+    if revenue_src and revenue_src != "菜品收入（元）":
+        out = out.copy()
+        out["菜品收入（元）"] = to_number(out[revenue_src])
+    elif revenue_src == "菜品收入（元）":
+        out = out.copy()
+        out["菜品收入（元）"] = to_number(out["菜品收入（元）"])
+    return out
+
+
 def _safe_read_sales(path: str) -> tuple[pd.DataFrame | None, pd.DataFrame | None]:
-    sold = read_sheet(path, "已销售")
-    sold = drop_placeholder_tail(sold, ["订单编号", "营业日期"])
+    names = list_sheet_names(path)
+    sold_sheet = next((nm for nm in ("已销售", "品项销售明细") if nm in names), None)
+    if not sold_sheet:
+        return None, None
+
+    sold = read_sheet(path, sold_sheet)
+    if "订单编号" in sold.columns and "营业日期" in sold.columns:
+        sold = drop_placeholder_tail(sold, ["订单编号", "营业日期"])
+    elif "订单号" in sold.columns and "营业日期" in sold.columns:
+        sold = drop_placeholder_tail(sold, ["订单号", "营业日期"])
+    elif "营业日期" in sold.columns:
+        sold = drop_placeholder_tail(sold, ["营业日期"])
+
+    sold = _normalize_sales_revenue_columns(sold)
+
     if "营业日期" in sold.columns:
         sold["business_date"] = sold["营业日期"].map(parse_business_date)
         sold["week_id"] = sold["business_date"].map(lambda d: week_id_for_date(d) if d else None)
@@ -86,13 +117,16 @@ def _safe_read_sales(path: str) -> tuple[pd.DataFrame | None, pd.DataFrame | Non
     if "销售数量" in sold.columns:
         sold["qty"] = to_number(sold["销售数量"])
 
-    ret = read_sheet(path, "退菜")
-    ret = drop_placeholder_tail(ret, ["订单编号", "营业日期"])
-    if "营业日期" in ret.columns:
-        ret["business_date"] = ret["营业日期"].map(parse_business_date)
-        ret["week_id"] = ret["business_date"].map(lambda d: week_id_for_date(d) if d else None)
-    if "菜品收入（元）" in ret.columns:
-        ret["dish_revenue"] = to_number(ret["菜品收入（元）"])
+    ret = pd.DataFrame()
+    if "退菜" in names:
+        ret = read_sheet(path, "退菜")
+        ret = drop_placeholder_tail(ret, ["订单编号", "营业日期"])
+        if "营业日期" in ret.columns:
+            ret["business_date"] = ret["营业日期"].map(parse_business_date)
+            ret["week_id"] = ret["business_date"].map(lambda d: week_id_for_date(d) if d else None)
+        ret = _normalize_sales_revenue_columns(ret)
+        if "菜品收入（元）" in ret.columns:
+            ret["dish_revenue"] = to_number(ret["菜品收入（元）"])
     return sold, ret
 
 
@@ -122,7 +156,16 @@ def _safe_read_groupbuy(path: str) -> pd.DataFrame | None:
 
 def _safe_read_reviews(path: str) -> pd.DataFrame | None:
     """店内评价管理 · 店内评价明细 sheet。"""
-    df = read_sheet(path, "店内评价明细")
+    # 不同导出表头行不稳定，依次尝试常见 header 行
+    probe_cols = {"评价时间", "评价日期", "提交时间", "创建时间", "时间", "总分", "score", "评分"}
+    df = None
+    for header_row in (2, 1, 0, 3):
+        cand = read_sheet(path, "店内评价明细", header_row=header_row)
+        if probe_cols & set(cand.columns):
+            df = cand
+            break
+    if df is None:
+        df = read_sheet(path, "店内评价明细")
     time_c = None
     for c in ("评价时间", "评价日期", "提交时间", "创建时间", "时间"):
         if c in df.columns:

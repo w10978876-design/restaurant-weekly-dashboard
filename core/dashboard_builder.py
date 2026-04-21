@@ -281,7 +281,7 @@ def _dish_rankings(bundle: StoreBundle, week_id: str) -> tuple[list[dict], list[
         s["week_id"] = s["business_date"].map(lambda d: week_id_for_date(d) if d else None)
     s = s[s["week_id"] == week_id]
     name_col = None
-    for c in ("菜品名称", "商品名称", "SPU名称", "品名"):
+    for c in ("品项名称", "菜品名称", "商品名称", "SPU名称", "品名"):
         if c in s.columns:
             name_col = c
             break
@@ -569,9 +569,10 @@ def _special_dates(week_id: str, orders_df: pd.DataFrame | None) -> list[dict]:
             {"name": "本周周平日", "days": 5, "revenue": 0, "avgDaily": 0, "trend": 0.0, "statusText": "警戒", "statusColor": "text-yellow-600"},
             {"name": "本周周末", "days": 2, "revenue": 0, "avgDaily": 0, "trend": 0.0, "statusText": "达标", "statusColor": "text-green-600"},
         ]
-    g = orders_df[orders_df["week_id"] == week_id]
+    g = orders_df.loc[orders_df["week_id"] == week_id]
     def bucket(mask):
-        sub = g[g["business_date"].map(lambda d: d.weekday() in mask)]
+        # Use .loc so zero-row `g` keeps columns (plain `g[bool]` can yield empty columns).
+        sub = g.loc[g["business_date"].map(lambda d: d.weekday() in mask)]
         rev = float(sub["order_revenue"].fillna(0).sum())
         days = sub["business_date"].nunique()
         ad = rev / days if days else 0.0
@@ -608,7 +609,7 @@ def _special_dates(week_id: str, orders_df: pd.DataFrame | None) -> list[dict]:
         date(start.year, 4, 6),
     }
     if qh:
-        sub = g[g["business_date"].isin(qh)]
+        sub = g.loc[g["business_date"].isin(qh)]
         rev = float(sub["order_revenue"].fillna(0).sum())
         days = sub["business_date"].nunique() or len(qh)
         ad = rev / days if days else 0.0

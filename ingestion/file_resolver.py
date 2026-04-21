@@ -50,7 +50,8 @@ def resolve_store_files(store_dir: str) -> dict[str, str | None]:
         "orders": pick_latest(files, has("店内订单明细", "全部订单"))
         or pick_latest(files, has("订单明细")),
         "payments": pick_latest(files, has("支付明细")),
-        "sales": pick_latest(files, has("菜品销售明细")),
+        "sales": pick_latest(files, has("菜品销售明细"))
+        or pick_latest(files, has("品项销售明细")),
         "waste": pick_latest(files, has("菜品报损")),
         "reviews": pick_latest(files, lambda n: ("评价管理" in n) or ("店内评价" in n)),
         "menu": pick_latest(files, has("菜品库")),

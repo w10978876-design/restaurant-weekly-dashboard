@@ -15,6 +15,15 @@ def _parse_cn_month_day(s: str) -> tuple[int, int] | None:
     return int(m.group(1)), int(m.group(2))
 
 
+def _parse_iso_date_cell(s: str) -> tuple[int, int, int] | None:
+    """表格里常见 `2026-04-13` / `2026/04/13`。"""
+    t = s.strip()
+    m = re.match(r"(20\d{2})[-/](\d{1,2})[-/](\d{1,2})", t)
+    if not m:
+        return None
+    return int(m.group(1)), int(m.group(2)), int(m.group(3))
+
+
 def _strip_nighttime_weather_text(text: str) -> str:
     """
     不采用夜间时段的天气描述：从「天气状况 / 风向风力 / 备注」中剔除含夜间信息的子句，
@@ -96,14 +105,22 @@ def load_weather_detail_map() -> dict[date, dict[str, str]]:
         if len(parts) < 6:
             continue
         date_cell = parts[1] if parts and parts[0] == "" else parts[0]
-        md = _parse_cn_month_day(date_cell)
-        if not md:
-            continue
-        month, day = md
-        try:
-            d = date(current_year, month, day)
-        except ValueError:
-            continue
+        iso = _parse_iso_date_cell(date_cell)
+        if iso:
+            y, month, day = iso
+            try:
+                d = date(y, month, day)
+            except ValueError:
+                continue
+        else:
+            md = _parse_cn_month_day(date_cell)
+            if not md:
+                continue
+            month, day = md
+            try:
+                d = date(current_year, month, day)
+            except ValueError:
+                continue
         phenomenon = _strip_nighttime_weather_text(parts[3] if len(parts) > 3 else "")
         lo = parts[4] if len(parts) > 4 else ""
         hi = parts[5] if len(parts) > 5 else ""
