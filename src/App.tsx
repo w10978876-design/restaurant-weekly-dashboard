@@ -80,10 +80,21 @@ function indexActions(items: ActionPlanItem[]) {
   return out;
 }
 
+/** 用绝对 URL，避免相对路径在某些入口下算错；并配合 cache: 'no-store' 绕过子资源缓存。 */
+function warehouseJsonUrl(repoPath: string): string {
+  const p = repoPath.replace(/^\//, "");
+  const base = import.meta.env.BASE_URL ?? "/";
+  const b = base.endsWith("/") ? base : `${base}/`;
+  if (typeof window !== "undefined" && b.startsWith("/")) {
+    return `${window.location.origin}${b}${p}`;
+  }
+  return `${b}${p}`;
+}
+
 async function loadRepoActionItems(): Promise<ActionPlanItem[]> {
   try {
-    const url = `${import.meta.env.BASE_URL}${ACTION_PLAN_REPO_PATH}`;
-    const res = await fetch(url);
+    const url = warehouseJsonUrl(ACTION_PLAN_REPO_PATH);
+    const res = await fetch(url, {cache: "no-store"});
     if (!res.ok) return [];
     const payload = await res.json();
     return asActionItems(payload);
@@ -216,23 +227,36 @@ export default function App() {
   const [repoActions, setRepoActions] = useState<ActionPlanItem[]>([]);
   const [syncCfg, setSyncCfg] = useState<SyncConfig>(loadSyncConfig());
   const [syncMsg, setSyncMsg] = useState("");
+  const [bootError, setBootError] = useState<string | null>(null);
 
   const load = async (storeId?: string, weekId?: string, repoItems?: ActionPlanItem[]) => {
     setLoading(true);
+    setBootError(null);
     try {
       let sourcePayload = payload;
       if (!sourcePayload) {
-        const url = `${import.meta.env.BASE_URL}data/warehouse/ui_payload.json`;
-        const res = await fetch(url);
+        const url = warehouseJsonUrl("data/warehouse/ui_payload.json");
+        const res = await fetch(url, {cache: "no-store"});
         if (!res.ok) {
           setData(null);
+          setBootError(`请求失败 HTTP ${res.status}：${url}`);
           return;
         }
-        sourcePayload = await res.json();
+        try {
+          sourcePayload = await res.json();
+        } catch (e) {
+          setData(null);
+          setBootError(`JSON 解析失败（可能被网络插入非 JSON 页面）：${url}`);
+          return;
+        }
         setPayload(sourcePayload);
       }
       const d = buildDashboardData(sourcePayload, storeId ?? selectedStoreId, weekId ?? selectedWeekId);
-      if (!d) return;
+      if (!d) {
+        setData(null);
+        setBootError("数据里没有可用的门店或周度（stores.weeks 为空）。");
+        return;
+      }
       const repoIndex = indexActions(repoItems ?? repoActions);
       const repoActs = repoIndex[`${d.selectedStore?.id}::${d.selectedWeek?.id}`] ?? [];
       const resolvedActions = (repoActs.length ? repoActs : d.summary?.actions ?? []).slice(0, 3);
@@ -247,6 +271,9 @@ export default function App() {
       setSelectedStoreId(d.selectedStore?.id ?? "");
       setSelectedWeekId(d.selectedWeek?.id ?? "");
       setEditedActions(resolvedActions);
+    } catch (e) {
+      setData(null);
+      setBootError(`加载异常：${String((e as Error)?.message ?? e)}`);
     } finally {
       setLoading(false);
     }
@@ -258,7 +285,10 @@ export default function App() {
         setRepoActions(items);
         return load(undefined, undefined, items);
       })
-      .catch(() => setLoading(false));
+      .catch((e) => {
+        setBootError(`初始化失败：${String((e as Error)?.message ?? e)}`);
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
@@ -302,7 +332,14 @@ export default function App() {
   };
 
   if (loading) return <div className="min-h-screen flex items-center justify-center dash-page">加载中...</div>;
-  if (!data?.coreMetrics) return <div className="min-h-screen flex flex-col items-center justify-center gap-3 dash-page text-sm text-[var(--dash-muted)]">暂无看板数据。请确认仓库中存在 <code className="font-mono text-xs bg-white px-2 py-1 rounded border">data/warehouse/ui_payload.json</code>。</div>;
+  if (!data?.coreMetrics)
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-3 dash-page text-sm text-[var(--dash-muted)] max-w-lg text-center px-4">
+        <p>暂无看板数据。请确认仓库已部署 <code className="font-mono text-xs bg-white px-2 py-1 rounded border">data/warehouse/ui_payload.json</code>。</p>
+        {bootError ? <p className="text-red-600 text-xs break-all">{bootError}</p> : null}
+        <p className="text-xs">若在微信内打开，请用系统浏览器打开本站；仍不行请清除本站数据后重试。</p>
+      </div>
+    );
 
   return (
     <div className="min-h-screen pb-20 dash-page">
