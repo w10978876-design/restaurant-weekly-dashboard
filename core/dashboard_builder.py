@@ -637,7 +637,7 @@ def _negative_review_counts(rv: pd.DataFrame, sc: str | None) -> int:
         return 0
     if sc and sc in rv.columns:
         s = pd.to_numeric(rv[sc], errors="coerce")
-        return int((s <= 2).sum())
+        return int((s <= 3).sum())
     for c in ("评价类型", "类型", "是否差评", "评价结果"):
         if c in rv.columns:
             col = rv[c].astype(str)
@@ -645,10 +645,40 @@ def _negative_review_counts(rv: pd.DataFrame, sc: str | None) -> int:
     return 0
 
 
+def _keyword_total_count(items: list[str]) -> int:
+    """从关键词标签里提取出现次数（如“服务一般（2次）” -> 2）。"""
+    total = 0
+    for s in items or []:
+        m = re.search(r"（(\d+)次）", str(s))
+        if m:
+            total += int(m.group(1))
+    return total
+
+
+def _fallback_keywords_from_texts(texts: list[str], max_items: int = 3) -> list[str]:
+    """
+    兜底关键词：当 NLP 未抽出关键词但存在差评文本时，取文本首句片段计数，避免“条数>0但关键词为空”。
+    """
+    parts: list[str] = []
+    for raw in texts or []:
+        t = str(raw or "").strip()
+        if not t:
+            continue
+        head = re.split(r"[，。！？；,.!?;\n]", t)[0].strip() or t
+        if len(head) > 16:
+            head = head[:16]
+        if head:
+            parts.append(head)
+    if not parts:
+        return []
+    c = Counter(parts)
+    return [f"{k}（{v}次）" for k, v in c.most_common(max_items)]
+
+
 def _load_existing_ui_payload_weeks() -> dict[tuple[str, str], dict]:
     """
     读取现有 ui_payload，按 (store_id, week_id) 建索引。
-    用于当本次源文件时间窗口变短时，保留历史周的详细模块数据。
+    沿用规则见 _should_use_frozen_prior_week（默认整周锁定已有周；可选从某周起强制重算）。
     """
     p = ui_payload_path()
     if not os.path.exists(p):
@@ -677,8 +707,34 @@ def _core_metric_by_label(core_metrics: list[dict], label: str) -> dict | None:
     return None
 
 
-def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
+def _recompute_boundary(explicit_week_id: str | None = None) -> str | None:
+    """
+    分界周（必须与 JSON 里的 week_id 字符串一致，一般为当周周一）。
+    explicit_week_id 优先（函数参数，不依赖终端是否把环境变量传给 Python）。
+    否则读环境变量 UI_PAYLOAD_RECOMPUTE_FROM_WEEK_ID。
+    若返回非空：仅当 week_id < 分界 且已有 prior 时才冻结；week_id >= 分界则强制重算。
+    若返回 None：只要有 prior 即冻结（仅全新 week_id 会从源计算）。
+    """
+    if explicit_week_id is not None:
+        e = explicit_week_id.strip()
+        return e or None
+    v = os.environ.get("UI_PAYLOAD_RECOMPUTE_FROM_WEEK_ID", "").strip()
+    return v or None
+
+
+def _should_use_frozen_prior_week(
+    week_id: str, prior_week_payload: dict | None, recompute_boundary: str | None
+) -> bool:
+    if prior_week_payload is None:
+        return False
+    if recompute_boundary:
+        return str(week_id) < recompute_boundary
+    return True
+
+
+def build_ui_payload(auto_persist_metrics: bool = False, recompute_from_week_id: str | None = None) -> dict[str, Any]:
     weather_map = load_weather_map()
+    recompute_boundary = _recompute_boundary(recompute_from_week_id)
     existing_weeks = _load_existing_ui_payload_weeks()
     engine = MetricsEngine(auto_persist=auto_persist_metrics)
     bundles = load_all_stores(data_dir())
@@ -699,9 +755,8 @@ def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
 
         for idx, wk in enumerate(weeks):
             prior_week_payload = existing_weeks.get((str(store_id), str(wk)))
-            # 历史周冻结：若该周已存在于旧 ui_payload，则整周完整沿用，不做重算。
-            # 这样可保证页面历史周的所有数字与文案完全保留，仅对“新增周”向后延伸生成。
-            if prior_week_payload is not None:
+            # 默认：已有周整周保留。recompute_boundary 非空时：仅 week_id < 分界 的沿用 prior。
+            if _should_use_frozen_prior_week(str(wk), prior_week_payload, recompute_boundary):
                 week_payloads[wk] = prior_week_payload
                 continue
             row = sub[sub["week_id"] == wk].iloc[0].to_dict()
@@ -909,6 +964,7 @@ def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
                         t = str(r.get(txt_col, "") or "") if txt_col else ""
                         if t and s >= 4:
                             good_texts.append(t)
+                        # 与“差评条数（店内评价总分 <=3）”口径一致，避免出现“条数为0但有差评关键词”。
                         if t and s <= 3:
                             bad_texts.append(t)
             all_review_texts = []
@@ -922,6 +978,8 @@ def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
             bad_ev = kw_meta.get("badEvidence", {})
             good_candidates = kw_meta.get("goodCandidates", [])
             bad_candidates = kw_meta.get("badCandidates", [])
+            if not bad_kw and bad_texts:
+                bad_kw = _fallback_keywords_from_texts(bad_texts)
             sc_col = None
             if rev_df is not None and not rev_df.empty:
                 for c in ("score", "总分", "评分", "总体评分", "星级分"):
@@ -929,6 +987,9 @@ def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
                         sc_col = c
                         break
             neg_cnt = _negative_review_counts(rv, sc_col)
+            # 展示一致性兜底：若已抽出差评关键词但差评条数为0，则至少按差评文本条数计数。
+            if neg_cnt == 0 and bad_texts:
+                neg_cnt = len(bad_texts)
             rv_prev = pd.DataFrame()
             if prev is not None and rev_df is not None and not rev_df.empty:
                 rp = rev_df.copy()
@@ -959,6 +1020,8 @@ def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
                             bt_prev.append(t)
                     all_prev = [str(x or "") for x in rv_prev[txt_prev].tolist() if str(x or "").strip()]
                     kw_meta_prev = extract_keywords_with_meta(gt_prev, bt_prev, all_prev)
+            if neg_prev == 0 and kw_meta_prev:
+                neg_prev = _keyword_total_count(kw_meta_prev.get("badKeywords", []))
             raw_r = row.get("review_score")
             rating = float(raw_r) if raw_r is not None and pd.notna(raw_r) else float("nan")
             raw_rp = prev.get("review_score") if prev else None
@@ -1091,10 +1154,17 @@ def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
     return payload
 
 
-def write_ui_payload(path: str | None = None, auto_persist_metrics: bool = False) -> str:
+def write_ui_payload(
+    path: str | None = None,
+    auto_persist_metrics: bool = False,
+    recompute_from_week_id: str | None = None,
+) -> str:
     p = path or ui_payload_path()
     os.makedirs(os.path.dirname(p), exist_ok=True)
-    data = build_ui_payload(auto_persist_metrics=auto_persist_metrics)
+    data = build_ui_payload(
+        auto_persist_metrics=auto_persist_metrics,
+        recompute_from_week_id=recompute_from_week_id,
+    )
     with open(p, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2, default=str)
     return p
