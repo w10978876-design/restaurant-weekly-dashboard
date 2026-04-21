@@ -150,6 +150,8 @@ def compute_fresh_weekly_table(bundle: StoreBundle, store_id: str) -> pd.DataFra
             review_score = _rating_last_actual_for_week(srs, str(wk))
             if pd.isna(review_score):
                 review_score = _rating_nearest_actual_for_week(srs, str(wk))
+                if pd.isna(review_score):
+                    review_score = float(rev_map_mean.loc[wk]) if wk in rev_map_mean.index else float("nan")
         else:
             review_score = float(rev_map_mean.loc[wk]) if wk in rev_map_mean.index else float("nan")
 

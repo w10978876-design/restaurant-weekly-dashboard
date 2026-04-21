@@ -196,10 +196,22 @@ def _safe_read_store_rating_sheet(path: str) -> pd.DataFrame | None:
 
     def _parse_store_rating_ts(raw, default_year: int) -> pd.Timestamp:
         """兼容「4 月 8 日」/「4月8日」等无年份中文日期。"""
+        # Excel 序列日期（如 46115）在新版导出中常见。
+        if isinstance(raw, (int, float)) and not pd.isna(raw):
+            try:
+                return pd.to_datetime(float(raw), unit="D", origin="1899-12-30", errors="coerce")
+            except Exception:
+                pass
+        s0 = str(raw).strip()
+        if re.fullmatch(r"\d+(?:\.\d+)?", s0):
+            try:
+                return pd.to_datetime(float(s0), unit="D", origin="1899-12-30", errors="coerce")
+            except Exception:
+                pass
         ts = pd.to_datetime(raw, errors="coerce")
         if pd.notna(ts):
             return ts
-        s = str(raw).strip()
+        s = s0
         m = re.search(r"(?:(\d{4})\s*年)?\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日", s)
         if not m:
             return pd.NaT
@@ -210,6 +222,26 @@ def _safe_read_store_rating_sheet(path: str) -> pd.DataFrame | None:
             return pd.Timestamp(datetime(y, mm, dd))
         except ValueError:
             return pd.NaT
+
+    def _parse_store_rating_actual(raw) -> float:
+        """
+        兼容:
+        - 纯数值: 4.4
+        - 文本: "星级分 4.4，服务 4.5"
+        """
+        n = to_number(pd.Series([raw])).iloc[0]
+        if pd.notna(n):
+            return float(n)
+        s = str(raw).strip()
+        # 优先提取“星级分”后的数值
+        m = re.search(r"星级分\s*([0-9]+(?:\.[0-9]+)?)", s)
+        if m:
+            return float(m.group(1))
+        # 兜底取文本中首个小数
+        m2 = re.search(r"([0-9]+(?:\.[0-9]+)?)", s)
+        if m2:
+            return float(m2.group(1))
+        return float("nan")
 
     try:
         names = list_sheet_names(path)
@@ -254,7 +286,7 @@ def _safe_read_store_rating_sheet(path: str) -> pd.DataFrame | None:
             continue
         out["business_date"] = out["_ts"].dt.date
         out["week_id"] = out["business_date"].map(lambda d: week_id_for_date(d) if d else None)
-        out["实际值"] = to_number(out["实际值"])
+        out["实际值"] = out["实际值"].map(_parse_store_rating_actual)
         out = out[out["week_id"].notna()]
         out = out[out["实际值"].notna()]
         if out.empty:
