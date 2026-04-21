@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-21T06:35:49+00:00",
+  "generated_at": "2026-04-21T06:42:27+00:00",
   "stores": {
     "夕佳悦": {
       "weeks": {
@@ -1482,7 +1482,7 @@
               }
             ],
             "returns": {
-              "count": 0,
+              "count": 5,
               "lastCount": 0,
               "statusText": "达标",
               "statusColor": "text-green-600",
@@ -2050,7 +2050,7 @@
               "groupbuy_income": 4864.38,
               "review_score": 4.4,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -2067,7 +2067,7 @@
               "groupbuy_income": 4392.12,
               "review_score": 4.4,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -2084,7 +2084,7 @@
               "groupbuy_income": 4808.72,
               "review_score": 4.4,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -2101,7 +2101,7 @@
               "groupbuy_income": 6456.15,
               "review_score": 4.4,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -2118,7 +2118,7 @@
               "groupbuy_income": 4299.62,
               "review_score": 4.4,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -2328,10 +2328,10 @@
               }
             ],
             "returns": {
-              "count": 0,
-              "lastCount": 0,
-              "statusText": "达标",
-              "statusColor": "text-green-600",
+              "count": 12,
+              "lastCount": 5,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600",
               "reference": "周>5次为🟡"
             },
             "lossAmount": {
@@ -2448,14 +2448,37 @@
           ],
           "service": {
             "negativeReviews": {
-              "thisWeek": 0,
+              "thisWeek": 1,
               "lastWeek": 0,
-              "statusText": "达标",
-              "statusColor": "text-green-600",
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600",
               "reference": "环比↑50%为🔴"
             },
-            "badKeywords": [],
-            "badKeywordEvidence": [],
+            "badKeywords": [
+              "餐厅环境不错（1次）",
+              "肉质绵软（1次）",
+              "服务一般（1次）"
+            ],
+            "badKeywordEvidence": [
+              {
+                "keyword": "餐厅环境不错",
+                "sentences": [
+                  "餐厅环境不错"
+                ]
+              },
+              {
+                "keyword": "肉质绵软",
+                "sentences": [
+                  "肉质绵软了"
+                ]
+              },
+              {
+                "keyword": "服务一般",
+                "sentences": [
+                  "服务一般"
+                ]
+              }
+            ],
             "badKeywordCandidates": [
               {
                 "keyword": "餐厅环境不错",
@@ -2823,7 +2846,7 @@
           },
           "summary": {
             "highlight": "本周出现3个高峰时段，时段经营效率突出；顾客好评主要集中在环境体验、服务体验（如服务热情周到、环境优雅）",
-            "problem": "顾客差评主要集中在环境体验、服务体验（如餐厅环境不错、肉质绵软）",
+            "problem": "顾客差评主要集中在环境体验、服务体验（如餐厅环境不错、肉质绵软）；退菜/换菜达到12次，超过每周5次警戒线",
             "actions": [
               "",
               "",
@@ -2935,7 +2958,7 @@
               "groupbuy_income": 4864.38,
               "review_score": 4.4,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -2952,7 +2975,7 @@
               "groupbuy_income": 4392.12,
               "review_score": 4.4,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -2969,7 +2992,7 @@
               "groupbuy_income": 4808.72,
               "review_score": 4.4,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -2986,7 +3009,7 @@
               "groupbuy_income": 6456.15,
               "review_score": 4.4,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -3003,7 +3026,7 @@
               "groupbuy_income": 4299.62,
               "review_score": 4.4,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -3213,10 +3236,10 @@
               }
             ],
             "returns": {
-              "count": 0,
-              "lastCount": 0,
-              "statusText": "达标",
-              "statusColor": "text-green-600",
+              "count": 15,
+              "lastCount": 12,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600",
               "reference": "周>5次为🟡"
             },
             "lossAmount": {
@@ -3334,7 +3357,7 @@
           "service": {
             "negativeReviews": {
               "thisWeek": 0,
-              "lastWeek": 0,
+              "lastWeek": 1,
               "statusText": "达标",
               "statusColor": "text-green-600",
               "reference": "环比↑50%为🔴"
@@ -3564,7 +3587,7 @@
           },
           "summary": {
             "highlight": "总营收环比增长23.3%，经营表现向好；本周出现2个高峰时段，时段经营效率突出；顾客好评主要集中在出品口碑（如重点推荐猪肘披萨挺好吃、双皮奶特别好吃）",
-            "problem": "本周出现1个低谷时段，时段经营稳定性不足",
+            "problem": "本周出现1个低谷时段，时段经营稳定性不足；退菜/换菜达到15次，超过每周5次警戒线",
             "actions": [
               "",
               "",
@@ -3676,7 +3699,7 @@
               "groupbuy_income": 4864.38,
               "review_score": 4.4,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -3693,7 +3716,7 @@
               "groupbuy_income": 4392.12,
               "review_score": 4.4,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -3710,7 +3733,7 @@
               "groupbuy_income": 4808.72,
               "review_score": 4.4,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -3727,7 +3750,7 @@
               "groupbuy_income": 6456.15,
               "review_score": 4.4,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -3744,7 +3767,7 @@
               "groupbuy_income": 4299.62,
               "review_score": 4.4,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -3954,10 +3977,10 @@
               }
             ],
             "returns": {
-              "count": 0,
-              "lastCount": 0,
-              "statusText": "达标",
-              "statusColor": "text-green-600",
+              "count": 6,
+              "lastCount": 15,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600",
               "reference": "周>5次为🟡"
             },
             "lossAmount": {
@@ -4366,7 +4389,7 @@
           },
           "summary": {
             "highlight": "总订单数环比增长21.2%，客流提升明显；本周出现2个高峰时段，时段经营效率突出；顾客好评关键词以性价比不错、地理位置很优越为主",
-            "problem": "本周出现1个低谷时段，时段经营稳定性不足",
+            "problem": "本周出现1个低谷时段，时段经营稳定性不足；退菜/换菜达到6次，超过每周5次警戒线",
             "actions": [
               "",
               "",
@@ -4478,7 +4501,7 @@
               "groupbuy_income": 4864.38,
               "review_score": 4.4,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -4495,7 +4518,7 @@
               "groupbuy_income": 4392.12,
               "review_score": 4.4,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -4512,7 +4535,7 @@
               "groupbuy_income": 4808.72,
               "review_score": 4.4,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -4529,7 +4552,7 @@
               "groupbuy_income": 6456.15,
               "review_score": 4.4,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -4546,7 +4569,7 @@
               "groupbuy_income": 4299.62,
               "review_score": 4.4,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -4756,10 +4779,10 @@
               }
             ],
             "returns": {
-              "count": 0,
-              "lastCount": 0,
-              "statusText": "达标",
-              "statusColor": "text-green-600",
+              "count": 6,
+              "lastCount": 6,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600",
               "reference": "周>5次为🟡"
             },
             "lossAmount": {
@@ -5202,7 +5225,7 @@
           },
           "summary": {
             "highlight": "顾客好评主要集中在环境体验、出品口碑（如天福号肘子饭味道不错、用餐环境非常优美）",
-            "problem": "总营收环比下滑43.2%，需重点复盘收入结构；总订单数环比下滑40.9%，需关注引流与转化；本周出现1个低谷时段，时段经营稳定性不足",
+            "problem": "总营收环比下滑43.2%，需重点复盘收入结构；总订单数环比下滑40.9%，需关注引流与转化；本周出现1个低谷时段，时段经营稳定性不足；退菜/换菜达到6次，超过每周5次警戒线",
             "actions": [
               "",
               "",
@@ -5314,7 +5337,7 @@
               "groupbuy_income": 4864.38,
               "review_score": 4.4,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -5331,7 +5354,7 @@
               "groupbuy_income": 4392.12,
               "review_score": 4.4,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -5348,7 +5371,7 @@
               "groupbuy_income": 4808.72,
               "review_score": 4.4,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -5365,7 +5388,7 @@
               "groupbuy_income": 6456.15,
               "review_score": 4.4,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -5382,7 +5405,7 @@
               "groupbuy_income": 4299.62,
               "review_score": 4.4,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -7361,7 +7384,7 @@
           "service": {
             "negativeReviews": {
               "thisWeek": 0,
-              "lastWeek": 1,
+              "lastWeek": 0,
               "statusText": "达标",
               "statusColor": "text-green-600",
               "reference": "环比↑50%为🔴"
@@ -7814,7 +7837,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.4,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -7831,7 +7854,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.4,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -7848,7 +7871,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.4,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -7865,7 +7888,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.3,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -7882,7 +7905,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.3,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -8212,14 +8235,23 @@
           ],
           "service": {
             "negativeReviews": {
-              "thisWeek": 0,
+              "thisWeek": 1,
               "lastWeek": 0,
-              "statusText": "达标",
-              "statusColor": "text-green-600",
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600",
               "reference": "环比↑50%为🔴"
             },
-            "badKeywords": [],
-            "badKeywordEvidence": [],
+            "badKeywords": [
+              "和普通快餐没有什么差别（1次）"
+            ],
+            "badKeywordEvidence": [
+              {
+                "keyword": "和普通快餐没有什么差别",
+                "sentences": [
+                  "和普通快餐没有什么差别"
+                ]
+              }
+            ],
             "badKeywordCandidates": [
               {
                 "keyword": "和普通快餐没有什么差别",
@@ -8677,7 +8709,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.4,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -8694,7 +8726,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.4,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -8711,7 +8743,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.4,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -8728,7 +8760,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.3,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -8745,7 +8777,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.3,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -9075,10 +9107,10 @@
           ],
           "service": {
             "negativeReviews": {
-              "thisWeek": 1,
-              "lastWeek": 0,
-              "statusText": "达标",
-              "statusColor": "text-green-600",
+              "thisWeek": 2,
+              "lastWeek": 1,
+              "statusText": "触发红线",
+              "statusColor": "text-red-600",
               "reference": "环比↑50%为🔴"
             },
             "badKeywords": [
@@ -9558,7 +9590,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.4,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -9575,7 +9607,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.4,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -9592,7 +9624,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.4,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -9609,7 +9641,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.3,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -9626,7 +9658,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.3,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T05:58:49+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -10416,7 +10448,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.4,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -10433,7 +10465,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.4,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -10450,7 +10482,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.4,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -10467,7 +10499,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.3,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -10484,7 +10516,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.3,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -11268,7 +11300,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.4,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -11285,7 +11317,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.4,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -11302,7 +11334,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.4,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -11319,7 +11351,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.3,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -11336,7 +11368,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.3,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T06:35:43+00:00",
+              "updated_at": "2026-04-21T06:42:19+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0

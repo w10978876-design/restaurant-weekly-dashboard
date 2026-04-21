@@ -120,20 +120,84 @@ def _prep_orders(bundle: StoreBundle) -> pd.DataFrame | None:
 
 
 def _returns_count_week(bundle: StoreBundle, week_id: str) -> tuple[int, int]:
+    def _count_from_ret_sheet(ret_df: pd.DataFrame) -> tuple[int, list[str]]:
+        r = ret_df.copy()
+        if "week_id" not in r.columns and "营业日期" in r.columns:
+            r["business_date"] = r["营业日期"].map(parse_business_date)
+            r["week_id"] = r["business_date"].map(lambda d: week_id_for_date(d) if d else None)
+        if "week_id" not in r.columns:
+            return 0, []
+        cur_count = int(len(r[r["week_id"] == week_id]))
+        wks = sorted(r["week_id"].dropna().astype(str).unique().tolist())
+        return cur_count, wks
+
+    def _count_from_sales_sheet(sold_df: pd.DataFrame) -> tuple[int, list[str]]:
+        s = sold_df.copy()
+        if "week_id" not in s.columns and "营业日期" in s.columns:
+            s["business_date"] = s["营业日期"].map(parse_business_date)
+            s["week_id"] = s["business_date"].map(lambda d: week_id_for_date(d) if d else None)
+        if "week_id" not in s.columns:
+            return 0, []
+
+        qty = pd.to_numeric(s["销售数量"], errors="coerce") if "销售数量" in s.columns else pd.Series(0, index=s.index)
+        ret_qty = pd.to_numeric(s["退菜数量"], errors="coerce") if "退菜数量" in s.columns else pd.Series(0, index=s.index)
+        ret_amt = (
+            pd.to_numeric(s["退菜金额(元)"], errors="coerce")
+            if "退菜金额(元)" in s.columns
+            else pd.Series(0, index=s.index)
+        )
+        op_col = s["敏感操作类型"].astype(str) if "敏感操作类型" in s.columns else pd.Series("", index=s.index)
+        mask = (ret_qty.fillna(0) > 0) | (ret_amt.fillna(0) > 0) | (qty.fillna(0) < 0) | op_col.str.contains("退菜|换菜", na=False)
+        sub = s.loc[mask].copy()
+        if sub.empty:
+            return 0, []
+        cur_rows = sub[sub["week_id"] == week_id]
+        # 新版“品项销售明细”常把退/换菜写在销售明细中：优先按订单去重计次，避免单订单多行放大。
+        if "订单号" in cur_rows.columns:
+            cur_count = int(cur_rows["订单号"].astype(str).nunique())
+        else:
+            cur_count = int(len(cur_rows))
+        wks = sorted(sub["week_id"].dropna().astype(str).unique().tolist())
+        return cur_count, wks
+
     ret = bundle.sales_return
-    if ret is None or ret.empty:
-        return 0, 0
-    r = ret.copy()
-    if "week_id" not in r.columns and "营业日期" in r.columns:
-        r["business_date"] = r["营业日期"].map(parse_business_date)
-        r["week_id"] = r["business_date"].map(lambda d: week_id_for_date(d) if d else None)
-    cur = len(r[r["week_id"] == week_id])
-    weeks = sorted(r["week_id"].dropna().unique().tolist())
+    if ret is not None and not ret.empty:
+        cur, weeks = _count_from_ret_sheet(ret)
+    else:
+        sold = bundle.sales_sold
+        if sold is None or sold.empty:
+            return 0, 0
+        cur, weeks = _count_from_sales_sheet(sold)
+
     prev_w = None
     for w in weeks:
         if w < week_id:
             prev_w = w
-    prev = len(r[r["week_id"] == prev_w]) if prev_w else 0
+    if not prev_w:
+        return cur, 0
+
+    if ret is not None and not ret.empty:
+        r = ret.copy()
+        if "week_id" not in r.columns and "营业日期" in r.columns:
+            r["business_date"] = r["营业日期"].map(parse_business_date)
+            r["week_id"] = r["business_date"].map(lambda d: week_id_for_date(d) if d else None)
+        prev = int(len(r[r["week_id"] == prev_w]))
+    else:
+        s = bundle.sales_sold.copy()
+        if "week_id" not in s.columns and "营业日期" in s.columns:
+            s["business_date"] = s["营业日期"].map(parse_business_date)
+            s["week_id"] = s["business_date"].map(lambda d: week_id_for_date(d) if d else None)
+        qty = pd.to_numeric(s["销售数量"], errors="coerce") if "销售数量" in s.columns else pd.Series(0, index=s.index)
+        ret_qty = pd.to_numeric(s["退菜数量"], errors="coerce") if "退菜数量" in s.columns else pd.Series(0, index=s.index)
+        ret_amt = (
+            pd.to_numeric(s["退菜金额(元)"], errors="coerce")
+            if "退菜金额(元)" in s.columns
+            else pd.Series(0, index=s.index)
+        )
+        op_col = s["敏感操作类型"].astype(str) if "敏感操作类型" in s.columns else pd.Series("", index=s.index)
+        mask = (ret_qty.fillna(0) > 0) | (ret_amt.fillna(0) > 0) | (qty.fillna(0) < 0) | op_col.str.contains("退菜|换菜", na=False)
+        prev_rows = s.loc[mask & (s["week_id"] == prev_w)].copy()
+        prev = int(prev_rows["订单号"].astype(str).nunique()) if ("订单号" in prev_rows.columns and not prev_rows.empty) else int(len(prev_rows))
     return cur, prev
 
 
