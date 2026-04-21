@@ -3,10 +3,13 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
 
-export default defineConfig(({mode}) => {
+export default defineConfig(({mode, command}) => {
   const env = loadEnv(mode, '.', '');
+  // GitHub Pages 项目站：若用相对路径 `./data/...`，在地址栏无末尾 `/` 时会错误解析到
+  // github.io/data/... 导致 404。生产构建使用仓库子路径作为绝对前缀。
+  const base = command === 'build' ? '/restaurant-weekly-dashboard/' : '/';
   return {
-    base: './',
+    base,
     plugins: [react(), tailwindcss()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
