@@ -7,6 +7,11 @@ const ACTIONS_STORAGE_KEY = "restaurant-dashboard-actions-v1";
 const GITHUB_SYNC_CFG_KEY = "restaurant-dashboard-github-sync-v1";
 const ACTION_PLAN_REPO_PATH = "data/warehouse/action_plans.json";
 
+/** 与仓库默认一致；备用镜像用于国内网络 github.io 返回 HTML 等非 JSON 时回退 */
+const PUBLIC_REPO_OWNER = "w10978876-design";
+const PUBLIC_REPO_NAME = "restaurant-weekly-dashboard";
+const PUBLIC_REPO_BRANCH = "main";
+
 type SyncConfig = {
   owner: string;
   repo: string;
@@ -91,13 +96,43 @@ function warehouseJsonUrl(repoPath: string): string {
   return `${b}${p}`;
 }
 
+/** 依次尝试 Pages → jsDelivr → Raw；国内网络常对 github.io 插入 HTML，备用源常为合法 JSON */
+function warehouseMirrorCandidates(repoRelativePath: string): string[] {
+  const rel = repoRelativePath.replace(/^\//, "");
+  const pages = warehouseJsonUrl(rel);
+  const jsDelivr = `https://cdn.jsdelivr.net/gh/${PUBLIC_REPO_OWNER}/${PUBLIC_REPO_NAME}@${PUBLIC_REPO_BRANCH}/${rel}`;
+  const raw = `https://raw.githubusercontent.com/${PUBLIC_REPO_OWNER}/${PUBLIC_REPO_NAME}/${PUBLIC_REPO_BRANCH}/${rel}`;
+  return Array.from(new Set([pages, jsDelivr, raw]));
+}
+
+async function fetchJsonFromMirrors(repoRelativePath: string): Promise<{data: any; via: string}> {
+  const urls = warehouseMirrorCandidates(repoRelativePath);
+  let last = "";
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, {cache: "no-store"});
+      if (!res.ok) {
+        last = `${url} HTTP ${res.status}`;
+        continue;
+      }
+      const text = await res.text();
+      try {
+        const data = JSON.parse(text.replace(/\bNaN\b/g, "null"));
+        return {data, via: url};
+      } catch {
+        last = `${url} 返回内容不是 JSON（多为网络劫持/拦截页）`;
+      }
+    } catch (e) {
+      last = `${url} ${String((e as Error)?.message ?? e)}`;
+    }
+  }
+  throw new Error(`无法加载 ${repoRelativePath}。最后：${last}`);
+}
+
 async function loadRepoActionItems(): Promise<ActionPlanItem[]> {
   try {
-    const url = warehouseJsonUrl(ACTION_PLAN_REPO_PATH);
-    const res = await fetch(url, {cache: "no-store"});
-    if (!res.ok) return [];
-    const payload = await res.json();
-    return asActionItems(payload);
+    const {data} = await fetchJsonFromMirrors(ACTION_PLAN_REPO_PATH);
+    return asActionItems(data);
   } catch {
     return [];
   }
@@ -235,21 +270,18 @@ export default function App() {
     try {
       let sourcePayload = payload;
       if (!sourcePayload) {
-        const url = warehouseJsonUrl("data/warehouse/ui_payload.json");
-        const res = await fetch(url, {cache: "no-store"});
-        if (!res.ok) {
-          setData(null);
-          setBootError(`请求失败 HTTP ${res.status}：${url}`);
-          return;
-        }
         try {
-          sourcePayload = await res.json();
+          const {data: parsed, via} = await fetchJsonFromMirrors("data/warehouse/ui_payload.json");
+          sourcePayload = parsed;
+          setPayload(sourcePayload);
+          if (via.startsWith("https://cdn.jsdelivr.net") || via.startsWith("https://raw.githubusercontent.com")) {
+            console.info("ui_payload.json 已通过备用源加载:", via);
+          }
         } catch (e) {
           setData(null);
-          setBootError(`JSON 解析失败（可能被网络插入非 JSON 页面）：${url}`);
+          setBootError(String((e as Error)?.message ?? e));
           return;
         }
-        setPayload(sourcePayload);
       }
       const d = buildDashboardData(sourcePayload, storeId ?? selectedStoreId, weekId ?? selectedWeekId);
       if (!d) {
@@ -337,7 +369,9 @@ export default function App() {
       <div className="min-h-screen flex flex-col items-center justify-center gap-3 dash-page text-sm text-[var(--dash-muted)] max-w-lg text-center px-4">
         <p>暂无看板数据。请确认仓库已部署 <code className="font-mono text-xs bg-white px-2 py-1 rounded border">data/warehouse/ui_payload.json</code>。</p>
         {bootError ? <p className="text-red-600 text-xs break-all">{bootError}</p> : null}
-        <p className="text-xs">若在微信内打开，请用系统浏览器打开本站；仍不行请清除本站数据后重试。</p>
+        <p className="text-xs">
+          若使用公司网/校园网，可能对 GitHub 做过滤；页面会自动尝试备用下载源。仍失败可换手机流量或家庭宽带再试。
+        </p>
       </div>
     );
 
