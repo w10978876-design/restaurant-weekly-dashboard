@@ -181,7 +181,7 @@ def _safe_read_reviews(path: str) -> pd.DataFrame | None:
         df["business_date"] = df["review_time"].dt.date
         df["week_id"] = df["business_date"].map(lambda d: week_id_for_date(d) if pd.notna(d) and d else None)
     score_c = None
-    for c in ("总分", "score", "评分", "星级", "总体评分", "满意度"):
+    for c in ("总分", "score", "评分", "星级", "星级分", "总体评分", "满意度"):
         if c in df.columns:
             score_c = c
             break

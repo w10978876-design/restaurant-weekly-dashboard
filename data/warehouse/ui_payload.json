@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-21T02:51:36+00:00",
+  "generated_at": "2026-04-21T03:09:28+00:00",
   "stores": {
     "夕佳悦": {
       "weeks": {
@@ -374,9 +374,9 @@
               "discount_amount": 331.40000000000003,
               "groupbuy_count": 41,
               "groupbuy_income": 4864.38,
-              "review_score": NaN,
+              "review_score": 4.844827586206897,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -391,9 +391,9 @@
               "discount_amount": 330.0,
               "groupbuy_count": 44,
               "groupbuy_income": 4392.12,
-              "review_score": NaN,
+              "review_score": 4.743243243243243,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -408,9 +408,9 @@
               "discount_amount": 87.2,
               "groupbuy_count": 47,
               "groupbuy_income": 4808.72,
-              "review_score": NaN,
+              "review_score": 4.7727272727272725,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -425,9 +425,9 @@
               "discount_amount": 130.2,
               "groupbuy_count": 49,
               "groupbuy_income": 6456.15,
-              "review_score": NaN,
+              "review_score": 4.576923076923077,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -442,9 +442,9 @@
               "discount_amount": 112.8,
               "groupbuy_count": 41,
               "groupbuy_income": 4299.62,
-              "review_score": NaN,
+              "review_score": 4.934782608695652,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -822,9 +822,9 @@
               "discount_amount": 331.40000000000003,
               "groupbuy_count": 41,
               "groupbuy_income": 4864.38,
-              "review_score": NaN,
+              "review_score": 4.844827586206897,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -839,9 +839,9 @@
               "discount_amount": 330.0,
               "groupbuy_count": 44,
               "groupbuy_income": 4392.12,
-              "review_score": NaN,
+              "review_score": 4.743243243243243,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -856,9 +856,9 @@
               "discount_amount": 87.2,
               "groupbuy_count": 47,
               "groupbuy_income": 4808.72,
-              "review_score": NaN,
+              "review_score": 4.7727272727272725,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -873,9 +873,9 @@
               "discount_amount": 130.2,
               "groupbuy_count": 49,
               "groupbuy_income": 6456.15,
-              "review_score": NaN,
+              "review_score": 4.576923076923077,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -890,9 +890,9 @@
               "discount_amount": 112.8,
               "groupbuy_count": 41,
               "groupbuy_income": 4299.62,
-              "review_score": NaN,
+              "review_score": 4.934782608695652,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -1227,15 +1227,239 @@
             "badKeywordCandidates": [],
             "rating": {
               "label": "门店评分（实际值）",
-              "thisWeek": 4.5,
+              "thisWeek": 4.84,
               "lastWeek": 4.5,
               "statusText": "达标",
               "statusColor": "text-green-600",
               "reference": "周降0.2分为🔴"
             },
-            "goodKeywords": [],
-            "goodKeywordEvidence": [],
-            "goodKeywordCandidates": []
+            "goodKeywords": [
+              "园林博物馆内环境清雅（1次）",
+              "景区餐厅价格偏贵（1次）",
+              "海鲜乌冬面比较好吃（1次）"
+            ],
+            "goodKeywordEvidence": [
+              {
+                "keyword": "园林博物馆内环境清雅",
+                "sentences": [
+                  "位于园林博物馆内 环境清雅 逛累了驻足喝茶"
+                ]
+              },
+              {
+                "keyword": "景区餐厅价格偏贵",
+                "sentences": [
+                  "景区餐厅价格偏贵卫生干净"
+                ]
+              },
+              {
+                "keyword": "海鲜乌冬面比较好吃",
+                "sentences": [
+                  "海鲜乌冬面比较好吃"
+                ]
+              }
+            ],
+            "goodKeywordCandidates": [
+              {
+                "keyword": "园林博物馆内环境清雅",
+                "count": 1,
+                "score": 2.086207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 1
+              },
+              {
+                "keyword": "景区餐厅价格偏贵",
+                "count": 1,
+                "score": 2.086207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 2
+              },
+              {
+                "keyword": "海鲜乌冬面比较好吃",
+                "count": 1,
+                "score": 2.086207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 3
+              },
+              {
+                "keyword": "薄饼披萨预期的好吃",
+                "count": 1,
+                "score": 2.086207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 4
+              },
+              {
+                "keyword": "食物味道也很不错",
+                "count": 1,
+                "score": 2.086207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 5
+              },
+              {
+                "keyword": "餐厅环境优美舒适",
+                "count": 1,
+                "score": 2.086207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 6
+              },
+              {
+                "keyword": "披萨口味不错",
+                "count": 1,
+                "score": 1.936207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 7
+              },
+              {
+                "keyword": "用料还不错",
+                "count": 1,
+                "score": 1.936207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 8
+              },
+              {
+                "keyword": "酱汁很浓郁",
+                "count": 1,
+                "score": 1.936207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 9
+              },
+              {
+                "keyword": "餐厅环境优雅",
+                "count": 1,
+                "score": 1.936207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 10
+              },
+              {
+                "keyword": "餐食味道不错",
+                "count": 1,
+                "score": 1.936207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 11
+              },
+              {
+                "keyword": "菜品味道中规中矩",
+                "count": 1,
+                "score": 1.886207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 12
+              },
+              {
+                "keyword": "儿童友好",
+                "count": 1,
+                "score": 1.786207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 13
+              },
+              {
+                "keyword": "卫生干净",
+                "count": 1,
+                "score": 1.786207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 14
+              },
+              {
+                "keyword": "种类丰富",
+                "count": 1,
+                "score": 1.786207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 15
+              },
+              {
+                "keyword": "边缘酥脆",
+                "count": 1,
+                "score": 1.786207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 16
+              },
+              {
+                "keyword": "环境真的很不错",
+                "count": 1,
+                "score": 1.736207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 17
+              },
+              {
+                "keyword": "服务也很棒",
+                "count": 1,
+                "score": 1.486207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 18
+              },
+              {
+                "keyword": "菜品也不错",
+                "count": 1,
+                "score": 1.486207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 19
+              },
+              {
+                "keyword": "服务贴心",
+                "count": 1,
+                "score": 1.336207,
+                "selfRatio": 0.034483,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.034483,
+                "rank": 20
+              }
+            ]
           },
           "externalAndWeather": {
             "specialDates": [
@@ -1333,7 +1557,7 @@
             }
           },
           "summary": {
-            "highlight": "总营收环比增长18.8%，经营表现向好；总订单数环比增长36.8%，客流提升明显",
+            "highlight": "总营收环比增长18.8%，经营表现向好；总订单数环比增长36.8%，客流提升明显；顾客好评主要集中在环境体验、出品口碑（如园林博物馆内环境清雅、景区餐厅价格偏贵）",
             "problem": "本周出现1个低谷时段，时段经营稳定性不足；异常天气对营收存在明显负向影响，抗天气波动能力偏弱",
             "actions": [
               "",
@@ -1444,9 +1668,9 @@
               "discount_amount": 331.40000000000003,
               "groupbuy_count": 41,
               "groupbuy_income": 4864.38,
-              "review_score": NaN,
+              "review_score": 4.844827586206897,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -1461,9 +1685,9 @@
               "discount_amount": 330.0,
               "groupbuy_count": 44,
               "groupbuy_income": 4392.12,
-              "review_score": NaN,
+              "review_score": 4.743243243243243,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -1478,9 +1702,9 @@
               "discount_amount": 87.2,
               "groupbuy_count": 47,
               "groupbuy_income": 4808.72,
-              "review_score": NaN,
+              "review_score": 4.7727272727272725,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -1495,9 +1719,9 @@
               "discount_amount": 130.2,
               "groupbuy_count": 49,
               "groupbuy_income": 6456.15,
-              "review_score": NaN,
+              "review_score": 4.576923076923077,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -1512,9 +1736,9 @@
               "discount_amount": 112.8,
               "groupbuy_count": 41,
               "groupbuy_income": 4299.62,
-              "review_score": NaN,
+              "review_score": 4.934782608695652,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -1850,20 +2074,300 @@
               "statusColor": "text-green-600",
               "reference": "环比↑50%为🔴"
             },
-            "badKeywords": [],
-            "badKeywordEvidence": [],
-            "badKeywordCandidates": [],
+            "badKeywords": [
+              "餐厅环境不错（1次）",
+              "肉质绵软（1次）",
+              "服务一般（1次）"
+            ],
+            "badKeywordEvidence": [
+              {
+                "keyword": "餐厅环境不错",
+                "sentences": [
+                  "餐厅环境不错"
+                ]
+              },
+              {
+                "keyword": "肉质绵软",
+                "sentences": [
+                  "肉质绵软了"
+                ]
+              },
+              {
+                "keyword": "服务一般",
+                "sentences": [
+                  "服务一般"
+                ]
+              }
+            ],
+            "badKeywordCandidates": [
+              {
+                "keyword": "餐厅环境不错",
+                "count": 1,
+                "score": 4.35,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 1
+              },
+              {
+                "keyword": "肉质绵软",
+                "count": 1,
+                "score": 4.2,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 2
+              },
+              {
+                "keyword": "服务一般",
+                "count": 1,
+                "score": 3.75,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 3
+              }
+            ],
             "rating": {
               "label": "门店评分（实际值）",
-              "thisWeek": NaN,
-              "lastWeek": NaN,
+              "thisWeek": 4.74,
+              "lastWeek": 4.84,
               "statusText": "达标",
               "statusColor": "text-green-600",
               "reference": "周降0.2分为🔴"
             },
-            "goodKeywords": [],
-            "goodKeywordEvidence": [],
-            "goodKeywordCandidates": []
+            "goodKeywords": [
+              "服务热情周到（4次）",
+              "环境优雅（4次）",
+              "环境不错（2次）"
+            ],
+            "goodKeywordEvidence": [
+              {
+                "keyword": "服务热情周到",
+                "sentences": [
+                  "服务热情周到",
+                  "孩子也爱吃～ 服务热情周到"
+                ]
+              },
+              {
+                "keyword": "环境优雅",
+                "sentences": [
+                  "环境优雅安静",
+                  "环境优雅"
+                ]
+              },
+              {
+                "keyword": "环境不错",
+                "sentences": [
+                  "环境不错"
+                ]
+              }
+            ],
+            "goodKeywordCandidates": [
+              {
+                "keyword": "服务热情周到",
+                "count": 4,
+                "score": 6.861111,
+                "selfRatio": 0.111111,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.111111,
+                "rank": 1
+              },
+              {
+                "keyword": "环境优雅",
+                "count": 4,
+                "score": 6.861111,
+                "selfRatio": 0.111111,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.111111,
+                "rank": 2
+              },
+              {
+                "keyword": "环境不错",
+                "count": 2,
+                "score": 3.027778,
+                "selfRatio": 0.055556,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.055556,
+                "rank": 3
+              },
+              {
+                "keyword": "博园在此就餐非常方便",
+                "count": 1,
+                "score": 2.069444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 4
+              },
+              {
+                "keyword": "下午茶很舒服",
+                "count": 1,
+                "score": 1.919444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 5
+              },
+              {
+                "keyword": "地方环境不错",
+                "count": 1,
+                "score": 1.919444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 6
+              },
+              {
+                "keyword": "景色很优美",
+                "count": 1,
+                "score": 1.919444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 7
+              },
+              {
+                "keyword": "用餐体验舒适",
+                "count": 1,
+                "score": 1.919444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 8
+              },
+              {
+                "keyword": "番茄意面酸甜",
+                "count": 1,
+                "score": 1.919444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 9
+              },
+              {
+                "keyword": "肘子披萨太好吃",
+                "count": 1,
+                "score": 1.919444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 10
+              },
+              {
+                "keyword": "芝士酱浓郁",
+                "count": 1,
+                "score": 1.919444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 11
+              },
+              {
+                "keyword": "西餐很方便",
+                "count": 1,
+                "score": 1.919444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 12
+              },
+              {
+                "keyword": "餐厅环境干净",
+                "count": 1,
+                "score": 1.919444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 13
+              },
+              {
+                "keyword": "香肠很好吃",
+                "count": 1,
+                "score": 1.919444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 14
+              },
+              {
+                "keyword": "价格适当",
+                "count": 1,
+                "score": 1.769444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 15
+              },
+              {
+                "keyword": "品质不错",
+                "count": 1,
+                "score": 1.769444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 16
+              },
+              {
+                "keyword": "数量明显",
+                "count": 1,
+                "score": 1.769444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 17
+              },
+              {
+                "keyword": "环境优美卫生",
+                "count": 1,
+                "score": 1.769444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 18
+              },
+              {
+                "keyword": "用料很足",
+                "count": 1,
+                "score": 1.769444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 19
+              },
+              {
+                "keyword": "茶点精致",
+                "count": 1,
+                "score": 1.769444,
+                "selfRatio": 0.027778,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.027778,
+                "rank": 20
+              }
+            ]
           },
           "externalAndWeather": {
             "specialDates": [
@@ -1961,8 +2465,8 @@
             }
           },
           "summary": {
-            "highlight": "本周出现3个高峰时段，时段经营效率突出",
-            "problem": "本周营收 ¥35,261、订单 340 笔，核心指标未见规则级异常，建议持续跟踪。",
+            "highlight": "本周出现3个高峰时段，时段经营效率突出；顾客好评主要集中在环境体验、服务体验（如服务热情周到、环境优雅）",
+            "problem": "顾客差评主要集中在环境体验、服务体验（如餐厅环境不错、肉质绵软）",
             "actions": [
               "",
               "",
@@ -2072,9 +2576,9 @@
               "discount_amount": 331.40000000000003,
               "groupbuy_count": 41,
               "groupbuy_income": 4864.38,
-              "review_score": NaN,
+              "review_score": 4.844827586206897,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -2089,9 +2593,9 @@
               "discount_amount": 330.0,
               "groupbuy_count": 44,
               "groupbuy_income": 4392.12,
-              "review_score": NaN,
+              "review_score": 4.743243243243243,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -2106,9 +2610,9 @@
               "discount_amount": 87.2,
               "groupbuy_count": 47,
               "groupbuy_income": 4808.72,
-              "review_score": NaN,
+              "review_score": 4.7727272727272725,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -2123,9 +2627,9 @@
               "discount_amount": 130.2,
               "groupbuy_count": 49,
               "groupbuy_income": 6456.15,
-              "review_score": NaN,
+              "review_score": 4.576923076923077,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -2140,9 +2644,9 @@
               "discount_amount": 112.8,
               "groupbuy_count": 41,
               "groupbuy_income": 4299.62,
-              "review_score": NaN,
+              "review_score": 4.934782608695652,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -2483,15 +2987,119 @@
             "badKeywordCandidates": [],
             "rating": {
               "label": "门店评分（实际值）",
-              "thisWeek": NaN,
-              "lastWeek": NaN,
+              "thisWeek": 4.77,
+              "lastWeek": 4.74,
               "statusText": "达标",
               "statusColor": "text-green-600",
               "reference": "周降0.2分为🔴"
             },
-            "goodKeywords": [],
-            "goodKeywordEvidence": [],
-            "goodKeywordCandidates": []
+            "goodKeywords": [
+              "重点推荐猪肘披萨挺好吃（1次）",
+              "双皮奶特别好吃（1次）",
+              "山坡花儿正艳（1次）"
+            ],
+            "goodKeywordEvidence": [
+              {
+                "keyword": "重点推荐猪肘披萨挺好吃",
+                "sentences": [
+                  "重点推荐猪肘披萨挺好吃"
+                ]
+              },
+              {
+                "keyword": "双皮奶特别好吃",
+                "sentences": [
+                  "双皮奶特别好吃"
+                ]
+              },
+              {
+                "keyword": "山坡花儿正艳",
+                "sentences": [
+                  "山坡花儿正艳"
+                ]
+              }
+            ],
+            "goodKeywordCandidates": [
+              {
+                "keyword": "重点推荐猪肘披萨挺好吃",
+                "count": 1,
+                "score": 2.25,
+                "selfRatio": 0.1,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.1,
+                "rank": 1
+              },
+              {
+                "keyword": "双皮奶特别好吃",
+                "count": 1,
+                "score": 2.1,
+                "selfRatio": 0.1,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.1,
+                "rank": 2
+              },
+              {
+                "keyword": "山坡花儿正艳",
+                "count": 1,
+                "score": 2.1,
+                "selfRatio": 0.1,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.1,
+                "rank": 3
+              },
+              {
+                "keyword": "餐厅环境优雅",
+                "count": 1,
+                "score": 2.1,
+                "selfRatio": 0.1,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.1,
+                "rank": 4
+              },
+              {
+                "keyword": "奶味很浓",
+                "count": 1,
+                "score": 1.95,
+                "selfRatio": 0.1,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.1,
+                "rank": 5
+              },
+              {
+                "keyword": "环境不错",
+                "count": 1,
+                "score": 1.5,
+                "selfRatio": 0.1,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.1,
+                "rank": 6
+              },
+              {
+                "keyword": "环境优雅",
+                "count": 1,
+                "score": 1.5,
+                "selfRatio": 0.1,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.1,
+                "rank": 7
+              },
+              {
+                "keyword": "环境清幽",
+                "count": 1,
+                "score": 1.5,
+                "selfRatio": 0.1,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.1,
+                "rank": 8
+              }
+            ]
           },
           "externalAndWeather": {
             "specialDates": [
@@ -2598,7 +3206,7 @@
             }
           },
           "summary": {
-            "highlight": "总营收环比增长23.3%，经营表现向好；本周出现2个高峰时段，时段经营效率突出",
+            "highlight": "总营收环比增长23.3%，经营表现向好；本周出现2个高峰时段，时段经营效率突出；顾客好评主要集中在出品口碑（如重点推荐猪肘披萨挺好吃、双皮奶特别好吃）",
             "problem": "本周出现1个低谷时段，时段经营稳定性不足",
             "actions": [
               "",
@@ -2709,9 +3317,9 @@
               "discount_amount": 331.40000000000003,
               "groupbuy_count": 41,
               "groupbuy_income": 4864.38,
-              "review_score": NaN,
+              "review_score": 4.844827586206897,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -2726,9 +3334,9 @@
               "discount_amount": 330.0,
               "groupbuy_count": 44,
               "groupbuy_income": 4392.12,
-              "review_score": NaN,
+              "review_score": 4.743243243243243,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -2743,9 +3351,9 @@
               "discount_amount": 87.2,
               "groupbuy_count": 47,
               "groupbuy_income": 4808.72,
-              "review_score": NaN,
+              "review_score": 4.7727272727272725,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -2760,9 +3368,9 @@
               "discount_amount": 130.2,
               "groupbuy_count": 49,
               "groupbuy_income": 6456.15,
-              "review_score": NaN,
+              "review_score": 4.576923076923077,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -2777,9 +3385,9 @@
               "discount_amount": 112.8,
               "groupbuy_count": 41,
               "groupbuy_income": 4299.62,
-              "review_score": NaN,
+              "review_score": 4.934782608695652,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -3120,15 +3728,180 @@
             "badKeywordCandidates": [],
             "rating": {
               "label": "门店评分（实际值）",
-              "thisWeek": NaN,
-              "lastWeek": NaN,
+              "thisWeek": 4.58,
+              "lastWeek": 4.77,
               "statusText": "达标",
               "statusColor": "text-green-600",
               "reference": "周降0.2分为🔴"
             },
-            "goodKeywords": [],
-            "goodKeywordEvidence": [],
-            "goodKeywordCandidates": []
+            "goodKeywords": [
+              "性价比不错（2次）",
+              "地理位置很优越（1次）",
+              "展馆设计的不错（1次）"
+            ],
+            "goodKeywordEvidence": [
+              {
+                "keyword": "性价比不错",
+                "sentences": [
+                  "现在各大公园里面都有一些性价比不错的简餐",
+                  "性价比不错"
+                ]
+              },
+              {
+                "keyword": "地理位置很优越",
+                "sentences": [
+                  "地理位置很优越"
+                ]
+              },
+              {
+                "keyword": "展馆设计的不错",
+                "sentences": [
+                  "展馆设计的不错"
+                ]
+              }
+            ],
+            "goodKeywordCandidates": [
+              {
+                "keyword": "性价比不错",
+                "count": 2,
+                "score": 3.969231,
+                "selfRatio": 0.153846,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.153846,
+                "rank": 1
+              },
+              {
+                "keyword": "地理位置很优越",
+                "count": 1,
+                "score": 2.042308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 2
+              },
+              {
+                "keyword": "展馆设计的不错",
+                "count": 1,
+                "score": 2.042308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 3
+              },
+              {
+                "keyword": "服务态度热情周到",
+                "count": 1,
+                "score": 2.042308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 4
+              },
+              {
+                "keyword": "评价也非常不错",
+                "count": 1,
+                "score": 2.042308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 5
+              },
+              {
+                "keyword": "价格不怎么",
+                "count": 1,
+                "score": 1.892308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 6
+              },
+              {
+                "keyword": "建议谨慎",
+                "count": 1,
+                "score": 1.892308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 7
+              },
+              {
+                "keyword": "环境优美整洁",
+                "count": 1,
+                "score": 1.892308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 8
+              },
+              {
+                "keyword": "质量一般",
+                "count": 1,
+                "score": 1.892308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 9
+              },
+              {
+                "keyword": "味道都比较一般",
+                "count": 1,
+                "score": 1.842308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 10
+              },
+              {
+                "keyword": "服务很不错",
+                "count": 1,
+                "score": 1.592308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 11
+              },
+              {
+                "keyword": "环境不错",
+                "count": 1,
+                "score": 1.442308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 12
+              },
+              {
+                "keyword": "环境优雅",
+                "count": 1,
+                "score": 1.442308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 13
+              },
+              {
+                "keyword": "菜品好吃",
+                "count": 1,
+                "score": 1.442308,
+                "selfRatio": 0.076923,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.076923,
+                "rank": 14
+              }
+            ]
           },
           "externalAndWeather": {
             "specialDates": [
@@ -3235,7 +4008,7 @@
             }
           },
           "summary": {
-            "highlight": "总订单数环比增长21.2%，客流提升明显；本周出现2个高峰时段，时段经营效率突出",
+            "highlight": "总订单数环比增长21.2%，客流提升明显；本周出现2个高峰时段，时段经营效率突出；顾客好评关键词以性价比不错、地理位置很优越为主",
             "problem": "本周出现1个低谷时段，时段经营稳定性不足",
             "actions": [
               "",
@@ -3346,9 +4119,9 @@
               "discount_amount": 331.40000000000003,
               "groupbuy_count": 41,
               "groupbuy_income": 4864.38,
-              "review_score": NaN,
+              "review_score": 4.844827586206897,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -3363,9 +4136,9 @@
               "discount_amount": 330.0,
               "groupbuy_count": 44,
               "groupbuy_income": 4392.12,
-              "review_score": NaN,
+              "review_score": 4.743243243243243,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -3380,9 +4153,9 @@
               "discount_amount": 87.2,
               "groupbuy_count": 47,
               "groupbuy_income": 4808.72,
-              "review_score": NaN,
+              "review_score": 4.7727272727272725,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -3397,9 +4170,9 @@
               "discount_amount": 130.2,
               "groupbuy_count": 49,
               "groupbuy_income": 6456.15,
-              "review_score": NaN,
+              "review_score": 4.576923076923077,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -3414,9 +4187,9 @@
               "discount_amount": 112.8,
               "groupbuy_count": 41,
               "groupbuy_income": 4299.62,
-              "review_score": NaN,
+              "review_score": 4.934782608695652,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -3751,15 +4524,229 @@
             "badKeywordCandidates": [],
             "rating": {
               "label": "门店评分（实际值）",
-              "thisWeek": NaN,
-              "lastWeek": NaN,
+              "thisWeek": 4.93,
+              "lastWeek": 4.58,
               "statusText": "达标",
               "statusColor": "text-green-600",
               "reference": "周降0.2分为🔴"
             },
-            "goodKeywords": [],
-            "goodKeywordEvidence": [],
-            "goodKeywordCandidates": []
+            "goodKeywords": [
+              "天福号肘子饭味道不错（2次）",
+              "用餐环境非常优美（1次）",
+              "产品口味丰富（1次）"
+            ],
+            "goodKeywordEvidence": [
+              {
+                "keyword": "天福号肘子饭味道不错",
+                "sentences": [
+                  "天福号肘子饭味道不错"
+                ]
+              },
+              {
+                "keyword": "用餐环境非常优美",
+                "sentences": [
+                  "用餐环境非常优美"
+                ]
+              },
+              {
+                "keyword": "产品口味丰富",
+                "sentences": [
+                  "产品口味丰富"
+                ]
+              }
+            ],
+            "goodKeywordCandidates": [
+              {
+                "keyword": "天福号肘子饭味道不错",
+                "count": 2,
+                "score": 3.934783,
+                "selfRatio": 0.086957,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.086957,
+                "rank": 1
+              },
+              {
+                "keyword": "用餐环境非常优美",
+                "count": 1,
+                "score": 2.108696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 2
+              },
+              {
+                "keyword": "产品口味丰富",
+                "count": 1,
+                "score": 1.958696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 3
+              },
+              {
+                "keyword": "小姐姐还贴心",
+                "count": 1,
+                "score": 1.958696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 4
+              },
+              {
+                "keyword": "来园博园团建",
+                "count": 1,
+                "score": 1.958696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 5
+              },
+              {
+                "keyword": "用餐环境舒适",
+                "count": 1,
+                "score": 1.958696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 6
+              },
+              {
+                "keyword": "结果味道不错",
+                "count": 1,
+                "score": 1.958696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 7
+              },
+              {
+                "keyword": "肘子饭味道不错",
+                "count": 1,
+                "score": 1.958696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 8
+              },
+              {
+                "keyword": "地方太好了",
+                "count": 1,
+                "score": 1.808696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 9
+              },
+              {
+                "keyword": "室内环境优雅",
+                "count": 1,
+                "score": 1.808696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 10
+              },
+              {
+                "keyword": "温度凉爽",
+                "count": 1,
+                "score": 1.808696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 11
+              },
+              {
+                "keyword": "音乐悠扬",
+                "count": 1,
+                "score": 1.808696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 12
+              },
+              {
+                "keyword": "味道比较新颖",
+                "count": 1,
+                "score": 1.508696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 13
+              },
+              {
+                "keyword": "菜品也不错",
+                "count": 1,
+                "score": 1.508696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 14
+              },
+              {
+                "keyword": "环境不错",
+                "count": 1,
+                "score": 1.358696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 15
+              },
+              {
+                "keyword": "环境优雅",
+                "count": 1,
+                "score": 1.358696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 16
+              },
+              {
+                "keyword": "环境干净",
+                "count": 1,
+                "score": 1.358696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 17
+              },
+              {
+                "keyword": "环境没得说",
+                "count": 1,
+                "score": 1.358696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 18
+              },
+              {
+                "keyword": "环境舒适",
+                "count": 1,
+                "score": 1.358696,
+                "selfRatio": 0.043478,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.043478,
+                "rank": 19
+              }
+            ]
           },
           "externalAndWeather": {
             "specialDates": [
@@ -3857,7 +4844,7 @@
             }
           },
           "summary": {
-            "highlight": "本周营收 ¥26,207、订单 257 笔，整体经营平稳。",
+            "highlight": "顾客好评主要集中在环境体验、出品口碑（如天福号肘子饭味道不错、用餐环境非常优美）",
             "problem": "总营收环比下滑43.2%，需重点复盘收入结构；总订单数环比下滑40.9%，需关注引流与转化；本周出现1个低谷时段，时段经营稳定性不足",
             "actions": [
               "",
@@ -3968,9 +4955,9 @@
               "discount_amount": 331.40000000000003,
               "groupbuy_count": 41,
               "groupbuy_income": 4864.38,
-              "review_score": NaN,
+              "review_score": 4.844827586206897,
               "waste_amount": 68.93352660403826,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 3.72,
               "repeat_payers": 9.0,
               "total_payers": 242.0
@@ -3985,9 +4972,9 @@
               "discount_amount": 330.0,
               "groupbuy_count": 44,
               "groupbuy_income": 4392.12,
-              "review_score": NaN,
+              "review_score": 4.743243243243243,
               "waste_amount": 73.43182625615101,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -4002,9 +4989,9 @@
               "discount_amount": 87.2,
               "groupbuy_count": 47,
               "groupbuy_income": 4808.72,
-              "review_score": NaN,
+              "review_score": 4.7727272727272725,
               "waste_amount": 90.57368000451689,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -4019,9 +5006,9 @@
               "discount_amount": 130.2,
               "groupbuy_count": 49,
               "groupbuy_income": 6456.15,
-              "review_score": NaN,
+              "review_score": 4.576923076923077,
               "waste_amount": 96.08326405990088,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -4036,9 +5023,9 @@
               "discount_amount": 112.8,
               "groupbuy_count": 41,
               "groupbuy_income": 4299.62,
-              "review_score": NaN,
+              "review_score": 4.934782608695652,
               "waste_amount": 54.57770307539293,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -4422,7 +5409,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.7073170731707314,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -4439,7 +5426,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.75,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -4456,7 +5443,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.659574468085107,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -4473,7 +5460,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.633333333333334,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -4490,7 +5477,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.6891891891891895,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -4870,7 +5857,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.7073170731707314,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -4887,7 +5874,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.75,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -4904,7 +5891,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.659574468085107,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -4921,7 +5908,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.633333333333334,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -4938,7 +5925,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.6891891891891895,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -5722,7 +6709,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.7073170731707314,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -5739,7 +6726,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.75,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -5756,7 +6743,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.659574468085107,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -5773,7 +6760,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.633333333333334,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -5790,7 +6777,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.6891891891891895,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -6594,7 +7581,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.7073170731707314,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -6611,7 +7598,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.75,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -6628,7 +7615,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.659574468085107,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -6645,7 +7632,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.633333333333334,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -6662,7 +7649,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.6891891891891895,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -7475,7 +8462,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.7073170731707314,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -7492,7 +8479,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.75,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -7509,7 +8496,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.659574468085107,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -7526,7 +8513,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.633333333333334,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -7543,7 +8530,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.6891891891891895,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -8326,7 +9313,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.7073170731707314,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -8343,7 +9330,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.75,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -8360,7 +9347,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.659574468085107,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -8377,7 +9364,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.633333333333334,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -8394,7 +9381,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.6891891891891895,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -9178,7 +10165,7 @@
               "groupbuy_income": 12223.08,
               "review_score": 4.7073170731707314,
               "waste_amount": 140.12544684907567,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.99,
               "repeat_payers": 93.0,
               "total_payers": 716.0
@@ -9195,7 +10182,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.75,
               "waste_amount": 133.7247818241656,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -9212,7 +10199,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.659574468085107,
               "waste_amount": 110.24975430393681,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -9229,7 +10216,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.633333333333334,
               "waste_amount": 137.74322775400887,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -9246,7 +10233,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.6891891891891895,
               "waste_amount": 96.15678926881306,
-              "updated_at": "2026-04-21T02:51:29+00:00",
+              "updated_at": "2026-04-21T03:01:35+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0

@@ -645,8 +645,41 @@ def _negative_review_counts(rv: pd.DataFrame, sc: str | None) -> int:
     return 0
 
 
+def _load_existing_ui_payload_weeks() -> dict[tuple[str, str], dict]:
+    """
+    读取现有 ui_payload，按 (store_id, week_id) 建索引。
+    用于当本次源文件时间窗口变短时，保留历史周的详细模块数据。
+    """
+    p = ui_payload_path()
+    if not os.path.exists(p):
+        return {}
+    try:
+        with open(p, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+    except Exception:
+        return {}
+    stores = payload.get("stores", {}) if isinstance(payload, dict) else {}
+    out: dict[tuple[str, str], dict] = {}
+    for sid, sv in stores.items():
+        weeks = (sv or {}).get("weeks", {})
+        if not isinstance(weeks, dict):
+            continue
+        for wk, wp in weeks.items():
+            if isinstance(wp, dict):
+                out[(str(sid), str(wk))] = wp
+    return out
+
+
+def _core_metric_by_label(core_metrics: list[dict], label: str) -> dict | None:
+    for m in core_metrics:
+        if m.get("label") == label:
+            return m
+    return None
+
+
 def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
     weather_map = load_weather_map()
+    existing_weeks = _load_existing_ui_payload_weeks()
     engine = MetricsEngine(auto_persist=auto_persist_metrics)
     bundles = load_all_stores(data_dir())
     trend_parts = [engine.get_trend_data(info.store_id) for info in engine.list_stores()]
@@ -665,6 +698,12 @@ def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
         rev_sum_store = float(sub["revenue"].sum()) if not sub.empty else 1.0
 
         for idx, wk in enumerate(weeks):
+            prior_week_payload = existing_weeks.get((str(store_id), str(wk)))
+            # 历史周冻结：若该周已存在于旧 ui_payload，则整周完整沿用，不做重算。
+            # 这样可保证页面历史周的所有数字与文案完全保留，仅对“新增周”向后延伸生成。
+            if prior_week_payload is not None:
+                week_payloads[wk] = prior_week_payload
+                continue
             row = sub[sub["week_id"] == wk].iloc[0].to_dict()
             prev = sub[sub["week_id"] < wk].iloc[-1].to_dict() if len(sub[sub["week_id"] < wk]) else None
             prev2 = None
@@ -885,7 +924,7 @@ def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
             bad_candidates = kw_meta.get("badCandidates", [])
             sc_col = None
             if rev_df is not None and not rev_df.empty:
-                for c in ("score", "总分", "评分", "总体评分"):
+                for c in ("score", "总分", "评分", "总体评分", "星级分"):
                     if c in rev_df.columns:
                         sc_col = c
                         break
@@ -905,7 +944,7 @@ def build_ui_payload(auto_persist_metrics: bool = False) -> dict[str, Any]:
             if not rv_prev.empty:
                 txt_prev = _review_text_column(rv_prev)
                 sc_prev = None
-                for c in ("score", "总分", "评分", "总体评分"):
+                for c in ("score", "总分", "评分", "总体评分", "星级分"):
                     if c in rv_prev.columns:
                         sc_prev = c
                         break
