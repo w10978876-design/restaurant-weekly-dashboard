@@ -209,6 +209,9 @@ async function startServer() {
     refreshUiPayloadFromExcel();
   }
 
+  // Dev: Vite 不会自动暴露仓库根目录的 data/，否则 fetch data/warehouse/ui_payload.json 会 404
+  app.use("/data", express.static(path.join(ROOT, "data")));
+
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },

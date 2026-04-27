@@ -232,6 +232,8 @@ async function startServer() {
     refreshUiPayloadFromExcel();
   }
 
+  app.use("/data", express.static(path.join(ROOT, "data")));
+
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
