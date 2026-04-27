@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-27T04:11:40+00:00",
+  "generated_at": "2026-04-27T04:17:19+00:00",
   "stores": {
     "夕佳悦": {
       "weeks": {
@@ -5838,7 +5838,7 @@
                 "rank": 6
               },
               {
-                "keyword": "环境还不错",
+                "keyword": "味道还不错",
                 "count": 1,
                 "score": 1.677778,
                 "selfRatio": 0.111111,
@@ -5848,7 +5848,7 @@
                 "rank": 7
               },
               {
-                "keyword": "菜品味道不错",
+                "keyword": "环境还不错",
                 "count": 1,
                 "score": 1.677778,
                 "selfRatio": 0.111111,
@@ -5858,6 +5858,26 @@
                 "rank": 8
               },
               {
+                "keyword": "菜品味道不错",
+                "count": 1,
+                "score": 1.677778,
+                "selfRatio": 0.111111,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.111111,
+                "rank": 9
+              },
+              {
+                "keyword": "味道不错",
+                "count": 1,
+                "score": 1.527778,
+                "selfRatio": 0.111111,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.111111,
+                "rank": 10
+              },
+              {
                 "keyword": "环境宽敞明亮",
                 "count": 1,
                 "score": 1.527778,
@@ -5865,7 +5885,7 @@
                 "otherCount": 0,
                 "otherRatio": 0.0,
                 "lift": 0.111111,
-                "rank": 9
+                "rank": 11
               },
               {
                 "keyword": "环境幽静",
@@ -5875,7 +5895,7 @@
                 "otherCount": 0,
                 "otherRatio": 0.0,
                 "lift": 0.111111,
-                "rank": 10
+                "rank": 12
               }
             ]
           },
@@ -6113,7 +6133,7 @@
               "groupbuy_income": 4392.12,
               "review_score": 4.4,
               "waste_amount": 103.41142121101035,
-              "updated_at": "2026-04-27T03:24:57+00:00",
+              "updated_at": "2026-04-27T04:17:13+00:00",
               "repurchase_rate": 4.96,
               "repeat_payers": 13.0,
               "total_payers": 262.0
@@ -6130,7 +6150,7 @@
               "groupbuy_income": 4808.72,
               "review_score": 4.4,
               "waste_amount": 127.55168230333628,
-              "updated_at": "2026-04-27T03:24:57+00:00",
+              "updated_at": "2026-04-27T04:17:13+00:00",
               "repurchase_rate": 7.17,
               "repeat_payers": 20.0,
               "total_payers": 279.0
@@ -6147,7 +6167,7 @@
               "groupbuy_income": 6456.15,
               "review_score": 4.4,
               "waste_amount": 135.31063297223722,
-              "updated_at": "2026-04-27T03:24:57+00:00",
+              "updated_at": "2026-04-27T04:17:13+00:00",
               "repurchase_rate": 2.78,
               "repeat_payers": 9.0,
               "total_payers": 324.0
@@ -6164,7 +6184,7 @@
               "groupbuy_income": 4299.62,
               "review_score": 4.4,
               "waste_amount": 76.85983216284436,
-              "updated_at": "2026-04-27T03:24:57+00:00",
+              "updated_at": "2026-04-27T04:17:13+00:00",
               "repurchase_rate": 2.44,
               "repeat_payers": 5.0,
               "total_payers": 205.0
@@ -6181,7 +6201,7 @@
               "groupbuy_income": 4829.42,
               "review_score": 4.4,
               "waste_amount": 86.46643135057188,
-              "updated_at": "2026-04-27T03:24:57+00:00",
+              "updated_at": "2026-04-27T04:17:14+00:00",
               "repurchase_rate": 3.05,
               "repeat_payers": 6.0,
               "total_payers": 197.0
@@ -12462,21 +12482,21 @@
               "reference": "环比↑50%为🔴"
             },
             "badKeywords": [
-              "餐厅吃了饭（1次）"
+              "味道怪怪的（1次）"
             ],
             "badKeywordEvidence": [
               {
-                "keyword": "餐厅吃了饭",
+                "keyword": "味道怪怪的",
                 "sentences": [
-                  "在紫竹院餐厅吃了饭"
+                  "吃的时候就感觉味道怪怪的"
                 ]
               }
             ],
             "badKeywordCandidates": [
               {
-                "keyword": "餐厅吃了饭",
+                "keyword": "味道怪怪的",
                 "count": 1,
-                "score": 4.2,
+                "score": 3.75,
                 "selfRatio": 1.0,
                 "otherCount": 0,
                 "otherRatio": 0.0,
@@ -12680,7 +12700,7 @@
                 "rank": 16
               },
               {
-                "keyword": "菜品也很不错",
+                "keyword": "味道也很好吃",
                 "count": 1,
                 "score": 1.496154,
                 "selfRatio": 0.038462,
@@ -12690,9 +12710,9 @@
                 "rank": 17
               },
               {
-                "keyword": "环境优雅",
+                "keyword": "味道还不错",
                 "count": 1,
-                "score": 1.346154,
+                "score": 1.496154,
                 "selfRatio": 0.038462,
                 "otherCount": 0,
                 "otherRatio": 0.0,
@@ -12700,9 +12720,9 @@
                 "rank": 18
               },
               {
-                "keyword": "环境很棒",
+                "keyword": "菜品也很不错",
                 "count": 1,
-                "score": 1.346154,
+                "score": 1.496154,
                 "selfRatio": 0.038462,
                 "otherCount": 0,
                 "otherRatio": 0.0,
@@ -12710,7 +12730,7 @@
                 "rank": 19
               },
               {
-                "keyword": "菜品丰富",
+                "keyword": "口感惊艳",
                 "count": 1,
                 "score": 1.346154,
                 "selfRatio": 0.038462,
@@ -12818,7 +12838,7 @@
           },
           "summary": {
             "highlight": "总营收环比增长12.2%，经营表现向好；顾客好评主要集中在服务体验（如服务贴心、人们手机下单很顺利）",
-            "problem": "顾客负面反馈集中在餐厅吃了饭",
+            "problem": "顾客差评主要集中在出品口碑（如味道怪怪的）",
             "actions": [
               "",
               "",
@@ -12955,7 +12975,7 @@
               "groupbuy_income": 16970.8,
               "review_score": 4.3,
               "waste_amount": 151.5982449158959,
-              "updated_at": "2026-04-27T03:24:57+00:00",
+              "updated_at": "2026-04-27T04:17:14+00:00",
               "repurchase_rate": 14.54,
               "repeat_payers": 98.0,
               "total_payers": 674.0
@@ -12972,7 +12992,7 @@
               "groupbuy_income": 15646.5,
               "review_score": 4.3,
               "waste_amount": 124.98557879019256,
-              "updated_at": "2026-04-27T03:24:57+00:00",
+              "updated_at": "2026-04-27T04:17:14+00:00",
               "repurchase_rate": 12.43,
               "repeat_payers": 68.0,
               "total_payers": 547.0
@@ -12989,7 +13009,7 @@
               "groupbuy_income": 15191.45,
               "review_score": 4.3,
               "waste_amount": 156.15379058172982,
-              "updated_at": "2026-04-27T03:24:57+00:00",
+              "updated_at": "2026-04-27T04:17:14+00:00",
               "repurchase_rate": 16.31,
               "repeat_payers": 99.0,
               "total_payers": 607.0
@@ -13006,7 +13026,7 @@
               "groupbuy_income": 15156.3,
               "review_score": 4.3,
               "waste_amount": 109.00896820356932,
-              "updated_at": "2026-04-27T03:24:57+00:00",
+              "updated_at": "2026-04-27T04:17:14+00:00",
               "repurchase_rate": 13.65,
               "repeat_payers": 58.0,
               "total_payers": 425.0
@@ -13023,7 +13043,7 @@
               "groupbuy_income": 17947.97,
               "review_score": 4.3,
               "waste_amount": 122.25341750861236,
-              "updated_at": "2026-04-27T03:24:57+00:00",
+              "updated_at": "2026-04-27T04:17:14+00:00",
               "repurchase_rate": 13.44,
               "repeat_payers": 61.0,
               "total_payers": 454.0
