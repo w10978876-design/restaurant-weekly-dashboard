@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": "2026-04-27T03:24:57+00:00",
+  "saved_at": "2026-04-27T04:11:35+00:00",
   "rows": [
     {
       "store_id": "夕佳悦",
@@ -65,7 +65,7 @@
       "groupbuy_income": 4392.12,
       "review_score": 4.4,
       "waste_amount": 103.41142121101035,
-      "updated_at": "2026-04-27T03:24:57+00:00",
+      "updated_at": "2026-04-27T04:11:35+00:00",
       "repurchase_rate": 4.96,
       "repeat_payers": 13.0,
       "total_payers": 262.0
@@ -82,7 +82,7 @@
       "groupbuy_income": 4808.72,
       "review_score": 4.4,
       "waste_amount": 127.55168230333628,
-      "updated_at": "2026-04-27T03:24:57+00:00",
+      "updated_at": "2026-04-27T04:11:35+00:00",
       "repurchase_rate": 7.17,
       "repeat_payers": 20.0,
       "total_payers": 279.0
@@ -99,7 +99,7 @@
       "groupbuy_income": 6456.15,
       "review_score": 4.4,
       "waste_amount": 135.31063297223722,
-      "updated_at": "2026-04-27T03:24:57+00:00",
+      "updated_at": "2026-04-27T04:11:35+00:00",
       "repurchase_rate": 2.78,
       "repeat_payers": 9.0,
       "total_payers": 324.0
@@ -116,7 +116,7 @@
       "groupbuy_income": 4299.62,
       "review_score": 4.4,
       "waste_amount": 76.85983216284436,
-      "updated_at": "2026-04-27T03:24:57+00:00",
+      "updated_at": "2026-04-27T04:11:35+00:00",
       "repurchase_rate": 2.44,
       "repeat_payers": 5.0,
       "total_payers": 205.0
@@ -133,7 +133,7 @@
       "groupbuy_income": 4829.42,
       "review_score": 4.4,
       "waste_amount": 86.46643135057188,
-      "updated_at": "2026-04-27T03:24:57+00:00",
+      "updated_at": "2026-04-27T04:11:35+00:00",
       "repurchase_rate": 3.05,
       "repeat_payers": 6.0,
       "total_payers": 197.0
@@ -201,7 +201,7 @@
       "groupbuy_income": 16970.8,
       "review_score": 4.3,
       "waste_amount": 151.5982449158959,
-      "updated_at": "2026-04-27T03:24:57+00:00",
+      "updated_at": "2026-04-27T04:11:35+00:00",
       "repurchase_rate": 14.54,
       "repeat_payers": 98.0,
       "total_payers": 674.0
@@ -218,7 +218,7 @@
       "groupbuy_income": 15646.5,
       "review_score": 4.3,
       "waste_amount": 124.98557879019256,
-      "updated_at": "2026-04-27T03:24:57+00:00",
+      "updated_at": "2026-04-27T04:11:35+00:00",
       "repurchase_rate": 12.43,
       "repeat_payers": 68.0,
       "total_payers": 547.0
@@ -235,7 +235,7 @@
       "groupbuy_income": 15191.45,
       "review_score": 4.3,
       "waste_amount": 156.15379058172982,
-      "updated_at": "2026-04-27T03:24:57+00:00",
+      "updated_at": "2026-04-27T04:11:35+00:00",
       "repurchase_rate": 16.31,
       "repeat_payers": 99.0,
       "total_payers": 607.0
@@ -252,7 +252,7 @@
       "groupbuy_income": 15156.3,
       "review_score": 4.3,
       "waste_amount": 109.00896820356932,
-      "updated_at": "2026-04-27T03:24:57+00:00",
+      "updated_at": "2026-04-27T04:11:35+00:00",
       "repurchase_rate": 13.65,
       "repeat_payers": 58.0,
       "total_payers": 425.0
@@ -269,7 +269,7 @@
       "groupbuy_income": 17947.97,
       "review_score": 4.3,
       "waste_amount": 122.25341750861236,
-      "updated_at": "2026-04-27T03:24:57+00:00",
+      "updated_at": "2026-04-27T04:11:35+00:00",
       "repurchase_rate": 13.44,
       "repeat_payers": 61.0,
       "total_payers": 454.0
