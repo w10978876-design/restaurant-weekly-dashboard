@@ -218,6 +218,57 @@ function humanizeSyncError(err: unknown) {
   return `同步失败：${msg || "未知错误"}`;
 }
 
+/**
+ * 旧版前端仍访问 productDetails.lossAmount；新 JSON 已去掉报损字段时补占位，避免整页白屏。
+ * 新版构建不再渲染该行；占位仅用于 CDN/浏览器缓存旧 JS 的过渡期。
+ */
+function normalizeWeekPayloadForUi(week: any): any {
+  if (!week || typeof week !== "object") return week;
+  const w = {...week};
+  const pd = {...(w.productDetails ?? {})};
+  if (!Array.isArray(pd.topSales)) pd.topSales = [];
+  if (!Array.isArray(pd.topRevenue)) pd.topRevenue = [];
+  if (!Array.isArray(pd.bottomSales)) pd.bottomSales = [];
+  pd.returns = {
+    count: 0,
+    lastCount: 0,
+    reference: "",
+    statusText: "—",
+    statusColor: "text-gray-500",
+    ...(pd.returns ?? {}),
+  };
+  if (!("lossAmount" in pd)) {
+    pd.lossAmount = {
+      amount: 0,
+      lastAmount: 0,
+      trend: 0,
+      reference: "本指标已停用",
+      statusText: "—",
+      statusColor: "text-gray-500",
+    };
+  }
+  w.productDetails = pd;
+  const ta = {...(w.timeAnalysis ?? {})};
+  if (!Array.isArray(ta.table)) ta.table = [];
+  if (!Array.isArray(ta.abnormalSummary)) ta.abnormalSummary = [];
+  w.timeAnalysis = ta;
+  const eaw = {...(w.externalAndWeather ?? {})};
+  const weather = {...(eaw.weather ?? {})};
+  if (!Array.isArray(weather.daily)) weather.daily = [];
+  weather.summary = {
+    abnormalDays: 0,
+    abnormalAvgRev: 0,
+    normalAvgRev: 0,
+    isImpacted: "否",
+    ...(weather.summary ?? {}),
+  };
+  eaw.weather = weather;
+  if (!Array.isArray(eaw.specialDates)) eaw.specialDates = [];
+  w.externalAndWeather = eaw;
+  if (!Array.isArray(w.marketing)) w.marketing = [];
+  return w;
+}
+
 function buildDashboardData(payload: any, storeId?: string, weekId?: string): DashboardData | null {
   const stores = payload?.stores ?? {};
   const storeKeys = Object.keys(stores)
@@ -292,13 +343,13 @@ export default function App() {
       const repoIndex = indexActions(repoItems ?? repoActions);
       const repoActs = repoIndex[`${d.selectedStore?.id}::${d.selectedWeek?.id}`] ?? [];
       const resolvedActions = (repoActs.length ? repoActs : d.summary?.actions ?? []).slice(0, 3);
-      const resolvedData = {
+      const resolvedData = normalizeWeekPayloadForUi({
         ...d,
         summary: {
           ...(d.summary ?? {}),
           actions: resolvedActions,
         },
-      };
+      });
       setData(resolvedData);
       setSelectedStoreId(d.selectedStore?.id ?? "");
       setSelectedWeekId(d.selectedWeek?.id ?? "");
@@ -435,15 +486,6 @@ export default function App() {
                   <td className="px-4 py-2.5 dash-mono text-[var(--dash-muted)]">较上周 {data.productDetails.returns.lastCount} 次</td>
                   <td className="px-4 py-2.5 text-[11px] text-[var(--dash-muted)]">{data.productDetails.returns.reference}</td>
                   <td className={cls("px-4 py-2.5 text-center text-[13px] font-semibold", data.productDetails.returns.statusColor)}>{data.productDetails.returns.statusText}</td>
-                </tr>
-                <tr className="border-t border-[var(--dash-border)]">
-                  <td className="px-4 py-2.5">菜品报损总金额（元）</td>
-                  <td className="px-4 py-2.5 font-semibold dash-mono">¥{data.productDetails.lossAmount.amount.toLocaleString()}</td>
-                  <td className={cls("px-4 py-2.5 font-semibold dash-mono", data.productDetails.lossAmount.trend >= 0 ? "dash-trend-down" : "dash-trend-up")}>
-                    {data.productDetails.lossAmount.trend > 0 ? "+" : ""}{data.productDetails.lossAmount.trend}%
-                  </td>
-                  <td className="px-4 py-2.5 text-[11px] text-[var(--dash-muted)]">{data.productDetails.lossAmount.reference}</td>
-                  <td className={cls("px-4 py-2.5 text-center text-[13px] font-semibold", data.productDetails.lossAmount.statusColor)}>{data.productDetails.lossAmount.statusText}</td>
                 </tr>
               </tbody>
             </table>
