@@ -130,13 +130,9 @@ def generate_summary(week_payload: dict[str, Any]) -> dict[str, list[str]]:
 
     product = week_payload.get("productDetails", {}) or {}
     returns = product.get("returns", {}) or {}
-    loss = product.get("lossAmount", {}) or {}
     returns_cnt = int(_to_float(returns.get("count"), 0))
-    loss_trend = _to_float(loss.get("trend"), 0.0)
     if returns_cnt > 5:
         problems.append(f"退菜/换菜达到{returns_cnt}次，超过每周5次警戒线")
-    if loss_trend > 30:
-        problems.append(f"报损金额环比上升{loss_trend:.1f}%，触发运营损耗红线")
 
     # 去重并保持顺序
     def _uniq(items: list[str]) -> list[str]:

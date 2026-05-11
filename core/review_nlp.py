@@ -104,13 +104,32 @@ _DEGREE_WORDS = frozenset(
 _BAD_DEGREE_BRIDGES = frozenset({"都"})
 _ALLOW_SINGLE_CHAR_TAIL = frozenset({"慢", "差", "脏", "咸", "淡", "贵", "挤", "吵", "乱"})
 _GENERIC_SENSORY_NOUNS = frozenset({"口味", "味道", "口感"})
-_BROAD_HEAD_NOUNS = frozenset({"披萨", "出品", "酱香", "奶油味道", "奶油味", "味道", "口感"})
+# 不含「味道/口感」：二者走 _expand_generic_head；若再进 broad 左侧回补，易把「吃的时候就感觉」整段粘成关键词
+_BROAD_HEAD_NOUNS = frozenset({"披萨", "出品", "酱香", "奶油味道", "奶油味"})
 _BAD_NOUN_ANCHORS = frozenset({"口吃"})
 _GENERIC_HEADS = frozenset({"环境", "服务", "口味", "味道", "口感", "菜品", "出品"})
 _BAD_PHRASE_FRAGMENTS = frozenset({"制造商", "用心良苦"})
 _CROWD_PAT = re.compile(r"(太挤|很挤|拥挤|人太多|人很多|排队拥挤)")
 _NEG_CUE_PAT = re.compile(r"(差|不好|不行|不佳|很吵|太吵|慢|久|脏|乱|贵|咸|淡|预制菜|包装)")
+# jieba 会把「吃了饭」「喝个水」等标成习用语 l；它们像形容词结尾但并非评价语义，不能与「餐厅」拼成差评主题
+_NARRATIVE_IDIOM_END = frozenset(
+    {
+        "吃了饭",
+        "吃了一顿",
+        "吃个饭",
+        "吃顿饭",
+        "喝过水",
+        "喝个水",
+        "来过一次",
+        "来一次",
+        "溜达一圈",
+    }
+)
 _POS_CUE_PAT = re.compile(r"(好吃|不错|香|浓郁|舒适|周到|热情|稳定|新鲜|划算|满意)")
+_NEGATIVE_LEXICAL_EXTRA = re.compile(
+    r"(不满意|失望|糟糕|差评|踩雷|无语|后悔|再也不|不推荐|避雷|太差|很差|特别差|特别贵|偏贵|离谱|恶心|呕吐|拉肚子|腹泻|又拉又吐|难受|怪怪的|食物中毒|变质|变味|发苦|馊"
+    r"|难吃|不好吃|太淡|太甜|太油|太辣|没味|没熟|上菜慢|等很久|凉了|生硬|不熟|发霉|异物|钢丝|毛发|量少|份量小|份量不足|上当|骗人|糊弄|烂|糟心)"
+)
 _CAUSAL_PATTERNS = [
     re.compile(r"([\u4e00-\u9fff]{2,16}(?:太大|过大|太高|过高|太多|过多|拥挤|太挤|很挤|太吵|很吵).{0,6}?导致[\u4e00-\u9fff]{2,16}(?:很差|较差|变差|不好))"),
     re.compile(r"([\u4e00-\u9fff]{2,16}导致[\u4e00-\u9fff]{2,16}(?:很差|较差|变差|不好))"),
@@ -209,11 +228,52 @@ def _is_adj_token(flag: str) -> bool:
 
 
 def _is_phrase_end(w: str, flag: str) -> bool:
+    if flag == "l" and w in _NARRATIVE_IDIOM_END:
+        return False
     if _is_adj_token(flag):
         return True
     if flag == "nr" and w in _NR_STATE_WORDS:
         return True
     if flag in frozenset({"v", "vi", "vn"}) and w in _EVAL_VERB_END:
+        return True
+    return False
+
+
+def _compliment_phrase_without_negation(phrase: str) -> bool:
+    """
+    短语在字面上是否主要为褒义（且不含负面线索），用于避免低分评价里「先夸后骂」
+    时把「环境非常不错」等片段误计为差评关键词。
+    """
+    p = re.sub(r"\s+", "", str(phrase or ""))
+    if not p or negative_lexical_signal(p):
+        return False
+    for m in _POS_CUE_PAT.finditer(p):
+        if m.start() == 0:
+            return True
+        prev = p[m.start() - 1]
+        if prev == "不":
+            # 不满意、不稳定 等：正面词根被「不」否定，不计为纯褒义
+            continue
+        return True
+    return False
+
+
+def negative_lexical_signal(text: str) -> bool:
+    """
+    文本是否包含可识别的负面/问题线索（用于区分「低分但只是叙述就餐」与真实差评语义）。
+    """
+    s = re.sub(r"\s+", "", str(text or ""))
+    if not s:
+        return False
+    if _NEG_CUE_PAT.search(s):
+        return True
+    if _CROWD_PAT.search(s):
+        return True
+    if _SLOW_PAT.search(s):
+        return True
+    if _HYGIENE_PAT.search(s):
+        return True
+    if _NEGATIVE_LEXICAL_EXTRA.search(s):
         return True
     return False
 
@@ -278,7 +338,7 @@ def _phrase_quality_boost(phrase: str, *, positive_side: bool) -> float:
 def _expand_generic_head(seg: str, toks: list[tuple[str, str, int, int]], i: int, ek: int) -> str | None:
     """
     若锚点是「口味/味道/口感」，尝试把前置菜品名并入（如「薄饼味道还不错」）。
-    补不出来则返回 None（避免「味道还不错」这类无对象短语）。
+    左侧只有「感觉/时候」等抽象词时无法并入菜名；此时仍返回「味道怪怪的」等片段，避免整条评价被丢弃。
     """
     w0, _, s0, _ = toks[i]
     if w0 not in _GENERIC_SENSORY_NOUNS:
@@ -303,7 +363,7 @@ def _expand_generic_head(seg: str, toks: list[tuple[str, str, int, int]], i: int
             break
         if ok:
             return seg[sj:ek]
-    return None
+    return seg[s0:ek]
 
 
 def _expand_broad_head(seg: str, toks: list[tuple[str, str, int, int]], i: int, ek: int, base_phrase: str) -> str | None:
@@ -599,9 +659,14 @@ def _collect_phrases_and_evidence(
     c: Counter[str] = Counter()
     evidence: dict[str, list[str]] = {}
     for t in text_list:
+        if include_crowd_issue and not negative_lexical_signal(str(t or "")):
+            # 低分但无负面词，如「在紫竹院餐厅吃了饭」：不抽无信息名词+习语尾
+            continue
         seen: set[str] = set()
         for p in _extract_phrases(str(t or "")):
             if p in seen:
+                continue
+            if include_crowd_issue and _compliment_phrase_without_negation(p):
                 continue
             seen.add(p)
             c[p] += 1
@@ -617,6 +682,8 @@ def _collect_phrases_and_evidence(
         for sp in _extract_suspect_phrases(str(t or "")):
             fixed = _repair_suspect_phrase(sp, text_list)
             if not fixed or fixed in seen:
+                continue
+            if include_crowd_issue and _compliment_phrase_without_negation(fixed):
                 continue
             seen.add(fixed)
             c[fixed] += 1

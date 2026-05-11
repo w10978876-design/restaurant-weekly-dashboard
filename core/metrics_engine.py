@@ -127,10 +127,6 @@ def compute_fresh_weekly_table(bundle: StoreBundle, store_id: str) -> pd.DataFra
         if "score" in r0.columns:
             rev_map_mean = r0.groupby("week_id")["score"].mean()
 
-    waste_total = 0.0
-    if bundle.waste is not None and not bundle.waste.empty and "waste_amount" in bundle.waste.columns:
-        waste_total = float(bundle.waste["waste_amount"].fillna(0).sum())
-
     rows: list[dict] = []
     weeks = sorted(df["week_id"].dropna().unique().tolist())
     rev_by_week = df.groupby("week_id")["order_revenue"].sum()
@@ -177,12 +173,7 @@ def compute_fresh_weekly_table(bundle: StoreBundle, store_id: str) -> pd.DataFra
             }
         )
 
-    out = pd.DataFrame(rows)
-    if waste_total > 0 and not out.empty:
-        rev_sum = float(out["revenue"].sum()) or 1.0
-        out["waste_amount"] = out["revenue"].astype(float) / rev_sum * waste_total
-
-    return out
+    return pd.DataFrame(rows)
 
 
 @dataclass

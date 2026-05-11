@@ -134,12 +134,8 @@ def main() -> int:
         print("\n[ok] 退/换菜检查通过（非全0）")
 
     print("\n[3/3] 下一步命令（复制执行）")
-    print(
-        "git add core/dashboard_builder.py core/metrics_engine.py ingestion/pipeline.py "
-        "data/warehouse/ui_payload.json data/warehouse/weekly_metrics.json "
-        "docs/看板数据处理与页面展示全链路说明.md docs/每周一数据更新标准操作手册.md scripts/run_monday_update.py"
-    )
-    print('git commit -m "weekly update"')
+    print("git add data/warehouse/ui_payload.json data/warehouse/weekly_metrics.json")
+    print('git commit -m "weekly update data"')
     print("git push origin main")
 
     if args.strict and (issues or return_warnings):

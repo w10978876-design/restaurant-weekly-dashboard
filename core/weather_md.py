@@ -147,7 +147,10 @@ def load_weather_map(year: int = 2026) -> dict[date, str]:
 
 def is_abnormal_weather(weather: str) -> bool:
     w = weather or ""
-    if any(x in w for x in ("雨", "雪", "雷", "沙尘", "雾", "霾", "大风", "阵风", "寒潮", "对流")):
+    if any(x in w for x in ("雨", "雪", "雷", "沙尘", "霾", "大风", "阵风", "寒潮", "对流")):
+        return True
+    # 仅“大雾/浓雾/低能见度”算异常；普通“雾”不直接判异常
+    if any(x in w for x in ("大雾", "浓雾", "低能见度")):
         return True
     if "高温" in w or "寒潮" in w:
         return True

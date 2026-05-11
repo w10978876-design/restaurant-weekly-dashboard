@@ -16,7 +16,7 @@ import pandas as pd
 from data_processor import generate_summary
 from core.metrics_engine import MetricsEngine, _repurchase_for_week
 from core.paths import data_dir, ui_payload_path
-from core.review_nlp import extract_keywords_with_meta
+from core.review_nlp import extract_keywords_with_meta, negative_lexical_signal
 from core.status_rules import aov_status, orders_status, retention_status, revenue_status
 from core.weeks import parse_business_date, week_id_for_date
 from core.weather_md import is_abnormal_weather, is_normal_weather, load_weather_map
@@ -199,27 +199,6 @@ def _returns_count_week(bundle: StoreBundle, week_id: str) -> tuple[int, int]:
         prev_rows = s.loc[mask & (s["week_id"] == prev_w)].copy()
         prev = int(prev_rows["订单号"].astype(str).nunique()) if ("订单号" in prev_rows.columns and not prev_rows.empty) else int(len(prev_rows))
     return cur, prev
-
-
-def _waste_week(bundle: StoreBundle, week_id: str, week_revenue: float, total_rev_all_weeks: float) -> float:
-    w = bundle.waste
-    if w is None or w.empty or "waste_amount" not in w.columns:
-        return 0.0
-    w = w.copy()
-    date_col = None
-    for c in ("报损日期", "营业日期", "日期"):
-        if c in w.columns:
-            date_col = c
-            break
-    if date_col:
-        w["business_date"] = w[date_col].map(parse_business_date)
-        w["week_id"] = w["business_date"].map(lambda d: week_id_for_date(d) if d else None)
-        sub = w[w["week_id"] == week_id]
-        return float(sub["waste_amount"].fillna(0).sum()) if not sub.empty else 0.0
-    tot = float(w["waste_amount"].fillna(0).sum())
-    if total_rev_all_weeks <= 0:
-        return 0.0
-    return tot * (week_revenue / total_rev_all_weeks)
 
 
 def _menu_as_category_map(menu: pd.DataFrame | None) -> pd.DataFrame | None:
@@ -585,6 +564,10 @@ def _weather_daily(
     daily = []
     revs_normal: list[float] = []
     revs_ab: list[float] = []
+    revs_wd_normal: list[float] = []
+    revs_wd_ab: list[float] = []
+    revs_we_normal: list[float] = []
+    revs_we_ab: list[float] = []
     for i, d in enumerate(days):
         wx = weather_map.get(d, "")
         rev = ord_cnt = diners = paid = 0
@@ -606,21 +589,47 @@ def _weather_daily(
                 "paidUsers": paid,
             }
         )
+        is_weekend = d.weekday() >= 5
         if is_normal_weather(wx) and rev > 0:
             revs_normal.append(rev)
+            if is_weekend:
+                revs_we_normal.append(rev)
+            else:
+                revs_wd_normal.append(rev)
         if is_abnormal_weather(wx) and rev > 0:
             revs_ab.append(rev)
+            if is_weekend:
+                revs_we_ab.append(rev)
+            else:
+                revs_wd_ab.append(rev)
     n_avg = sum(revs_normal) / len(revs_normal) if revs_normal else 0.0
     a_avg = sum(revs_ab) / len(revs_ab) if revs_ab else 0.0
+
+    wd_n_avg = sum(revs_wd_normal) / len(revs_wd_normal) if revs_wd_normal else 0.0
+    wd_a_avg = sum(revs_wd_ab) / len(revs_wd_ab) if revs_wd_ab else 0.0
+    we_n_avg = sum(revs_we_normal) / len(revs_we_normal) if revs_we_normal else 0.0
+    we_a_avg = sum(revs_we_ab) / len(revs_we_ab) if revs_we_ab else 0.0
+
+    drops: list[float] = []
+    if wd_n_avg > 0 and wd_a_avg >= 0:
+        drops.append((wd_n_avg - wd_a_avg) / wd_n_avg)
+    if we_n_avg > 0 and we_a_avg >= 0:
+        drops.append((we_n_avg - we_a_avg) / we_n_avg)
+    avg_drop = sum(drops) / len(drops) if drops else 0.0
+
     impacted = "否"
-    if n_avg > 0 and a_avg >= 0:
-        if (n_avg - a_avg) / n_avg > 0.30:
-            impacted = "是 (营收下降超过30%)"
+    if avg_drop > 0.30:
+        impacted = "是 (营收下降超过30%)"
     summary = {
         "abnormalDays": len(revs_ab),
         "abnormalAvgRev": round(a_avg, 2),
         "normalAvgRev": round(n_avg, 2),
         "isImpacted": impacted,
+        "weekdayNormalAvgRev": round(wd_n_avg, 2),
+        "weekdayAbnormalAvgRev": round(wd_a_avg, 2),
+        "weekendNormalAvgRev": round(we_n_avg, 2),
+        "weekendAbnormalAvgRev": round(we_a_avg, 2),
+        "impactDropAvg": round(avg_drop, 4),
     }
     return daily, summary
 
@@ -721,20 +730,24 @@ def _keyword_total_count(items: list[str]) -> int:
 
 def _fallback_keywords_from_texts(texts: list[str], max_items: int = 3) -> list[str]:
     """
-    兜底关键词：当 NLP 未抽出关键词但存在差评文本时，取文本首句片段计数，避免“条数>0但关键词为空”。
+    兜底关键词：当 NLP 未抽出关键词但存在差评文本时，优先取含负面语义的片段；
+    若全文无语义差评词（仅有「吃了饭」类叙述），用聚合标签占位，避免出现「餐厅吃了饭」这类无信息量词。
     """
+    raw_list = [str(x or "").strip() for x in texts if str(x or "").strip()]
+    if not raw_list:
+        return []
+    lexical = [t for t in raw_list if negative_lexical_signal(t)]
+    if not lexical:
+        return [f"低分评价未写明具体问题（{len(raw_list)}次）"]
     parts: list[str] = []
-    for raw in texts or []:
-        t = str(raw or "").strip()
-        if not t:
-            continue
+    for t in lexical:
         head = re.split(r"[，。！？；,.!?;\n]", t)[0].strip() or t
         if len(head) > 16:
             head = head[:16]
         if head:
             parts.append(head)
     if not parts:
-        return []
+        return [f"低分评价未写明具体问题（{len(raw_list)}次）"]
     c = Counter(parts)
     return [f"{k}（{v}次）" for k, v in c.most_common(max_items)]
 
@@ -924,11 +937,7 @@ def build_ui_payload(auto_persist_metrics: bool = False, recompute_from_week_id:
 
             top_sales, top_rev, bottom = _dish_rankings(bundle, wk)
             ret_cnt, return_cnt_prev = _returns_count_week(bundle, wk)
-            waste_amt = _waste_week(bundle, wk, revenue, rev_sum_store or 1.0)
-            waste_prev = _waste_week(bundle, prev["week_id"], float(prev.get("revenue", 0) or 0), rev_sum_store or 1.0) if prev else 0.0
-            wow_waste = _wow(waste_amt, waste_prev)
             ret_st = ("警戒", "text-yellow-600") if ret_cnt > 5 else ("达标", "text-green-600")
-            loss_st = ("触发红线", "text-red-600") if wow_waste > 30 else ("警戒", "text-yellow-600") if wow_waste > 15 else ("达标", "text-green-600")
 
             slot_cur = _slot_revenue_orders(orders_df, wk)
             slot_prev = _slot_revenue_orders(orders_df, prev["week_id"]) if prev else {k: (0.0, 0) for k in slot_cur}
@@ -1121,7 +1130,6 @@ def build_ui_payload(auto_persist_metrics: bool = False, recompute_from_week_id:
                     "externalAndWeather": {"weather": {"summary": wx_sum}},
                     "productDetails": {
                         "returns": {"count": ret_cnt, "lastCount": return_cnt_prev},
-                        "lossAmount": {"trend": round(wow_waste, 2), "amount": round(waste_amt, 2), "lastAmount": round(waste_prev, 2)},
                     },
                 }
             )
@@ -1146,14 +1154,6 @@ def build_ui_payload(auto_persist_metrics: bool = False, recompute_from_week_id:
                         "statusText": ret_st[0],
                         "statusColor": ret_st[1],
                         "reference": "周>5次为🟡",
-                    },
-                    "lossAmount": {
-                        "amount": round(waste_amt, 2),
-                        "lastAmount": round(waste_prev, 2),
-                        "trend": round(wow_waste, 2),
-                        "statusText": loss_st[0],
-                        "statusColor": loss_st[1],
-                        "reference": "环比↑30%为🔴",
                     },
                 },
                 "timeAnalysis": {

@@ -354,13 +354,8 @@ def main() -> None:
             if x.get("note"):
                 st.caption(x.get("note"))
         st.markdown("</div>", unsafe_allow_html=True)
-    rc, lc = st.columns(2)
-    with rc:
-        r = pdetail.get("returns", {})
-        st.markdown(f"**退菜/换菜**：{r.get('count','-')} 次（上周 {r.get('lastCount','-')}）")
-    with lc:
-        l = pdetail.get("lossAmount", {})
-        st.markdown(f"**报损金额**：¥{_fmt_num(l.get('amount',0))}（环比 {l.get('trend',0)}%）")
+    r = pdetail.get("returns", {})
+    st.markdown(f"**退菜/换菜**：{r.get('count','-')} 次（上周 {r.get('lastCount','-')}）")
 
     # 四、时段销售分析
     st.markdown("### 四、时段销售分析")

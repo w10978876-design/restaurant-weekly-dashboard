@@ -130,18 +130,6 @@ def _safe_read_sales(path: str) -> tuple[pd.DataFrame | None, pd.DataFrame | Non
     return sold, ret
 
 
-def _safe_read_waste(path: str) -> pd.DataFrame | None:
-    df = read_sheet(path, "菜品报损统计")
-    df = drop_placeholder_tail(df, ["菜品名称", "报损金额"])
-    if "菜品名称" in df.columns:
-        df = df[~df["菜品名称"].astype(str).str.contains("合计", na=False)]
-    if "报损金额" in df.columns:
-        df["waste_amount"] = to_number(df["报损金额"])
-    if "报损数量" in df.columns:
-        df["waste_qty"] = to_number(df["报损数量"])
-    return df
-
-
 def _safe_read_groupbuy(path: str) -> pd.DataFrame | None:
     df = read_sheet(path, "团购核销明细")
     df = drop_placeholder_tail(df, ["核销/撤销时间"])
@@ -318,7 +306,8 @@ def load_store_bundle(store_key: str, store_dir: str) -> StoreBundle:
     sold = ret = None
     if resolved.get("sales"):
         sold, ret = _safe_read_sales(resolved["sales"])
-    waste = _safe_read_waste(resolved["waste"]) if resolved.get("waste") else None
+    # 不再接入「菜品报损」数据源
+    waste = None
     gb = _safe_read_groupbuy(resolved["groupbuy"]) if resolved.get("groupbuy") else None
     rev = _safe_read_reviews(resolved["reviews"]) if resolved.get("reviews") else None
     menu = _safe_read_menu(resolved["menu"]) if resolved.get("menu") else None

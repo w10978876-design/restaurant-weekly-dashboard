@@ -8,3 +8,6 @@ coverage/
 !.env.example
 __pycache__/
 *.pyc
+.codebuddy/
+.workbuddy/
+历史数据备份/
