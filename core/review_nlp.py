@@ -858,6 +858,12 @@ def extract_keywords_with_meta(
             for s in v:
                 _append_evidence(bad_evidence, k, s)
 
+    # 差评池兜底也可能带入「不错」等子串；统一剔除纯褒义短语，避免进 TOP 与证据表
+    for _bk in list(bad_counter.keys()):
+        if _compliment_phrase_without_negation(_bk):
+            del bad_counter[_bk]
+            bad_evidence.pop(_bk, None)
+
     good_ranked = _rank_keywords_detail(good_counter, bad_counter, len(good_texts), len(bad_texts), positive_side=True)
     bad_ranked = _rank_keywords_detail(bad_counter, good_counter, len(bad_texts), len(good_texts), positive_side=False)
     good_kw = [f"{x['keyword']}（{x['count']}次）" for x in good_ranked[:3]]

@@ -85,7 +85,8 @@ def main() -> int:
     parser.add_argument(
         "--recompute-from",
         default="auto",
-        help="week_id 边界。默认 auto=从当前 payload 最后一周的下一周开始（仅追加新周）。",
+        help="week_id 分界：仅重算 week_id >= 该值的周；更早的周沿用 ui_payload 快照。默认 auto=最后一周+7 天（仅追加新周）。"
+        " NLP/口径变更后需刷新历史周时，可传 1900-01-01 使任意真实周均 >= 分界从而全量重算。",
     )
     parser.add_argument("--strict", action="store_true", help="存在一致性问题时返回非0")
     args = parser.parse_args()
