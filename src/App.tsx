@@ -138,6 +138,11 @@ async function loadRepoActionItems(): Promise<ActionPlanItem[]> {
   }
 }
 
+/** 避免紧连重试打满 GitHub 限流 */
+function sleep(ms: number): Promise<void> {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
 async function readRemoteActionPlan(cfg: SyncConfig) {
   const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${ACTION_PLAN_REPO_PATH}`;
   const headers = {
@@ -145,7 +150,9 @@ async function readRemoteActionPlan(cfg: SyncConfig) {
     Accept: "application/vnd.github+json",
     "Content-Type": "application/json",
   };
-  const getRes = await fetch(`${api}?ref=${encodeURIComponent(cfg.branch)}`, { headers });
+  // GitHub 对 contents GET 常带 Cache-Control: max-age=60；若走缓存会拿到旧 sha，随后 PUT 必 409
+  const getUrl = `${api}?ref=${encodeURIComponent(cfg.branch)}&_=${Date.now()}`;
+  const getRes = await fetch(getUrl, { headers, cache: "no-store" });
   if (!getRes.ok) {
     throw new Error(`GITHUB_GET_${getRes.status}`);
   }
@@ -183,7 +190,8 @@ function upsertWeekActions(
 }
 
 async function writeActionItemsToGithub(cfg: SyncConfig, storeId: string, weekId: string, actions: string[]) {
-  for (let attempt = 0; attempt < 4; attempt += 1) {
+  const maxAttempts = 8;
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
     const { api, headers, sha, remoteItems } = await readRemoteActionPlan(cfg);
     const mergedItems = upsertWeekActions(remoteItems, storeId, weekId, actions);
     const payload = { version: 1, saved_at: toIso(), items: mergedItems };
@@ -191,6 +199,7 @@ async function writeActionItemsToGithub(cfg: SyncConfig, storeId: string, weekId
     const putRes = await fetch(api, {
       method: "PUT",
       headers,
+      cache: "no-store",
       body: JSON.stringify({
         message: `update action plans at ${toIso()}`,
         content,
@@ -199,8 +208,10 @@ async function writeActionItemsToGithub(cfg: SyncConfig, storeId: string, weekId
       }),
     });
     if (putRes.ok) return mergedItems;
-    if (putRes.status === 409 && attempt < 3) {
-      // Another commit landed between read/write; refetch and retry merge.
+    if (putRes.status === 409 && attempt < maxAttempts - 1) {
+      // 并发提交或浏览器曾缓存旧 sha：退避后重新拉取最新 sha 再合并写入
+      const backoff = Math.min(2000, 120 * 2 ** attempt) + Math.floor(Math.random() * 120);
+      await sleep(backoff);
       continue;
     }
     throw new Error(`GITHUB_PUT_${putRes.status}`);
@@ -213,7 +224,8 @@ function humanizeSyncError(err: unknown) {
   if (msg.includes("GITHUB_GET_401") || msg.includes("GITHUB_PUT_401")) return "同步失败：Token 无效或已过期（401）。";
   if (msg.includes("GITHUB_GET_403") || msg.includes("GITHUB_PUT_403")) return "同步失败：权限不足（403），请确认 token 具有 repo/workflow 权限。";
   if (msg.includes("GITHUB_GET_404") || msg.includes("GITHUB_PUT_404")) return "同步失败：仓库或文件路径不存在（404）。";
-  if (msg.includes("GITHUB_PUT_409")) return "同步失败：仓库文件有并发更新冲突（409），请点一次刷新后重试。";
+  if (msg.includes("GITHUB_PUT_409"))
+    return "同步失败：写入时与仓库版本不一致（409）。已自动重试仍失败时请稍等几秒再点「保存」；若仍失败请刷新页面后重试（勿多开标签同时保存）。";
   if (msg.includes("Failed to fetch") || msg.includes("NetworkError")) return "同步失败：网络连接异常，请稍后重试。";
   return `同步失败：${msg || "未知错误"}`;
 }
