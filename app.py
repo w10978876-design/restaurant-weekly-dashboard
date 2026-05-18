@@ -423,7 +423,10 @@ def main() -> None:
         with wc2:
             st.metric("异常天气日均营收", f"¥{_fmt_num(s.get('abnormalAvgRev', 0))}")
         with wc3:
-            st.metric("正常天气日均营收", f"¥{_fmt_num(s.get('normalAvgRev', 0))}")
+            st.metric(
+                "参考同日日均",
+                f"¥{_fmt_num(s.get('referenceSameDayAvg', s.get('normalAvgRev', 0)))}",
+            )
         with wc4:
             st.metric("天气是否显著影响", str(s.get("isImpacted", "-")))
     else:

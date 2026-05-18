@@ -627,7 +627,7 @@ def _weather_impact_summary(
     """
     回答「异常天气是否导致营收下降超过25%」：
     主判定 = 本周营收较上周环比下降 ≥25%（与核心指标口径一致），且本周存在异常天气日。
-    辅指标 = 本周异常天气日日均营收 vs 前两周（连续三周窗口中的前两周）日均营收。
+    辅指标 = 本周异常日日均营收 vs 参考同日日均（每个异常日取前两周同一星期几的营收均值，再对异常日求平均）。
     """
     comp_weeks = _comparison_week_ids(week_id, store_weeks)
     cur_start = datetime.strptime(week_id, "%Y-%m-%d").date()
@@ -642,26 +642,35 @@ def _weather_impact_summary(
     wow_pct = _wow(this_rev, last_rev)
     decline_ratio = max(0.0, -wow_pct / 100.0) if wow_pct < 0 else 0.0
 
-    # 本周异常日日均 vs 前两周所有有营收日的日均（三周窗口内除本周外）
-    prior_weeks = [w for w in comp_weeks if w != week_id]
-    baseline_daily: list[float] = []
-    for wk in prior_weeks:
-        wk_start = datetime.strptime(wk, "%Y-%m-%d").date()
-        for i in range(7):
-            rev, _, _, _ = _revenue_for_business_date(orders_df, wk_start + timedelta(days=i))
-            if rev > 0:
-                baseline_daily.append(rev)
-    baseline_avg = sum(baseline_daily) / len(baseline_daily) if baseline_daily else 0.0
-
     revs_ab_cur: list[float] = []
+    per_abnormal_same_day_avgs: list[float] = []
+    reference_same_day_samples = 0
     for d in cur_days:
         if not is_abnormal_weather_detail(weather_detail.get(d, {})):
             continue
         rev, _, _, _ = _revenue_for_business_date(orders_df, d)
         if rev > 0:
             revs_ab_cur.append(rev)
+        same_day_refs: list[float] = []
+        for k in (1, 2):
+            ref_d = d - timedelta(weeks=k)
+            ref_rev, _, _, _ = _revenue_for_business_date(orders_df, ref_d)
+            if ref_rev > 0:
+                same_day_refs.append(ref_rev)
+                reference_same_day_samples += 1
+        if same_day_refs:
+            per_abnormal_same_day_avgs.append(sum(same_day_refs) / len(same_day_refs))
     ab_cur_avg = sum(revs_ab_cur) / len(revs_ab_cur) if revs_ab_cur else 0.0
-    day_vs_baseline_drop = (baseline_avg - ab_cur_avg) / baseline_avg if baseline_avg > 0 and ab_cur_avg > 0 else 0.0
+    reference_same_day_avg = (
+        sum(per_abnormal_same_day_avgs) / len(per_abnormal_same_day_avgs)
+        if per_abnormal_same_day_avgs
+        else 0.0
+    )
+    day_vs_baseline_drop = (
+        (reference_same_day_avg - ab_cur_avg) / reference_same_day_avg
+        if reference_same_day_avg > 0 and ab_cur_avg > 0
+        else 0.0
+    )
 
     if abnormal_days_cur == 0:
         impacted = "否"
@@ -679,15 +688,15 @@ def _weather_impact_summary(
         "lastWeekRevenue": round(last_rev, 2),
         "weekRevenueChangePct": wow_pct,
         "abnormalAvgRev": round(ab_cur_avg, 2),
-        "normalAvgRev": round(baseline_avg, 2),
+        "referenceSameDayAvg": round(reference_same_day_avg, 2),
         "isImpacted": impacted,
         "impactDropAvg": round(decline_ratio, 4),
-        "abnormalVsBaselineDrop": round(day_vs_baseline_drop, 4),
+        "abnormalVsReferenceSameDayDrop": round(day_vs_baseline_drop, 4),
         "comparisonWeeks": comp_weeks,
         "comparisonRangeLabel": comp_label,
         "priorWeekId": prev_wk,
         "abnormalSampleDays": len(revs_ab_cur),
-        "baselineSampleDays": len(baseline_daily),
+        "referenceSameDaySampleCount": reference_same_day_samples,
     }
 
 
