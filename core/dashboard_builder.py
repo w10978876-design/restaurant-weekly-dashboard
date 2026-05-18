@@ -19,7 +19,13 @@ from core.paths import data_dir, ui_payload_path
 from core.review_nlp import extract_keywords_with_meta, negative_lexical_signal
 from core.status_rules import aov_status, orders_status, retention_status, revenue_status
 from core.weeks import parse_business_date, week_id_for_date
-from core.weather_md import is_abnormal_weather, is_normal_weather, load_weather_map
+from core.weather_md import (
+    is_abnormal_weather,
+    is_abnormal_weather_detail,
+    is_normal_weather,
+    load_weather_detail_map,
+    load_weather_map,
+)
 from ingestion.category_mapping import normalize_join_key
 from ingestion.excel_reader import to_number
 from ingestion.pipeline import StoreBundle, load_all_stores
@@ -425,6 +431,7 @@ def _anomaly_cards(
     week_id: str,
     store_weeks: list[str],
     weather_map: dict[date, str],
+    weather_detail: dict[date, dict[str, str]],
 ) -> tuple[list[dict], dict | None]:
     cards: list[dict] = []
     if orders_df is None or "_slot" not in orders_df.columns:
@@ -504,7 +511,11 @@ def _anomaly_cards(
         if low_rev or low_ord:
             ord_drop = (1.0 - ord_ratio) * 100 if ord_ratio is not None else None
             rev_base_pct = rev_ratio * 100 if rev_ratio is not None else None
-            weather_judge = f"受天气影响（{wx}）" if is_abnormal_weather(wx) else "天气正常，建议排查运营问题"
+            weather_judge = (
+                f"受天气影响（{wx}）"
+                if is_abnormal_weather_detail(weather_detail.get(bd, {}))
+                else "天气正常，建议排查运营问题"
+            )
             ord_part = (
                 f"订单数({ord_cnt})较同组均值下降{ord_drop:.0f}%" if ord_drop is not None else f"订单数({ord_cnt})明显低于基准"
             )
@@ -610,7 +621,7 @@ def _prior_week_id(week_id: str, store_weeks: list[str] | None) -> str | None:
 def _weather_impact_summary(
     week_id: str,
     orders_df: pd.DataFrame | None,
-    weather_map: dict[date, str],
+    weather_detail: dict[date, dict[str, str]],
     store_weeks: list[str] | None,
 ) -> dict[str, Any]:
     """
@@ -618,11 +629,12 @@ def _weather_impact_summary(
     主判定 = 本周营收较上周环比下降 ≥25%（与核心指标口径一致），且本周存在异常天气日。
     辅指标 = 本周异常天气日日均营收 vs 前两周（连续三周窗口中的前两周）日均营收。
     """
-    threshold_pct = int(WEATHER_WOW_DECLINE_THRESHOLD * 100)
     comp_weeks = _comparison_week_ids(week_id, store_weeks)
     cur_start = datetime.strptime(week_id, "%Y-%m-%d").date()
     cur_days = [cur_start + timedelta(days=i) for i in range(7)]
-    abnormal_days_cur = sum(1 for d in cur_days if is_abnormal_weather(weather_map.get(d, "")))
+    abnormal_days_cur = sum(
+        1 for d in cur_days if is_abnormal_weather_detail(weather_detail.get(d, {}))
+    )
 
     this_rev = _week_total_revenue(orders_df, week_id)
     prev_wk = _prior_week_id(week_id, store_weeks)
@@ -643,7 +655,7 @@ def _weather_impact_summary(
 
     revs_ab_cur: list[float] = []
     for d in cur_days:
-        if not is_abnormal_weather(weather_map.get(d, "")):
+        if not is_abnormal_weather_detail(weather_detail.get(d, {})):
             continue
         rev, _, _, _ = _revenue_for_business_date(orders_df, d)
         if rev > 0:
@@ -652,18 +664,13 @@ def _weather_impact_summary(
     day_vs_baseline_drop = (baseline_avg - ab_cur_avg) / baseline_avg if baseline_avg > 0 and ab_cur_avg > 0 else 0.0
 
     if abnormal_days_cur == 0:
-        impacted = "否（本周无异常天气日）"
+        impacted = "否"
     elif not prev_wk or last_rev <= 0:
-        impacted = "数据不足（缺少上周营收对照）"
+        impacted = "数据不足"
     elif decline_ratio >= WEATHER_WOW_DECLINE_THRESHOLD:
-        impacted = (
-            f"是（本周营收环比下降 {round(decline_ratio * 100)}%，"
-            f"且本周 {abnormal_days_cur} 天异常天气）"
-        )
-    elif wow_pct >= 0:
-        impacted = f"否（本周营收环比{wow_pct:+.1f}%，未见规则级下滑）"
+        impacted = "是"
     else:
-        impacted = f"否（本周环比下降 {round(decline_ratio * 100)}%，未达{threshold_pct}%阈值）"
+        impacted = "否"
 
     comp_label = "、".join(_parse_week_range(w) for w in comp_weeks)
     return {
@@ -688,6 +695,7 @@ def _weather_daily(
     week_id: str,
     orders_df: pd.DataFrame | None,
     weather_map: dict[date, str],
+    weather_detail: dict[date, dict[str, str]],
     store_weeks: list[str] | None = None,
 ) -> tuple[list[dict], dict]:
     start = datetime.strptime(week_id, "%Y-%m-%d").date()
@@ -709,7 +717,7 @@ def _weather_daily(
                 "paidUsers": paid,
             }
         )
-    summary = _weather_impact_summary(week_id, orders_df, weather_map, store_weeks)
+    summary = _weather_impact_summary(week_id, orders_df, weather_detail, store_weeks)
     return daily, summary
 
 
@@ -889,7 +897,8 @@ def _should_use_frozen_prior_week(
 
 
 def build_ui_payload(auto_persist_metrics: bool = False, recompute_from_week_id: str | None = None) -> dict[str, Any]:
-    weather_map = load_weather_map()
+    weather_detail = load_weather_detail_map()
+    weather_map = {d: (v.get("line") or v.get("phenomenon", "")) for d, v in weather_detail.items()}
     recompute_boundary = _recompute_boundary(recompute_from_week_id)
     existing_weeks = _load_existing_ui_payload_weeks()
     engine = MetricsEngine(auto_persist=auto_persist_metrics)
@@ -1049,7 +1058,7 @@ def build_ui_payload(auto_persist_metrics: bool = False, recompute_from_week_id:
                     }
                 )
 
-            abnormal, lowest = _anomaly_cards(orders_df, wk, weeks, weather_map)
+            abnormal, lowest = _anomaly_cards(orders_df, wk, weeks, weather_map, weather_detail)
             gb_c = int(row.get("groupbuy_count", 0) or 0)
             gb_share = round(gb_c / max(orders, 1) * 100, 1)
             prev_gb = int(prev.get("groupbuy_count", 0) or 0) if prev else 0
@@ -1191,7 +1200,7 @@ def build_ui_payload(auto_persist_metrics: bool = False, recompute_from_week_id:
             )
             rat_st = ("触发红线", "text-red-600") if rating_prev - rating >= 0.2 else ("达标", "text-green-600")
 
-            daily, wx_sum = _weather_daily(wk, orders_df, weather_map, weeks)
+            daily, wx_sum = _weather_daily(wk, orders_df, weather_map, weather_detail, weeks)
             special = _special_dates(wk, orders_df)
 
             summary_items = generate_summary(
