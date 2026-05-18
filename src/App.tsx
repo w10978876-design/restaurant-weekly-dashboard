@@ -271,7 +271,13 @@ function normalizeWeekPayloadForUi(week: any): any {
     abnormalDays: 0,
     abnormalAvgRev: 0,
     normalAvgRev: 0,
+    thisWeekRevenue: 0,
+    lastWeekRevenue: 0,
+    weekRevenueChangePct: 0,
     isImpacted: "否",
+    comparisonRangeLabel: "",
+    abnormalSampleDays: 0,
+    baselineSampleDays: 0,
     ...(weather.summary ?? {}),
   };
   eaw.weather = weather;
@@ -635,12 +641,15 @@ export default function App() {
             </table>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-t border-[var(--dash-border)] bg-[#f8f9fa] text-[13px]">
               <div>
-                <div className="flex justify-between gap-2"><span className="text-[var(--dash-muted)]">本周异常天气天数：</span><span className="font-semibold dash-mono">{data.externalAndWeather.weather.summary.abnormalDays} 天</span></div>
-                <div className="flex justify-between mt-1 gap-2"><span className="text-[var(--dash-muted)]">异常天气日均营收：</span><span className="font-semibold dash-mono">¥{data.externalAndWeather.weather.summary.abnormalAvgRev.toLocaleString()}</span></div>
+                <div className="flex justify-between gap-2"><span className="text-[var(--dash-muted)]">本周营收（较上周）：</span><span className={cls("font-semibold dash-mono", (data.externalAndWeather.weather.summary.weekRevenueChangePct ?? 0) < 0 ? "dash-trend-down" : "dash-trend-up")}>{(data.externalAndWeather.weather.summary.weekRevenueChangePct ?? 0) > 0 ? "+" : ""}{data.externalAndWeather.weather.summary.weekRevenueChangePct ?? 0}%</span></div>
+                <div className="flex justify-between mt-1 gap-2"><span className="text-[var(--dash-muted)]">本周 / 上周营收：</span><span className="font-semibold dash-mono text-[12px]">¥{(data.externalAndWeather.weather.summary.thisWeekRevenue ?? 0).toLocaleString()} / ¥{(data.externalAndWeather.weather.summary.lastWeekRevenue ?? 0).toLocaleString()}</span></div>
+                <div className="flex justify-between mt-1 gap-2"><span className="text-[var(--dash-muted)]">本周异常天气天数：</span><span className="font-semibold dash-mono">{data.externalAndWeather.weather.summary.abnormalDays} 天</span></div>
+                <div className="flex justify-between mt-1 gap-2"><span className="text-[var(--dash-muted)]">本周异常日日均营收：</span><span className="font-semibold dash-mono">¥{data.externalAndWeather.weather.summary.abnormalAvgRev.toLocaleString()}</span></div>
               </div>
               <div>
-                <div className="flex justify-between gap-2"><span className="text-[var(--dash-muted)]">正常天气日均营收：</span><span className="font-semibold dash-mono">¥{data.externalAndWeather.weather.summary.normalAvgRev.toLocaleString()}</span></div>
-                <div className="flex justify-between mt-1 gap-2"><span className="text-[var(--dash-muted)] shrink">异常天气是否导致营收下降超过30%？</span><span className="font-semibold text-[var(--dash-danger)] text-right">{data.externalAndWeather.weather.summary.isImpacted}</span></div>
+                <div className="flex justify-between gap-2"><span className="text-[var(--dash-muted)]">前两周日均营收（对照）：</span><span className="font-semibold dash-mono">¥{data.externalAndWeather.weather.summary.normalAvgRev.toLocaleString()}</span></div>
+                <p className="text-[11px] text-[var(--dash-muted)] mt-2 leading-snug">判定：本周环比下降≥25% 且本周有异常天气日 → 视为天气造成显著拖累（与核心指标环比口径一致）。</p>
+                <div className="flex justify-between mt-2 gap-2"><span className="text-[var(--dash-muted)] shrink">异常天气是否导致营收下降超过25%？</span><span className={cls("font-semibold text-right", String(data.externalAndWeather.weather.summary.isImpacted).startsWith("是") ? "text-[var(--dash-danger)]" : "text-[var(--dash-ink)]")}>{data.externalAndWeather.weather.summary.isImpacted}</span></div>
               </div>
             </div>
           </div>

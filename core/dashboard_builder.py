@@ -35,6 +35,9 @@ PERIOD_DEF = [
 
 SLOT_LABELS = {p[0] for p in PERIOD_DEF}
 
+# 天气影响：本周营收较上周环比下降达到该比例且本周有异常天气日 → 判「是」
+WEATHER_WOW_DECLINE_THRESHOLD = 0.25
+
 
 def _normalize_dish_key(s: str) -> str:
     """与 ingestion.category_mapping.normalize_join_key 一致，便于名称/大类与映射表 join。"""
@@ -555,28 +558,145 @@ def _anomaly_cards(
     return cards, lowest
 
 
+def _comparison_week_ids(week_id: str, store_weeks: list[str] | None) -> list[str]:
+    """连续三周窗口（含本周）：用于异常天气对照，避免单周样本过少算不出降幅。"""
+    if store_weeks:
+        ordered = sorted(str(w) for w in store_weeks)
+        if week_id in ordered:
+            idx = ordered.index(week_id)
+            return ordered[max(0, idx - 2) : idx + 1]
+    start = datetime.strptime(week_id, "%Y-%m-%d").date()
+    return [(start - timedelta(days=14)).isoformat(), (start - timedelta(days=7)).isoformat(), week_id]
+
+
+def _revenue_for_business_date(orders_df: pd.DataFrame | None, d: date) -> tuple[float, int, int, int]:
+    rev = ord_cnt = diners = paid = 0
+    if orders_df is None or orders_df.empty:
+        return rev, ord_cnt, diners, paid
+    if "business_date" not in orders_df.columns:
+        return rev, ord_cnt, diners, paid
+    sub = orders_df[orders_df["business_date"] == d]
+    if sub.empty:
+        return rev, ord_cnt, diners, paid
+    rev = float(sub["order_revenue"].fillna(0).sum())
+    ord_cnt = int(sub["订单号"].nunique()) if "订单号" in sub.columns else len(sub)
+    paid = ord_cnt
+    diners = int(sub["用餐人数"].fillna(0).sum()) if "用餐人数" in sub.columns else ord_cnt * 2
+    return rev, ord_cnt, diners, paid
+
+
+def _week_total_revenue(orders_df: pd.DataFrame | None, week_id: str) -> float:
+    if orders_df is None or orders_df.empty:
+        return 0.0
+    if "week_id" in orders_df.columns:
+        sub = orders_df[orders_df["week_id"].astype(str) == str(week_id)]
+        if not sub.empty:
+            return float(sub["order_revenue"].fillna(0).sum())
+    start = datetime.strptime(week_id, "%Y-%m-%d").date()
+    days = [start + timedelta(days=i) for i in range(7)]
+    return float(sum(_revenue_for_business_date(orders_df, d)[0] for d in days))
+
+
+def _prior_week_id(week_id: str, store_weeks: list[str] | None) -> str | None:
+    if not store_weeks:
+        return None
+    ordered = sorted(str(w) for w in store_weeks)
+    if week_id not in ordered:
+        return None
+    idx = ordered.index(week_id)
+    return ordered[idx - 1] if idx > 0 else None
+
+
+def _weather_impact_summary(
+    week_id: str,
+    orders_df: pd.DataFrame | None,
+    weather_map: dict[date, str],
+    store_weeks: list[str] | None,
+) -> dict[str, Any]:
+    """
+    回答「异常天气是否导致营收下降超过25%」：
+    主判定 = 本周营收较上周环比下降 ≥25%（与核心指标口径一致），且本周存在异常天气日。
+    辅指标 = 本周异常天气日日均营收 vs 前两周（连续三周窗口中的前两周）日均营收。
+    """
+    threshold_pct = int(WEATHER_WOW_DECLINE_THRESHOLD * 100)
+    comp_weeks = _comparison_week_ids(week_id, store_weeks)
+    cur_start = datetime.strptime(week_id, "%Y-%m-%d").date()
+    cur_days = [cur_start + timedelta(days=i) for i in range(7)]
+    abnormal_days_cur = sum(1 for d in cur_days if is_abnormal_weather(weather_map.get(d, "")))
+
+    this_rev = _week_total_revenue(orders_df, week_id)
+    prev_wk = _prior_week_id(week_id, store_weeks)
+    last_rev = _week_total_revenue(orders_df, prev_wk) if prev_wk else 0.0
+    wow_pct = _wow(this_rev, last_rev)
+    decline_ratio = max(0.0, -wow_pct / 100.0) if wow_pct < 0 else 0.0
+
+    # 本周异常日日均 vs 前两周所有有营收日的日均（三周窗口内除本周外）
+    prior_weeks = [w for w in comp_weeks if w != week_id]
+    baseline_daily: list[float] = []
+    for wk in prior_weeks:
+        wk_start = datetime.strptime(wk, "%Y-%m-%d").date()
+        for i in range(7):
+            rev, _, _, _ = _revenue_for_business_date(orders_df, wk_start + timedelta(days=i))
+            if rev > 0:
+                baseline_daily.append(rev)
+    baseline_avg = sum(baseline_daily) / len(baseline_daily) if baseline_daily else 0.0
+
+    revs_ab_cur: list[float] = []
+    for d in cur_days:
+        if not is_abnormal_weather(weather_map.get(d, "")):
+            continue
+        rev, _, _, _ = _revenue_for_business_date(orders_df, d)
+        if rev > 0:
+            revs_ab_cur.append(rev)
+    ab_cur_avg = sum(revs_ab_cur) / len(revs_ab_cur) if revs_ab_cur else 0.0
+    day_vs_baseline_drop = (baseline_avg - ab_cur_avg) / baseline_avg if baseline_avg > 0 and ab_cur_avg > 0 else 0.0
+
+    if abnormal_days_cur == 0:
+        impacted = "否（本周无异常天气日）"
+    elif not prev_wk or last_rev <= 0:
+        impacted = "数据不足（缺少上周营收对照）"
+    elif decline_ratio >= WEATHER_WOW_DECLINE_THRESHOLD:
+        impacted = (
+            f"是（本周营收环比下降 {round(decline_ratio * 100)}%，"
+            f"且本周 {abnormal_days_cur} 天异常天气）"
+        )
+    elif wow_pct >= 0:
+        impacted = f"否（本周营收环比{wow_pct:+.1f}%，未见规则级下滑）"
+    else:
+        impacted = f"否（本周环比下降 {round(decline_ratio * 100)}%，未达{threshold_pct}%阈值）"
+
+    comp_label = "、".join(_parse_week_range(w) for w in comp_weeks)
+    return {
+        "abnormalDays": abnormal_days_cur,
+        "thisWeekRevenue": round(this_rev, 2),
+        "lastWeekRevenue": round(last_rev, 2),
+        "weekRevenueChangePct": wow_pct,
+        "abnormalAvgRev": round(ab_cur_avg, 2),
+        "normalAvgRev": round(baseline_avg, 2),
+        "isImpacted": impacted,
+        "impactDropAvg": round(decline_ratio, 4),
+        "abnormalVsBaselineDrop": round(day_vs_baseline_drop, 4),
+        "comparisonWeeks": comp_weeks,
+        "comparisonRangeLabel": comp_label,
+        "priorWeekId": prev_wk,
+        "abnormalSampleDays": len(revs_ab_cur),
+        "baselineSampleDays": len(baseline_daily),
+    }
+
+
 def _weather_daily(
-    week_id: str, orders_df: pd.DataFrame | None, weather_map: dict[date, str]
+    week_id: str,
+    orders_df: pd.DataFrame | None,
+    weather_map: dict[date, str],
+    store_weeks: list[str] | None = None,
 ) -> tuple[list[dict], dict]:
     start = datetime.strptime(week_id, "%Y-%m-%d").date()
     days = [start + timedelta(days=i) for i in range(7)]
     wd_cn = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-    daily = []
-    revs_normal: list[float] = []
-    revs_ab: list[float] = []
-    revs_wd_normal: list[float] = []
-    revs_wd_ab: list[float] = []
-    revs_we_normal: list[float] = []
-    revs_we_ab: list[float] = []
+    daily: list[dict] = []
     for i, d in enumerate(days):
         wx = weather_map.get(d, "")
-        rev = ord_cnt = diners = paid = 0
-        if orders_df is not None and not orders_df.empty and "business_date" in orders_df.columns:
-            sub = orders_df[orders_df["business_date"] == d]
-            rev = float(sub["order_revenue"].fillna(0).sum())
-            ord_cnt = int(sub["订单号"].nunique()) if "订单号" in sub.columns else len(sub)
-            paid = ord_cnt
-            diners = int(sub["用餐人数"].fillna(0).sum()) if "用餐人数" in sub.columns else ord_cnt * 2
+        rev, ord_cnt, diners, paid = _revenue_for_business_date(orders_df, d)
         typ = _weather_icon_type(wx)
         daily.append(
             {
@@ -589,48 +709,7 @@ def _weather_daily(
                 "paidUsers": paid,
             }
         )
-        is_weekend = d.weekday() >= 5
-        if is_normal_weather(wx) and rev > 0:
-            revs_normal.append(rev)
-            if is_weekend:
-                revs_we_normal.append(rev)
-            else:
-                revs_wd_normal.append(rev)
-        if is_abnormal_weather(wx) and rev > 0:
-            revs_ab.append(rev)
-            if is_weekend:
-                revs_we_ab.append(rev)
-            else:
-                revs_wd_ab.append(rev)
-    n_avg = sum(revs_normal) / len(revs_normal) if revs_normal else 0.0
-    a_avg = sum(revs_ab) / len(revs_ab) if revs_ab else 0.0
-
-    wd_n_avg = sum(revs_wd_normal) / len(revs_wd_normal) if revs_wd_normal else 0.0
-    wd_a_avg = sum(revs_wd_ab) / len(revs_wd_ab) if revs_wd_ab else 0.0
-    we_n_avg = sum(revs_we_normal) / len(revs_we_normal) if revs_we_normal else 0.0
-    we_a_avg = sum(revs_we_ab) / len(revs_we_ab) if revs_we_ab else 0.0
-
-    drops: list[float] = []
-    if wd_n_avg > 0 and wd_a_avg >= 0:
-        drops.append((wd_n_avg - wd_a_avg) / wd_n_avg)
-    if we_n_avg > 0 and we_a_avg >= 0:
-        drops.append((we_n_avg - we_a_avg) / we_n_avg)
-    avg_drop = sum(drops) / len(drops) if drops else 0.0
-
-    impacted = "否"
-    if avg_drop > 0.30:
-        impacted = "是 (营收下降超过30%)"
-    summary = {
-        "abnormalDays": len(revs_ab),
-        "abnormalAvgRev": round(a_avg, 2),
-        "normalAvgRev": round(n_avg, 2),
-        "isImpacted": impacted,
-        "weekdayNormalAvgRev": round(wd_n_avg, 2),
-        "weekdayAbnormalAvgRev": round(wd_a_avg, 2),
-        "weekendNormalAvgRev": round(we_n_avg, 2),
-        "weekendAbnormalAvgRev": round(we_a_avg, 2),
-        "impactDropAvg": round(avg_drop, 4),
-    }
+    summary = _weather_impact_summary(week_id, orders_df, weather_map, store_weeks)
     return daily, summary
 
 
@@ -1112,7 +1191,7 @@ def build_ui_payload(auto_persist_metrics: bool = False, recompute_from_week_id:
             )
             rat_st = ("触发红线", "text-red-600") if rating_prev - rating >= 0.2 else ("达标", "text-green-600")
 
-            daily, wx_sum = _weather_daily(wk, orders_df, weather_map)
+            daily, wx_sum = _weather_daily(wk, orders_df, weather_map, weeks)
             special = _special_dates(wk, orders_df)
 
             summary_items = generate_summary(
