@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": "2026-05-25T02:18:48+00:00",
+  "saved_at": "2026-06-01T02:23:23+00:00",
   "rows": [
     {
       "store_id": "夕佳悦",
@@ -150,7 +150,7 @@
       "groupbuy_income": 8213.039999999999,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-05-25T02:18:48+00:00",
+      "updated_at": "2026-06-01T02:23:23+00:00",
       "repurchase_rate": 3.2,
       "repeat_payers": 11.0,
       "total_payers": 344.0
@@ -167,7 +167,7 @@
       "groupbuy_income": 9990.93,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-05-25T02:18:48+00:00",
+      "updated_at": "2026-06-01T02:23:23+00:00",
       "repurchase_rate": 3.58,
       "repeat_payers": 10.0,
       "total_payers": 279.0
@@ -184,7 +184,7 @@
       "groupbuy_income": 4283.0599999999995,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-05-25T02:18:48+00:00",
+      "updated_at": "2026-06-01T02:23:23+00:00",
       "repurchase_rate": 4.15,
       "repeat_payers": 8.0,
       "total_payers": 193.0
@@ -201,10 +201,27 @@
       "groupbuy_income": 3936.02,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-05-25T02:18:48+00:00",
+      "updated_at": "2026-06-01T02:23:23+00:00",
       "repurchase_rate": 2.19,
       "repeat_payers": 4.0,
       "total_payers": 183.0
+    },
+    {
+      "store_id": "夕佳悦",
+      "week_id": "2026-05-25",
+      "revenue": 36549.8,
+      "orders": 299,
+      "table_turnover_rate": 2.4916666666666667,
+      "avg_order_value": 122.24013377926423,
+      "discount_amount": 387.8,
+      "groupbuy_count": 80,
+      "groupbuy_income": 8334.71,
+      "review_score": 4.4,
+      "waste_amount": 0.0,
+      "updated_at": "2026-06-01T02:23:23+00:00",
+      "repurchase_rate": 3.48,
+      "repeat_payers": 7.0,
+      "total_payers": 201.0
     },
     {
       "store_id": "紫竹",
@@ -352,9 +369,9 @@
       "discount_amount": 480.8,
       "groupbuy_count": 68,
       "groupbuy_income": 14137.710000000001,
-      "review_score": 4.844827586206897,
+      "review_score": 4.3,
       "waste_amount": 0.0,
-      "updated_at": "2026-05-25T02:18:48+00:00",
+      "updated_at": "2026-06-01T02:23:23+00:00",
       "repurchase_rate": 7.3,
       "repeat_payers": 36.0,
       "total_payers": 493.0
@@ -369,9 +386,9 @@
       "discount_amount": 38.4,
       "groupbuy_count": 70,
       "groupbuy_income": 13378.09,
-      "review_score": 4.578947368421052,
+      "review_score": 4.3,
       "waste_amount": 0.0,
-      "updated_at": "2026-05-25T02:18:48+00:00",
+      "updated_at": "2026-06-01T02:23:23+00:00",
       "repurchase_rate": 6.85,
       "repeat_payers": 33.0,
       "total_payers": 482.0
@@ -386,9 +403,9 @@
       "discount_amount": 171.6,
       "groupbuy_count": 49,
       "groupbuy_income": 9299.17,
-      "review_score": 4.684210526315789,
+      "review_score": 4.3,
       "waste_amount": 0.0,
-      "updated_at": "2026-05-25T02:18:48+00:00",
+      "updated_at": "2026-06-01T02:23:23+00:00",
       "repurchase_rate": 5.19,
       "repeat_payers": 18.0,
       "total_payers": 347.0
@@ -403,12 +420,29 @@
       "discount_amount": 553.6,
       "groupbuy_count": 50,
       "groupbuy_income": 9664.54,
-      "review_score": 4.8125,
+      "review_score": 4.3,
       "waste_amount": 0.0,
-      "updated_at": "2026-05-25T02:18:48+00:00",
+      "updated_at": "2026-06-01T02:23:23+00:00",
       "repurchase_rate": 6.39,
       "repeat_payers": 23.0,
       "total_payers": 360.0
+    },
+    {
+      "store_id": "紫竹",
+      "week_id": "2026-05-25",
+      "revenue": 66138.2,
+      "orders": 488,
+      "table_turnover_rate": 3.5107913669064748,
+      "avg_order_value": 135.52909836065572,
+      "discount_amount": 82.6,
+      "groupbuy_count": 40,
+      "groupbuy_income": 6406.61,
+      "review_score": 4.3,
+      "waste_amount": 0.0,
+      "updated_at": "2026-06-01T02:23:23+00:00",
+      "repurchase_rate": 9.57,
+      "repeat_payers": 36.0,
+      "total_payers": 376.0
     }
   ]
 }
