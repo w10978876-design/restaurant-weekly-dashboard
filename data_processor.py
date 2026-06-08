@@ -118,7 +118,7 @@ def generate_summary(week_payload: dict[str, Any]) -> dict[str, list[str]]:
     weather = (week_payload.get("externalAndWeather", {}) or {}).get("weather", {}) or {}
     weather_summary = weather.get("summary", {}) or {}
     impacted_text = str(weather_summary.get("isImpacted", "")).strip()
-    if impacted_text == "是" or impacted_text.startswith("是（") or impacted_text.startswith("是 "):
+    if impacted_text in ("是", "异常天气影响营收") or impacted_text.startswith("是（") or impacted_text.startswith("是 "):
         problems.append("异常天气对营收存在明显负向影响，抗天气波动能力偏弱")
 
     # 5) 质量下滑与运营损耗信号（规格要求）

@@ -625,9 +625,9 @@ def _weather_impact_summary(
     store_weeks: list[str] | None,
 ) -> dict[str, Any]:
     """
-    回答「异常天气是否导致营收下降超过25%」：
-    主判定 = 本周营收较上周环比下降 ≥25%（与核心指标口径一致），且本周存在异常天气日。
-    辅指标 = 本周异常日日均营收 vs 参考同日日均（每个异常日取前两周同一星期几的营收均值，再对异常日求平均）。
+    回答「异常天气是否影响营收」：
+    判定 = 本周整体营收较上周环比下降，且异常日日均较参考同日日均下降 ≥25%。
+    参考同日日均 = 每个异常日取前两周同一星期几的营收均值，再对异常日求平均。
     """
     comp_weeks = _comparison_week_ids(week_id, store_weeks)
     cur_start = datetime.strptime(week_id, "%Y-%m-%d").date()
@@ -671,13 +671,22 @@ def _weather_impact_summary(
         if reference_same_day_avg > 0 and ab_cur_avg > 0
         else 0.0
     )
+    abnormal_vs_ref_pct = (
+        ((ab_cur_avg - reference_same_day_avg) / reference_same_day_avg) * 100
+        if reference_same_day_avg > 0 and ab_cur_avg > 0
+        else 0.0
+    )
 
     if abnormal_days_cur == 0:
         impacted = "否"
     elif not prev_wk or last_rev <= 0:
         impacted = "数据不足"
-    elif decline_ratio >= WEATHER_WOW_DECLINE_THRESHOLD:
-        impacted = "是"
+    elif wow_pct >= 0:
+        impacted = "否"
+    elif reference_same_day_avg <= 0 or ab_cur_avg <= 0:
+        impacted = "数据不足"
+    elif day_vs_baseline_drop >= WEATHER_WOW_DECLINE_THRESHOLD:
+        impacted = "异常天气影响营收"
     else:
         impacted = "否"
 
@@ -692,6 +701,7 @@ def _weather_impact_summary(
         "isImpacted": impacted,
         "impactDropAvg": round(decline_ratio, 4),
         "abnormalVsReferenceSameDayDrop": round(day_vs_baseline_drop, 4),
+        "abnormalVsReferenceSameDayDropPct": round(abnormal_vs_ref_pct, 2),
         "comparisonWeeks": comp_weeks,
         "comparisonRangeLabel": comp_label,
         "priorWeekId": prev_wk,
@@ -715,9 +725,12 @@ def _weather_daily(
         wx = weather_map.get(d, "")
         rev, ord_cnt, diners, paid = _revenue_for_business_date(orders_df, d)
         typ = _weather_icon_type(wx)
+        abnormal = is_abnormal_weather_detail(weather_detail.get(d, {}))
         daily.append(
             {
                 "date": wd_cn[i],
+                "calendarDate": d.isoformat(),
+                "isAbnormalWeather": abnormal,
                 "type": typ,
                 "description": wx or "（当日无北京天气预报记录）",
                 "revenue": rev,

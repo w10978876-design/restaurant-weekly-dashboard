@@ -274,12 +274,14 @@ function normalizeWeekPayloadForUi(week: any): any {
     thisWeekRevenue: 0,
     lastWeekRevenue: 0,
     weekRevenueChangePct: 0,
+    abnormalVsReferenceSameDayDropPct: 0,
     isImpacted: "否",
     comparisonRangeLabel: "",
     abnormalSampleDays: 0,
     referenceSameDaySampleCount: 0,
     ...(weather.summary ?? {}),
   };
+  weather.daily = weather.daily.map((d: any) => ({isAbnormalWeather: false, ...d}));
   eaw.weather = weather;
   if (!Array.isArray(eaw.specialDates)) eaw.specialDates = [];
   w.externalAndWeather = eaw;
@@ -626,10 +628,16 @@ export default function App() {
               <tbody>{data.externalAndWeather.weather.daily.map((w: any, i: number) => {
                 const desc = String(w.description || w.type || "");
                 const t = String(w.type || "");
+                const abnormal = Boolean(w.isAbnormalWeather);
                 const icon = t.includes("雨雪") || t.includes("雨") ? <CloudRain size={13} className="text-[var(--dash-accent)] shrink-0" /> : t.includes("沙尘") ? <Cloud size={13} className="text-amber-800 shrink-0" /> : t.includes("大风") ? <Wind size={13} className="text-slate-600 shrink-0" /> : <Sun size={13} className="text-[#fd7e14] shrink-0" />;
                 return (
-                  <tr key={i} className="border-t border-[var(--dash-border)]">
-                    <td className="px-4 py-2.5">{w.date}</td>
+                  <tr key={i} className={cls("border-t border-[var(--dash-border)]", abnormal ? "bg-[#fff8f0]" : "")}>
+                    <td className="px-4 py-2.5">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span>{w.date}</span>
+                        {abnormal ? <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-[#ffe8cc] text-[#b45309] border border-[#fdba74]">异常天气</span> : null}
+                      </div>
+                    </td>
                     <td className="px-4 py-2.5"><div className="flex gap-2 items-start min-w-0"><span className="mt-0.5">{icon}</span><span className="text-[12px] leading-snug whitespace-normal break-words">{desc}</span></div></td>
                     <td className="px-4 py-2.5 text-right font-semibold dash-mono">¥{w.revenue.toLocaleString()}</td>
                     <td className="px-4 py-2.5 text-right dash-mono">{w.orders}</td>
@@ -648,8 +656,9 @@ export default function App() {
               </div>
               <div>
                 <div className="flex justify-between gap-2"><span className="text-[var(--dash-muted)]">参考同日日均：</span><span className="font-semibold dash-mono">¥{(data.externalAndWeather.weather.summary.referenceSameDayAvg ?? data.externalAndWeather.weather.summary.normalAvgRev ?? 0).toLocaleString()}</span></div>
-                <p className="text-[11px] text-[var(--dash-muted)] mt-2 leading-snug">判定：本周环比下降≥25% 且本周有异常天气日 → 视为天气造成显著拖累（与核心指标环比口径一致）。</p>
-                <div className="flex justify-between mt-2 gap-2"><span className="text-[var(--dash-muted)] shrink">异常天气是否导致营收下降超过25%？</span><span className={cls("font-semibold text-right", String(data.externalAndWeather.weather.summary.isImpacted).startsWith("是") ? "text-[var(--dash-danger)]" : "text-[var(--dash-ink)]")}>{data.externalAndWeather.weather.summary.isImpacted}</span></div>
+                <div className="flex justify-between mt-1 gap-2"><span className="text-[var(--dash-muted)]">异常日较参考同日：</span><span className={cls("font-semibold dash-mono", (data.externalAndWeather.weather.summary.abnormalVsReferenceSameDayDropPct ?? 0) < 0 ? "dash-trend-down" : "text-[var(--dash-ink)]")}>{(data.externalAndWeather.weather.summary.abnormalVsReferenceSameDayDropPct ?? 0) > 0 ? "+" : ""}{data.externalAndWeather.weather.summary.abnormalVsReferenceSameDayDropPct ?? 0}%</span></div>
+                <p className="text-[11px] text-[var(--dash-muted)] mt-2 leading-snug">判定：本周整体环比下降，且异常日日均较参考同日日均下降≥25% → 异常天气影响营收。表格中带「异常天气」标签的为判定日。</p>
+                <div className="flex justify-between mt-2 gap-2"><span className="text-[var(--dash-muted)] shrink">异常天气影响营收？</span><span className={cls("font-semibold text-right", data.externalAndWeather.weather.summary.isImpacted === "异常天气影响营收" ? "text-[var(--dash-danger)]" : "text-[var(--dash-ink)]")}>{data.externalAndWeather.weather.summary.isImpacted}</span></div>
               </div>
             </div>
           </div>
