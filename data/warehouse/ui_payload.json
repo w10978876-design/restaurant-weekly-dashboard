@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-08T03:03:28+00:00",
+  "generated_at": "2026-06-15T02:20:34+00:00",
   "stores": {
     "夕佳悦": {
       "weeks": {
@@ -10609,6 +10609,999 @@
               "repurchase_rate": 4.84,
               "repeat_payers": 12.0,
               "total_payers": 248.0
+            }
+          ]
+        },
+        "2026-06-08": {
+          "weekRange": "2026-06-08 ~ 2026-06-14",
+          "coreMetrics": [
+            {
+              "label": "总营收（元）",
+              "thisWeek": 31792.8,
+              "lastWeek": 36356.8,
+              "trend": -12.55,
+              "reference": "连续两周↓>10%为🔴",
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            },
+            {
+              "label": "总订单数",
+              "thisWeek": 288,
+              "lastWeek": 334,
+              "trend": -13.77,
+              "reference": "周降幅>5%为🔴",
+              "statusText": "触发红线",
+              "statusColor": "text-red-600"
+            },
+            {
+              "label": "客单价（元）",
+              "thisWeek": 110.39,
+              "lastWeek": 108.85,
+              "trend": 1.41,
+              "reference": "波动±15%为🟡",
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "label": "复购率（支付明细）",
+              "thisWeek": "3.21%",
+              "lastWeek": "4.84%",
+              "trend": -33.68,
+              "reference": "支付明细表·付款人信息：当周≥2笔不重复业务单号的付款人占比",
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            }
+          ],
+          "categoryAnalysis": [
+            {
+              "name": "正餐主食",
+              "coveredMajorClassCount": 3,
+              "sales": 259,
+              "ratio": 35,
+              "revenue": 12842.82,
+              "revRatio": 41,
+              "trend": -19.06,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            },
+            {
+              "name": "轻食配餐/小吃",
+              "coveredMajorClassCount": 3,
+              "sales": 139,
+              "ratio": 19,
+              "revenue": 7381.49,
+              "revRatio": 23,
+              "trend": -16.77,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            },
+            {
+              "name": "未映射类目",
+              "coveredMajorClassCount": 3,
+              "sales": 98,
+              "ratio": 13,
+              "revenue": 3801.04,
+              "revRatio": 12,
+              "trend": 3.16,
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "name": "酒水饮品",
+              "coveredMajorClassCount": 5,
+              "sales": 89,
+              "ratio": 12,
+              "revenue": 2797.96,
+              "revRatio": 9,
+              "trend": 7.23,
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "name": "儿童餐",
+              "coveredMajorClassCount": 1,
+              "sales": 45,
+              "ratio": 6,
+              "revenue": 2158.0,
+              "revRatio": 7,
+              "trend": 18.42,
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "name": "咖啡",
+              "coveredMajorClassCount": 3,
+              "sales": 44,
+              "ratio": 6,
+              "revenue": 1193.8,
+              "revRatio": 4,
+              "trend": 2.33,
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "name": "美团团购",
+              "coveredMajorClassCount": 1,
+              "sales": 33,
+              "ratio": 4,
+              "revenue": 757.85,
+              "revRatio": 2,
+              "trend": -5.71,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            },
+            {
+              "name": "甜品",
+              "coveredMajorClassCount": 1,
+              "sales": 40,
+              "ratio": 5,
+              "revenue": 655.84,
+              "revRatio": 2,
+              "trend": -2.44,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            }
+          ],
+          "productDetails": {
+            "topSales": [
+              {
+                "name": "天福甄烤酱肘子焗饭",
+                "value": 62
+              },
+              {
+                "name": "传统意式肉酱面",
+                "value": 45
+              },
+              {
+                "name": "咖喱鸡肉饭（不辣）",
+                "value": 38
+              },
+              {
+                "name": "缤纷小食总汇",
+                "value": 33
+              },
+              {
+                "name": "鲜榨火龙果汁（冷）",
+                "value": 28
+              }
+            ],
+            "topRevenue": [
+              {
+                "name": "天福甄烤酱肘子焗饭",
+                "value": 2452.95
+              },
+              {
+                "name": "缤纷小食总汇",
+                "value": 2233.71
+              },
+              {
+                "name": "传统意式肉酱面",
+                "value": 1701.83
+              },
+              {
+                "name": "咖喱鸡肉饭（不辣）",
+                "value": 1596.0
+              },
+              {
+                "name": "厚烤安格斯肉眼牛排",
+                "value": 1442.41
+              }
+            ],
+            "bottomSales": [
+              {
+                "name": "桂花雪梨茶（壶·热）",
+                "value": 1,
+                "note": "销量偏低"
+              },
+              {
+                "name": "卡布奇诺",
+                "value": 1,
+                "note": "销量偏低"
+              },
+              {
+                "name": "柚子陈皮茶（热）",
+                "value": 1,
+                "note": "销量偏低"
+              },
+              {
+                "name": "西柚味苏打水（瓶）",
+                "value": 1,
+                "note": "销量偏低"
+              },
+              {
+                "name": "巧克力",
+                "value": 1,
+                "note": "销量偏低"
+              }
+            ],
+            "returns": {
+              "count": 4,
+              "lastCount": 6,
+              "statusText": "达标",
+              "statusColor": "text-green-600",
+              "reference": "周>5次为🟡"
+            }
+          },
+          "timeAnalysis": {
+            "table": [
+              {
+                "period": "上午 (08:00-10:30)",
+                "orders": 5,
+                "ratio": 2,
+                "revenue": 347.0,
+                "revRatio": 1,
+                "trend": -16.67,
+                "turnoverRate": 0.1,
+                "statusText": "警戒",
+                "statusColor": "text-yellow-600"
+              },
+              {
+                "period": "午餐 (10:30-14:00)",
+                "orders": 246,
+                "ratio": 85,
+                "revenue": 29089.8,
+                "revRatio": 91,
+                "trend": -15.46,
+                "turnoverRate": 4.92,
+                "statusText": "达标",
+                "statusColor": "text-green-600"
+              },
+              {
+                "period": "下午茶 (14:00-17:00)",
+                "orders": 37,
+                "ratio": 13,
+                "revenue": 2356.0,
+                "revRatio": 7,
+                "trend": 0.0,
+                "turnoverRate": 0.74,
+                "statusText": "达标",
+                "statusColor": "text-green-600"
+              },
+              {
+                "period": "晚餐 (17:00-21:00)",
+                "orders": 0,
+                "ratio": 0,
+                "revenue": 0.0,
+                "revRatio": 0,
+                "trend": 0.0,
+                "turnoverRate": 0.0,
+                "statusText": "警戒",
+                "statusColor": "text-yellow-600"
+              }
+            ],
+            "abnormalSummary": [
+              {
+                "type": "high",
+                "day": "周二",
+                "period": "午餐",
+                "reason": "订单数(38)与营收(¥3,873)显著高于基准，较近5周同组时段均值增长74%。"
+              },
+              {
+                "type": "low",
+                "day": "周五",
+                "period": "下午茶",
+                "reason": "天气正常，建议排查运营问题，订单数(1)较同组均值下降62%，营收仅为¥32（约为基准14%）（对比近5周同组时段均值）。"
+              },
+              {
+                "type": "high",
+                "day": "周三",
+                "period": "午餐",
+                "reason": "订单数(32)与营收(¥2,980)显著高于基准，较近5周同组时段均值增长47%。"
+              }
+            ],
+            "lowestOrderDay": {
+              "day": "周四",
+              "orders": 23,
+              "reason": "当日订单 23 笔，建议结合天气、活动与时段结构复盘。"
+            }
+          },
+          "marketing": [
+            {
+              "label": "团购核销订单数",
+              "thisWeek": 49,
+              "lastWeek": 58,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            },
+            {
+              "label": "团购核销订单占比",
+              "thisWeek": "17.0%",
+              "lastWeek": "17.4%",
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "label": "自然进店订单占比",
+              "thisWeek": "83.0%",
+              "lastWeek": "82.6%",
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "label": "支付复购率（付款人）",
+              "thisWeek": "3.21%",
+              "lastWeek": "4.84%",
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            }
+          ],
+          "service": {
+            "negativeReviews": {
+              "thisWeek": 0,
+              "lastWeek": 0,
+              "statusText": "达标",
+              "statusColor": "text-green-600",
+              "reference": "环比↑50%为🔴"
+            },
+            "badKeywords": [],
+            "badKeywordEvidence": [],
+            "badKeywordCandidates": [],
+            "rating": {
+              "label": "门店评分（实际值）",
+              "thisWeek": 4.4,
+              "lastWeek": 4.4,
+              "statusText": "达标",
+              "statusColor": "text-green-600",
+              "reference": "周降0.2分为🔴"
+            },
+            "goodKeywords": [
+              "咖喱酱汁咸香柔和（1次）",
+              "分格餐盘干净（1次）",
+              "座位视野绝佳（1次）"
+            ],
+            "goodKeywordEvidence": [
+              {
+                "keyword": "咖喱酱汁咸香柔和",
+                "sentences": [
+                  "咖喱酱汁咸香柔和"
+                ]
+              },
+              {
+                "keyword": "分格餐盘干净",
+                "sentences": [
+                  "分格餐盘干净卫生"
+                ]
+              },
+              {
+                "keyword": "座位视野绝佳",
+                "sentences": [
+                  "户外座位视野绝佳"
+                ]
+              }
+            ],
+            "goodKeywordCandidates": [
+              {
+                "keyword": "咖喱酱汁咸香柔和",
+                "count": 1,
+                "score": 4.5,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 1
+              },
+              {
+                "keyword": "分格餐盘干净",
+                "count": 1,
+                "score": 4.35,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 2
+              },
+              {
+                "keyword": "座位视野绝佳",
+                "count": 1,
+                "score": 4.35,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 3
+              },
+              {
+                "keyword": "星星造型发糕",
+                "count": 1,
+                "score": 4.35,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 4
+              },
+              {
+                "keyword": "游玩休整两不误",
+                "count": 1,
+                "score": 4.35,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 5
+              },
+              {
+                "keyword": "虾仁饼用料扎实",
+                "count": 1,
+                "score": 4.35,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 6
+              },
+              {
+                "keyword": "口味单点咖喱鸡肉单人餐品相精致",
+                "count": 1,
+                "score": 4.3,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 7
+              },
+              {
+                "keyword": "菜品口味家常稳妥",
+                "count": 1,
+                "score": 4.3,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 8
+              },
+              {
+                "keyword": "塔楼景致",
+                "count": 1,
+                "score": 4.2,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 9
+              },
+              {
+                "keyword": "客流稀疏",
+                "count": 1,
+                "score": 4.2,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 10
+              },
+              {
+                "keyword": "绿树繁茂",
+                "count": 1,
+                "score": 4.2,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 11
+              },
+              {
+                "keyword": "口味清淡",
+                "count": 1,
+                "score": 3.75,
+                "selfRatio": 1.0,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 1.0,
+                "rank": 12
+              }
+            ]
+          },
+          "externalAndWeather": {
+            "specialDates": [
+              {
+                "name": "本周周平日",
+                "days": 4,
+                "revenue": 12478.8,
+                "avgDaily": 3119.7,
+                "trend": 3.09,
+                "statusText": "达标",
+                "statusColor": "text-green-600"
+              },
+              {
+                "name": "本周周末",
+                "days": 2,
+                "revenue": 19314.0,
+                "avgDaily": 9657.0,
+                "trend": 5.26,
+                "statusText": "达标",
+                "statusColor": "text-green-600"
+              }
+            ],
+            "weather": {
+              "daily": [
+                {
+                  "date": "周一",
+                  "calendarDate": "2026-06-08",
+                  "isAbnormalWeather": true,
+                  "type": "雨雪",
+                  "description": "晴转多云，下午至前半夜雷阵雨；气温 14℃～**28.7℃**；北转南风2-3级（雷雨时短时阵风8级左右）；⚠️雷雨时局地伴有8级短时大风和冰雹；高考第二日；观象台最高28.7℃（14:02），最低14.6℃（05:01）",
+                  "revenue": 0,
+                  "orders": 0,
+                  "diners": 0,
+                  "paidUsers": 0
+                },
+                {
+                  "date": "周二",
+                  "calendarDate": "2026-06-09",
+                  "isAbnormalWeather": false,
+                  "type": "雨雪",
+                  "description": "晴转多云，有分散性阵雨或雷阵雨；气温 **16.8℃**～28℃；北风3级（阵风5-6级）；\"冷涡蓝\"高颜值天气；西部北部有短时阵雨或雷阵雨；观象台最高28℃（15:21），最低16.8℃（05:04）；高考第三日",
+                  "revenue": 4402.0,
+                  "orders": 42,
+                  "diners": 98,
+                  "paidUsers": 42
+                },
+                {
+                  "date": "周三",
+                  "calendarDate": "2026-06-10",
+                  "isAbnormalWeather": true,
+                  "type": "雨雪",
+                  "description": "多云转分散性雷阵雨；气温 **13.9℃**～**26.5℃**；偏北风2-3级（雷雨时局地阵风7级以上）；**⚠️ 雷电黄色预警**（13:35发布，19:30解除）；局地短时大风+冰雹；高考最后一日；观象台最高26.5℃（13:25），最低13.9℃（04:41）",
+                  "revenue": 3146.2,
+                  "orders": 35,
+                  "diners": 56,
+                  "paidUsers": 35
+                },
+                {
+                  "date": "周四",
+                  "calendarDate": "2026-06-11",
+                  "isAbnormalWeather": false,
+                  "type": "晴",
+                  "description": "晴间多云；气温 18.7℃～**31.1℃**；北转南风2-3级；天气晴晒，紫外线很强；观象台最高31.1℃（16:02），最低18.7℃（02:53）；气温明显回升",
+                  "revenue": 1987.0,
+                  "orders": 23,
+                  "diners": 40,
+                  "paidUsers": 23
+                },
+                {
+                  "date": "周五",
+                  "calendarDate": "2026-06-12",
+                  "isAbnormalWeather": false,
+                  "type": "雨雪",
+                  "description": "多云转阴；气温 20℃～32℃；偏南风1级转3级（雷雨时阵风7级以上）；阵风7级以上；早晨西部南部有短时小阵雨",
+                  "revenue": 2943.6,
+                  "orders": 26,
+                  "diners": 49,
+                  "paidUsers": 26
+                },
+                {
+                  "date": "周六",
+                  "calendarDate": "2026-06-13",
+                  "isAbnormalWeather": true,
+                  "type": "雨雪",
+                  "description": "阴有雷阵雨；气温 **17.3℃**～**28.7℃**；偏北风2-3级；**⚠️ 雷电黄色预警**（14:15发布）+**大风蓝色预警**（15:45发布）；7级以上短时大风+冰雹；门头沟/房山/昌平/延庆/怀柔/密云局地可达9级；大风蓝警19:40解除，雷电黄警20:10解除；观象台最高28.7℃（15:36），最低17.3℃（02:37）",
+                  "revenue": 9496.6,
+                  "orders": 79,
+                  "diners": 189,
+                  "paidUsers": 79
+                },
+                {
+                  "date": "周日",
+                  "calendarDate": "2026-06-14",
+                  "isAbnormalWeather": true,
+                  "type": "雨雪",
+                  "description": "晴转多云；气温 21℃～30℃；北转南风2-3级；**⚠️ 暴雨蓝色预警+雷电蓝色预警**；全市5时至13时平均降水**28.4mm**，城区**46.7mm**，最大丰台玉泉营**80mm**；午后体感较热",
+                  "revenue": 9817.4,
+                  "orders": 83,
+                  "diners": 191,
+                  "paidUsers": 83
+                }
+              ],
+              "summary": {
+                "abnormalDays": 4,
+                "thisWeekRevenue": 31792.8,
+                "lastWeekRevenue": 36356.8,
+                "weekRevenueChangePct": -12.55,
+                "abnormalAvgRev": 7486.73,
+                "referenceSameDayAvg": 8806.93,
+                "isImpacted": "否",
+                "impactDropAvg": 0.1255,
+                "abnormalVsReferenceSameDayDrop": 0.1499,
+                "abnormalVsReferenceSameDayDropPct": -14.99,
+                "comparisonWeeks": [
+                  "2026-05-25",
+                  "2026-06-01",
+                  "2026-06-08"
+                ],
+                "comparisonRangeLabel": "2026-05-25 ~ 2026-05-31、2026-06-01 ~ 2026-06-07、2026-06-08 ~ 2026-06-14",
+                "priorWeekId": "2026-06-01",
+                "abnormalSampleDays": 3,
+                "referenceSameDaySampleCount": 6
+              }
+            }
+          },
+          "summary": {
+            "highlight": "本周出现2个高峰时段，时段经营效率突出；顾客好评关键词以咖喱酱汁咸香柔和、分格餐盘干净为主",
+            "problem": "总营收环比下滑12.6%，需重点复盘收入结构；总订单数环比下滑13.8%，需关注引流与转化；本周出现1个低谷时段，时段经营稳定性不足",
+            "actions": [
+              "",
+              "",
+              ""
+            ]
+          },
+          "trendData": [
+            {
+              "weekId": "2026-03-02",
+              "weekRange": "2026-03-02 ~ 2026-03-08",
+              "revenue": 22687.399999999998,
+              "orders": 234,
+              "avgOrderValue": 96.95470085470085,
+              "turnoverRate": 2.6292134831460676
+            },
+            {
+              "weekId": "2026-03-09",
+              "weekRange": "2026-03-09 ~ 2026-03-15",
+              "revenue": 27866.200000000004,
+              "orders": 231,
+              "avgOrderValue": 120.63290043290046,
+              "turnoverRate": 2.4574468085106385
+            },
+            {
+              "weekId": "2026-03-16",
+              "weekRange": "2026-03-16 ~ 2026-03-22",
+              "revenue": 33100.6,
+              "orders": 316,
+              "avgOrderValue": 104.74873417721518,
+              "turnoverRate": 2.7719298245614037
+            },
+            {
+              "weekId": "2026-03-23",
+              "weekRange": "2026-03-23 ~ 2026-03-29",
+              "revenue": 35260.600000000006,
+              "orders": 340,
+              "avgOrderValue": 103.70764705882354,
+              "turnoverRate": 2.8333333333333335
+            },
+            {
+              "weekId": "2026-03-30",
+              "weekRange": "2026-03-30 ~ 2026-04-05",
+              "revenue": 43491.8,
+              "orders": 359,
+              "avgOrderValue": 121.14707520891366,
+              "turnoverRate": 2.6791044776119404
+            },
+            {
+              "weekId": "2026-04-06",
+              "weekRange": "2026-04-06 ~ 2026-04-12",
+              "revenue": 46137.4,
+              "orders": 435,
+              "avgOrderValue": 106.06298850574713,
+              "turnoverRate": 3.152173913043478
+            },
+            {
+              "weekId": "2026-04-13",
+              "weekRange": "2026-04-13 ~ 2026-04-19",
+              "revenue": 26207.199999999997,
+              "orders": 257,
+              "avgOrderValue": 101.97354085603112,
+              "turnoverRate": 2.12396694214876
+            },
+            {
+              "weekId": "2026-04-20",
+              "weekRange": "2026-04-20 ~ 2026-04-26",
+              "revenue": 29482.799999999996,
+              "orders": 278,
+              "avgOrderValue": 106.05323741007193,
+              "turnoverRate": 2.2601626016260163
+            },
+            {
+              "weekId": "2026-04-27",
+              "weekRange": "2026-04-27 ~ 2026-05-03",
+              "revenue": 57113.8,
+              "orders": 452,
+              "avgOrderValue": 126.35796460176992,
+              "turnoverRate": 3.033557046979866
+            },
+            {
+              "weekId": "2026-05-04",
+              "weekRange": "2026-05-04 ~ 2026-05-10",
+              "revenue": 46943.8,
+              "orders": 388,
+              "avgOrderValue": 120.98917525773197,
+              "turnoverRate": 2.5866666666666664
+            },
+            {
+              "weekId": "2026-05-11",
+              "weekRange": "2026-05-11 ~ 2026-05-17",
+              "revenue": 28887.4,
+              "orders": 256,
+              "avgOrderValue": 112.84140625,
+              "turnoverRate": 2.048
+            },
+            {
+              "weekId": "2026-05-18",
+              "weekRange": "2026-05-18 ~ 2026-05-24",
+              "revenue": 27434.0,
+              "orders": 254,
+              "avgOrderValue": 108.00787401574803,
+              "turnoverRate": 2.152542372881356
+            },
+            {
+              "weekId": "2026-05-25",
+              "weekRange": "2026-05-25 ~ 2026-05-31",
+              "revenue": 36549.8,
+              "orders": 299,
+              "avgOrderValue": 122.24013377926423,
+              "turnoverRate": 2.4916666666666667
+            },
+            {
+              "weekId": "2026-06-01",
+              "weekRange": "2026-06-01 ~ 2026-06-07",
+              "revenue": 36356.8,
+              "orders": 334,
+              "avgOrderValue": 108.85269461077846,
+              "turnoverRate": 2.693548387096774
+            },
+            {
+              "weekId": "2026-06-08",
+              "weekRange": "2026-06-08 ~ 2026-06-14",
+              "revenue": 31792.8,
+              "orders": 288,
+              "avgOrderValue": 110.39166666666667,
+              "turnoverRate": 2.1818181818181817
+            }
+          ],
+          "weeklyTable": [
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-03-02",
+              "revenue": 22687.399999999998,
+              "orders": 234,
+              "table_turnover_rate": 2.6292134831460676,
+              "avg_order_value": 96.95470085470085,
+              "discount_amount": 8.4,
+              "groupbuy_count": 35,
+              "groupbuy_income": 3314.88,
+              "review_score": 4.4,
+              "waste_amount": 103.31846759922315,
+              "updated_at": "2026-04-21T03:16:52+00:00",
+              "repurchase_rate": 2.26,
+              "repeat_payers": 4.0,
+              "total_payers": 177.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-03-09",
+              "revenue": 27866.200000000004,
+              "orders": 231,
+              "table_turnover_rate": 2.4574468085106385,
+              "avg_order_value": 120.63290043290046,
+              "discount_amount": 180.0,
+              "groupbuy_count": 32,
+              "groupbuy_income": 4074.0,
+              "review_score": 4.5,
+              "waste_amount": 126.90273375589416,
+              "updated_at": "2026-04-21T03:16:52+00:00",
+              "repurchase_rate": 5.56,
+              "repeat_payers": 10.0,
+              "total_payers": 180.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-03-16",
+              "revenue": 33100.6,
+              "orders": 316,
+              "table_turnover_rate": 2.7719298245614037,
+              "avg_order_value": 104.74873417721518,
+              "discount_amount": 331.40000000000003,
+              "groupbuy_count": 41,
+              "groupbuy_income": 4864.38,
+              "review_score": 4.4,
+              "waste_amount": 68.93352660403826,
+              "updated_at": "2026-04-21T07:14:10+00:00",
+              "repurchase_rate": 3.72,
+              "repeat_payers": 9.0,
+              "total_payers": 242.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-03-23",
+              "revenue": 35260.600000000006,
+              "orders": 340,
+              "table_turnover_rate": 2.8333333333333335,
+              "avg_order_value": 103.70764705882354,
+              "discount_amount": 330.0,
+              "groupbuy_count": 44,
+              "groupbuy_income": 4392.12,
+              "review_score": 4.4,
+              "waste_amount": 103.41142121101035,
+              "updated_at": "2026-04-27T04:17:13+00:00",
+              "repurchase_rate": 4.96,
+              "repeat_payers": 13.0,
+              "total_payers": 262.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-03-30",
+              "revenue": 43491.8,
+              "orders": 359,
+              "table_turnover_rate": 2.6791044776119404,
+              "avg_order_value": 121.14707520891366,
+              "discount_amount": 87.2,
+              "groupbuy_count": 47,
+              "groupbuy_income": 4808.72,
+              "review_score": 4.4,
+              "waste_amount": 127.55168230333628,
+              "updated_at": "2026-04-27T04:17:13+00:00",
+              "repurchase_rate": 7.17,
+              "repeat_payers": 20.0,
+              "total_payers": 279.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-04-06",
+              "revenue": 46137.4,
+              "orders": 435,
+              "table_turnover_rate": 3.152173913043478,
+              "avg_order_value": 106.06298850574713,
+              "discount_amount": 130.2,
+              "groupbuy_count": 49,
+              "groupbuy_income": 6456.15,
+              "review_score": 4.4,
+              "waste_amount": 0.0,
+              "updated_at": "2026-05-11T02:59:30+00:00",
+              "repurchase_rate": 2.78,
+              "repeat_payers": 9.0,
+              "total_payers": 324.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-04-13",
+              "revenue": 26207.199999999997,
+              "orders": 257,
+              "table_turnover_rate": 2.12396694214876,
+              "avg_order_value": 101.97354085603112,
+              "discount_amount": 112.8,
+              "groupbuy_count": 41,
+              "groupbuy_income": 4299.62,
+              "review_score": 4.4,
+              "waste_amount": 0.0,
+              "updated_at": "2026-05-18T04:22:49+00:00",
+              "repurchase_rate": 2.44,
+              "repeat_payers": 5.0,
+              "total_payers": 205.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-04-20",
+              "revenue": 29482.799999999996,
+              "orders": 278,
+              "table_turnover_rate": 2.2601626016260163,
+              "avg_order_value": 106.05323741007193,
+              "discount_amount": 1358.8,
+              "groupbuy_count": 54,
+              "groupbuy_income": 4829.42,
+              "review_score": 4.4,
+              "waste_amount": 0.0,
+              "updated_at": "2026-05-25T02:18:48+00:00",
+              "repurchase_rate": 3.05,
+              "repeat_payers": 6.0,
+              "total_payers": 197.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-04-27",
+              "revenue": 57113.8,
+              "orders": 452,
+              "table_turnover_rate": 3.033557046979866,
+              "avg_order_value": 126.35796460176992,
+              "discount_amount": 150.4,
+              "groupbuy_count": 60,
+              "groupbuy_income": 8213.039999999999,
+              "review_score": 4.4,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-01T02:23:23+00:00",
+              "repurchase_rate": 3.2,
+              "repeat_payers": 11.0,
+              "total_payers": 344.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-05-04",
+              "revenue": 46943.8,
+              "orders": 388,
+              "table_turnover_rate": 2.5866666666666664,
+              "avg_order_value": 120.98917525773197,
+              "discount_amount": 103.80000000000001,
+              "groupbuy_count": 61,
+              "groupbuy_income": 9990.93,
+              "review_score": 3.727272727272727,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-08T03:03:22+00:00",
+              "repurchase_rate": 3.58,
+              "repeat_payers": 10.0,
+              "total_payers": 279.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-05-11",
+              "revenue": 28887.4,
+              "orders": 256,
+              "table_turnover_rate": 2.048,
+              "avg_order_value": 112.84140625,
+              "discount_amount": 188.0,
+              "groupbuy_count": 34,
+              "groupbuy_income": 4283.0599999999995,
+              "review_score": 4.4,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-15T02:20:30+00:00",
+              "repurchase_rate": 4.15,
+              "repeat_payers": 8.0,
+              "total_payers": 193.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-05-18",
+              "revenue": 27434.0,
+              "orders": 254,
+              "table_turnover_rate": 2.152542372881356,
+              "avg_order_value": 108.00787401574803,
+              "discount_amount": 99.19999999999999,
+              "groupbuy_count": 43,
+              "groupbuy_income": 3936.02,
+              "review_score": 4.4,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-15T02:20:30+00:00",
+              "repurchase_rate": 2.19,
+              "repeat_payers": 4.0,
+              "total_payers": 183.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-05-25",
+              "revenue": 36549.8,
+              "orders": 299,
+              "table_turnover_rate": 2.4916666666666667,
+              "avg_order_value": 122.24013377926423,
+              "discount_amount": 387.8,
+              "groupbuy_count": 80,
+              "groupbuy_income": 8334.71,
+              "review_score": 4.4,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-15T02:20:30+00:00",
+              "repurchase_rate": 3.48,
+              "repeat_payers": 7.0,
+              "total_payers": 201.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-06-01",
+              "revenue": 36356.8,
+              "orders": 334,
+              "table_turnover_rate": 2.693548387096774,
+              "avg_order_value": 108.85269461077846,
+              "discount_amount": 24.0,
+              "groupbuy_count": 58,
+              "groupbuy_income": 5066.47,
+              "review_score": 4.4,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-15T02:20:30+00:00",
+              "repurchase_rate": 4.84,
+              "repeat_payers": 12.0,
+              "total_payers": 248.0
+            },
+            {
+              "store_id": "夕佳悦",
+              "week_id": "2026-06-08",
+              "revenue": 31792.8,
+              "orders": 288,
+              "table_turnover_rate": 2.1818181818181817,
+              "avg_order_value": 110.39166666666667,
+              "discount_amount": 196.8,
+              "groupbuy_count": 49,
+              "groupbuy_income": 3949.56,
+              "review_score": 4.4,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-15T02:20:30+00:00",
+              "repurchase_rate": 3.21,
+              "repeat_payers": 7.0,
+              "total_payers": 218.0
             }
           ]
         }
@@ -21546,6 +22539,1090 @@
               "repurchase_rate": 5.43,
               "repeat_payers": 19.0,
               "total_payers": 350.0
+            }
+          ]
+        },
+        "2026-06-08": {
+          "weekRange": "2026-06-08 ~ 2026-06-14",
+          "coreMetrics": [
+            {
+              "label": "总营收（元）",
+              "thisWeek": 60777.0,
+              "lastWeek": 56963.8,
+              "trend": 6.69,
+              "reference": "连续两周↓>10%为🔴",
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "label": "总订单数",
+              "thisWeek": 462,
+              "lastWeek": 430,
+              "trend": 7.44,
+              "reference": "周降幅>5%为🔴",
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "label": "客单价（元）",
+              "thisWeek": 131.55,
+              "lastWeek": 132.47,
+              "trend": -0.7,
+              "reference": "波动±15%为🟡",
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "label": "复购率（支付明细）",
+              "thisWeek": "4.96%",
+              "lastWeek": "5.43%",
+              "trend": -8.66,
+              "reference": "支付明细表·付款人信息：当周≥2笔不重复业务单号的付款人占比",
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            }
+          ],
+          "categoryAnalysis": [
+            {
+              "name": "正餐主食",
+              "coveredMajorClassCount": 4,
+              "sales": 293,
+              "ratio": 26,
+              "revenue": 17084.71,
+              "revRatio": 28,
+              "trend": 6.16,
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "name": "轻食配餐/小吃",
+              "coveredMajorClassCount": 3,
+              "sales": 294,
+              "ratio": 26,
+              "revenue": 15878.28,
+              "revRatio": 26,
+              "trend": -3.92,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            },
+            {
+              "name": "酒水饮品",
+              "coveredMajorClassCount": 8,
+              "sales": 244,
+              "ratio": 21,
+              "revenue": 9650.9,
+              "revRatio": 16,
+              "trend": 34.81,
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "name": "美团团购",
+              "coveredMajorClassCount": 1,
+              "sales": 31,
+              "ratio": 3,
+              "revenue": 5984.2,
+              "revRatio": 10,
+              "trend": 47.62,
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "name": "咖啡",
+              "coveredMajorClassCount": 2,
+              "sales": 125,
+              "ratio": 11,
+              "revenue": 4230.54,
+              "revRatio": 7,
+              "trend": 25.0,
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "name": "新品尝鲜",
+              "coveredMajorClassCount": 1,
+              "sales": 59,
+              "ratio": 5,
+              "revenue": 3486.59,
+              "revRatio": 6,
+              "trend": -13.24,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            },
+            {
+              "name": "儿童餐",
+              "coveredMajorClassCount": 1,
+              "sales": 17,
+              "ratio": 1,
+              "revenue": 2204.87,
+              "revRatio": 4,
+              "trend": -10.53,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            },
+            {
+              "name": "甜品",
+              "coveredMajorClassCount": 1,
+              "sales": 32,
+              "ratio": 3,
+              "revenue": 1515.91,
+              "revRatio": 3,
+              "trend": -5.88,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            },
+            {
+              "name": "未映射类目",
+              "coveredMajorClassCount": 1,
+              "sales": 43,
+              "ratio": 4,
+              "revenue": 572.0,
+              "revRatio": 1,
+              "trend": 10.26,
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            }
+          ],
+          "productDetails": {
+            "topSales": [
+              {
+                "name": "缤纷小食总汇",
+                "value": 49
+              },
+              {
+                "name": "天福甄烤酱肘薄饼",
+                "value": 45
+              },
+              {
+                "name": "紫竹特色沙拉",
+                "value": 40
+              },
+              {
+                "name": "传统意式肉酱面",
+                "value": 38
+              },
+              {
+                "name": "拿铁",
+                "value": 37
+              }
+            ],
+            "topRevenue": [
+              {
+                "name": "缤纷小食总汇",
+                "value": 3804.71
+              },
+              {
+                "name": "美团团购-【双人优选】经典双人餐",
+                "value": 3420.0
+              },
+              {
+                "name": "天福甄烤酱肘薄饼",
+                "value": 2327.23
+              },
+              {
+                "name": "紫竹特色沙拉",
+                "value": 2313.93
+              },
+              {
+                "name": "美团团购-【品味西韵】管饱双人餐",
+                "value": 2296.0
+              }
+            ],
+            "bottomSales": [
+              {
+                "name": "澳白（热）",
+                "value": 1,
+                "note": "销量偏低"
+              },
+              {
+                "name": "啵乐乐草莓",
+                "value": 1,
+                "note": "销量偏低"
+              },
+              {
+                "name": "主厨甄选双人餐",
+                "value": 1,
+                "note": "销量偏低"
+              },
+              {
+                "name": "啵乐乐蓝莓",
+                "value": 1,
+                "note": "销量偏低"
+              },
+              {
+                "name": "浓汤番茄焗意面（2-3人份）",
+                "value": 1,
+                "note": "销量偏低"
+              }
+            ],
+            "returns": {
+              "count": 6,
+              "lastCount": 3,
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600",
+              "reference": "周>5次为🟡"
+            }
+          },
+          "timeAnalysis": {
+            "table": [
+              {
+                "period": "上午 (08:00-10:30)",
+                "orders": 18,
+                "ratio": 4,
+                "revenue": 2012.0,
+                "revRatio": 3,
+                "trend": -18.18,
+                "turnoverRate": 0.36,
+                "statusText": "警戒",
+                "statusColor": "text-yellow-600"
+              },
+              {
+                "period": "午餐 (10:30-14:00)",
+                "orders": 258,
+                "ratio": 56,
+                "revenue": 39980.8,
+                "revRatio": 66,
+                "trend": 1.57,
+                "turnoverRate": 5.16,
+                "statusText": "达标",
+                "statusColor": "text-green-600"
+              },
+              {
+                "period": "下午茶 (14:00-17:00)",
+                "orders": 124,
+                "ratio": 27,
+                "revenue": 12829.2,
+                "revRatio": 21,
+                "trend": 44.19,
+                "turnoverRate": 2.48,
+                "statusText": "达标",
+                "statusColor": "text-green-600"
+              },
+              {
+                "period": "晚餐 (17:00-21:00)",
+                "orders": 62,
+                "ratio": 13,
+                "revenue": 5955.0,
+                "revRatio": 10,
+                "trend": -8.82,
+                "turnoverRate": 1.24,
+                "statusText": "达标",
+                "statusColor": "text-green-600"
+              }
+            ],
+            "abnormalSummary": [
+              {
+                "type": "high",
+                "day": "周日",
+                "period": "下午茶",
+                "reason": "订单数(43)与营收(¥5,148)显著高于基准，较近5周同组时段均值增长49%。"
+              },
+              {
+                "type": "low",
+                "day": "周二",
+                "period": "上午",
+                "reason": "天气正常，建议排查运营问题，订单数(1)较同组均值下降64%，营收仅为¥35（约为基准12%）（对比近5周同组时段均值）。"
+              },
+              {
+                "type": "high",
+                "day": "周五",
+                "period": "下午茶",
+                "reason": "订单数(15)与营收(¥1,147)显著高于基准，较近5周同组时段均值增长44%。"
+              }
+            ],
+            "lowestOrderDay": {
+              "day": "周四",
+              "orders": 31,
+              "reason": "当日订单 31 笔，建议结合天气、活动与时段结构复盘。"
+            }
+          },
+          "marketing": [
+            {
+              "label": "团购核销订单数",
+              "thisWeek": 42,
+              "lastWeek": 28,
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "label": "团购核销订单占比",
+              "thisWeek": "9.1%",
+              "lastWeek": "6.5%",
+              "statusText": "达标",
+              "statusColor": "text-green-600"
+            },
+            {
+              "label": "自然进店订单占比",
+              "thisWeek": "90.9%",
+              "lastWeek": "93.5%",
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            },
+            {
+              "label": "支付复购率（付款人）",
+              "thisWeek": "4.96%",
+              "lastWeek": "5.43%",
+              "statusText": "警戒",
+              "statusColor": "text-yellow-600"
+            }
+          ],
+          "service": {
+            "negativeReviews": {
+              "thisWeek": 0,
+              "lastWeek": 0,
+              "statusText": "达标",
+              "statusColor": "text-green-600",
+              "reference": "环比↑50%为🔴"
+            },
+            "badKeywords": [],
+            "badKeywordEvidence": [],
+            "badKeywordCandidates": [],
+            "rating": {
+              "label": "门店评分（实际值）",
+              "thisWeek": 4.2,
+              "lastWeek": 4.2,
+              "statusText": "达标",
+              "statusColor": "text-green-600",
+              "reference": "周降0.2分为🔴"
+            },
+            "goodKeywords": [
+              "烧饼夹肉也没什么（1次）",
+              "草莓气泡饮品漂亮（1次）",
+              "鸡翅什么的还挺好吃（1次）"
+            ],
+            "goodKeywordEvidence": [
+              {
+                "keyword": "烧饼夹肉也没什么",
+                "sentences": [
+                  "其实吃着跟普通的烧饼夹肉也没什么区别"
+                ]
+              },
+              {
+                "keyword": "草莓气泡饮品漂亮",
+                "sentences": [
+                  "草莓气泡饮品漂亮"
+                ]
+              },
+              {
+                "keyword": "鸡翅什么的还挺好吃",
+                "sentences": [
+                  "鸡翅什么的还挺好吃的"
+                ]
+              }
+            ],
+            "goodKeywordCandidates": [
+              {
+                "keyword": "烧饼夹肉也没什么",
+                "count": 1,
+                "score": 2.092593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 1
+              },
+              {
+                "keyword": "草莓气泡饮品漂亮",
+                "count": 1,
+                "score": 2.092593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 2
+              },
+              {
+                "keyword": "鸡翅什么的还挺好吃",
+                "count": 1,
+                "score": 2.092593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 3
+              },
+              {
+                "keyword": "小姐姐也贴心",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 4
+              },
+              {
+                "keyword": "座位风景不错",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 5
+              },
+              {
+                "keyword": "景色也很美",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 6
+              },
+              {
+                "keyword": "汉堡很好吃",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 7
+              },
+              {
+                "keyword": "沙拉也很好吃",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 8
+              },
+              {
+                "keyword": "甜品味道一般",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 9
+              },
+              {
+                "keyword": "番茄味浓郁",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 10
+              },
+              {
+                "keyword": "碎冰还挺好喝",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 11
+              },
+              {
+                "keyword": "聊天很惬意",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 12
+              },
+              {
+                "keyword": "肘子薄饼很好吃",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 13
+              },
+              {
+                "keyword": "薯条也非常好吃",
+                "count": 1,
+                "score": 1.942593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 14
+              },
+              {
+                "keyword": "双皮奶细腻",
+                "count": 1,
+                "score": 1.792593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 15
+              },
+              {
+                "keyword": "居民楼具体",
+                "count": 1,
+                "score": 1.792593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 16
+              },
+              {
+                "keyword": "景观不错",
+                "count": 1,
+                "score": 1.792593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 17
+              },
+              {
+                "keyword": "花果茶好喝",
+                "count": 1,
+                "score": 1.792593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 18
+              },
+              {
+                "keyword": "风景绝佳",
+                "count": 1,
+                "score": 1.792593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 19
+              },
+              {
+                "keyword": "菜品口味也不错",
+                "count": 1,
+                "score": 1.742593,
+                "selfRatio": 0.037037,
+                "otherCount": 0,
+                "otherRatio": 0.0,
+                "lift": 0.037037,
+                "rank": 20
+              }
+            ]
+          },
+          "externalAndWeather": {
+            "specialDates": [
+              {
+                "name": "本周周平日",
+                "days": 5,
+                "revenue": 29525.4,
+                "avgDaily": 5905.08,
+                "trend": 3.09,
+                "statusText": "达标",
+                "statusColor": "text-green-600"
+              },
+              {
+                "name": "本周周末",
+                "days": 2,
+                "revenue": 31251.6,
+                "avgDaily": 15625.8,
+                "trend": 5.26,
+                "statusText": "达标",
+                "statusColor": "text-green-600"
+              }
+            ],
+            "weather": {
+              "daily": [
+                {
+                  "date": "周一",
+                  "calendarDate": "2026-06-08",
+                  "isAbnormalWeather": true,
+                  "type": "雨雪",
+                  "description": "晴转多云，下午至前半夜雷阵雨；气温 14℃～**28.7℃**；北转南风2-3级（雷雨时短时阵风8级左右）；⚠️雷雨时局地伴有8级短时大风和冰雹；高考第二日；观象台最高28.7℃（14:02），最低14.6℃（05:01）",
+                  "revenue": 4583.6,
+                  "orders": 39,
+                  "diners": 94,
+                  "paidUsers": 39
+                },
+                {
+                  "date": "周二",
+                  "calendarDate": "2026-06-09",
+                  "isAbnormalWeather": false,
+                  "type": "雨雪",
+                  "description": "晴转多云，有分散性阵雨或雷阵雨；气温 **16.8℃**～28℃；北风3级（阵风5-6级）；\"冷涡蓝\"高颜值天气；西部北部有短时阵雨或雷阵雨；观象台最高28℃（15:21），最低16.8℃（05:04）；高考第三日",
+                  "revenue": 5861.8,
+                  "orders": 44,
+                  "diners": 108,
+                  "paidUsers": 44
+                },
+                {
+                  "date": "周三",
+                  "calendarDate": "2026-06-10",
+                  "isAbnormalWeather": true,
+                  "type": "雨雪",
+                  "description": "多云转分散性雷阵雨；气温 **13.9℃**～**26.5℃**；偏北风2-3级（雷雨时局地阵风7级以上）；**⚠️ 雷电黄色预警**（13:35发布，19:30解除）；局地短时大风+冰雹；高考最后一日；观象台最高26.5℃（13:25），最低13.9℃（04:41）",
+                  "revenue": 6880.0,
+                  "orders": 43,
+                  "diners": 101,
+                  "paidUsers": 43
+                },
+                {
+                  "date": "周四",
+                  "calendarDate": "2026-06-11",
+                  "isAbnormalWeather": false,
+                  "type": "晴",
+                  "description": "晴间多云；气温 18.7℃～**31.1℃**；北转南风2-3级；天气晴晒，紫外线很强；观象台最高31.1℃（16:02），最低18.7℃（02:53）；气温明显回升",
+                  "revenue": 3881.6,
+                  "orders": 31,
+                  "diners": 64,
+                  "paidUsers": 31
+                },
+                {
+                  "date": "周五",
+                  "calendarDate": "2026-06-12",
+                  "isAbnormalWeather": false,
+                  "type": "雨雪",
+                  "description": "多云转阴；气温 20℃～32℃；偏南风1级转3级（雷雨时阵风7级以上）；阵风7级以上；早晨西部南部有短时小阵雨",
+                  "revenue": 8318.4,
+                  "orders": 63,
+                  "diners": 165,
+                  "paidUsers": 63
+                },
+                {
+                  "date": "周六",
+                  "calendarDate": "2026-06-13",
+                  "isAbnormalWeather": true,
+                  "type": "雨雪",
+                  "description": "阴有雷阵雨；气温 **17.3℃**～**28.7℃**；偏北风2-3级；**⚠️ 雷电黄色预警**（14:15发布）+**大风蓝色预警**（15:45发布）；7级以上短时大风+冰雹；门头沟/房山/昌平/延庆/怀柔/密云局地可达9级；大风蓝警19:40解除，雷电黄警20:10解除；观象台最高28.7℃（15:36），最低17.3℃（02:37）",
+                  "revenue": 12625.6,
+                  "orders": 101,
+                  "diners": 264,
+                  "paidUsers": 101
+                },
+                {
+                  "date": "周日",
+                  "calendarDate": "2026-06-14",
+                  "isAbnormalWeather": true,
+                  "type": "雨雪",
+                  "description": "晴转多云；气温 21℃～30℃；北转南风2-3级；**⚠️ 暴雨蓝色预警+雷电蓝色预警**；全市5时至13时平均降水**28.4mm**，城区**46.7mm**，最大丰台玉泉营**80mm**；午后体感较热",
+                  "revenue": 18626.0,
+                  "orders": 141,
+                  "diners": 431,
+                  "paidUsers": 141
+                }
+              ],
+              "summary": {
+                "abnormalDays": 4,
+                "thisWeekRevenue": 60777.0,
+                "lastWeekRevenue": 56963.8,
+                "weekRevenueChangePct": 6.69,
+                "abnormalAvgRev": 10678.8,
+                "referenceSameDayAvg": 11044.6,
+                "isImpacted": "否",
+                "impactDropAvg": 0.0,
+                "abnormalVsReferenceSameDayDrop": 0.0331,
+                "abnormalVsReferenceSameDayDropPct": -3.31,
+                "comparisonWeeks": [
+                  "2026-05-25",
+                  "2026-06-01",
+                  "2026-06-08"
+                ],
+                "comparisonRangeLabel": "2026-05-25 ~ 2026-05-31、2026-06-01 ~ 2026-06-07、2026-06-08 ~ 2026-06-14",
+                "priorWeekId": "2026-06-01",
+                "abnormalSampleDays": 4,
+                "referenceSameDaySampleCount": 8
+              }
+            }
+          },
+          "summary": {
+            "highlight": "本周出现2个高峰时段，时段经营效率突出；顾客好评主要集中在出品口碑（如烧饼夹肉也没什么、草莓气泡饮品漂亮）",
+            "problem": "本周出现1个低谷时段，时段经营稳定性不足；退菜/换菜达到6次，超过每周5次警戒线",
+            "actions": [
+              "",
+              "",
+              ""
+            ]
+          },
+          "trendData": [
+            {
+              "weekId": "2026-03-02",
+              "weekRange": "2026-03-02 ~ 2026-03-08",
+              "revenue": 64910.2,
+              "orders": 521,
+              "avgOrderValue": 124.5877159309021,
+              "turnoverRate": 4.168
+            },
+            {
+              "weekId": "2026-03-09",
+              "weekRange": "2026-03-09 ~ 2026-03-15",
+              "revenue": 84239.8,
+              "orders": 635,
+              "avgOrderValue": 132.66110236220473,
+              "turnoverRate": 4.379310344827586
+            },
+            {
+              "weekId": "2026-03-16",
+              "weekRange": "2026-03-16 ~ 2026-03-22",
+              "revenue": 119878.0,
+              "orders": 905,
+              "avgOrderValue": 132.46187845303868,
+              "turnoverRate": 5.0
+            },
+            {
+              "weekId": "2026-03-23",
+              "weekRange": "2026-03-23 ~ 2026-03-29",
+              "revenue": 114402.2,
+              "orders": 855,
+              "avgOrderValue": 133.80374269005847,
+              "turnoverRate": 4.803370786516854
+            },
+            {
+              "weekId": "2026-03-30",
+              "weekRange": "2026-03-30 ~ 2026-04-05",
+              "revenue": 94319.2,
+              "orders": 677,
+              "avgOrderValue": 139.31935007385525,
+              "turnoverRate": 3.9590643274853803
+            },
+            {
+              "weekId": "2026-04-06",
+              "weekRange": "2026-04-06 ~ 2026-04-12",
+              "revenue": 117840.0,
+              "orders": 798,
+              "avgOrderValue": 147.66917293233084,
+              "turnoverRate": 5.082802547770701
+            },
+            {
+              "weekId": "2026-04-13",
+              "weekRange": "2026-04-13 ~ 2026-04-19",
+              "revenue": 82262.6,
+              "orders": 540,
+              "avgOrderValue": 152.33814814814815,
+              "turnoverRate": 3.3962264150943398
+            },
+            {
+              "weekId": "2026-04-20",
+              "weekRange": "2026-04-20 ~ 2026-04-26",
+              "revenue": 92257.4,
+              "orders": 587,
+              "avgOrderValue": 157.16763202725724,
+              "turnoverRate": 3.6012269938650308
+            },
+            {
+              "weekId": "2026-04-27",
+              "weekRange": "2026-04-27 ~ 2026-05-03",
+              "revenue": 90547.0,
+              "orders": 645,
+              "avgOrderValue": 140.3829457364341,
+              "turnoverRate": 3.909090909090909
+            },
+            {
+              "weekId": "2026-05-04",
+              "weekRange": "2026-05-04 ~ 2026-05-10",
+              "revenue": 93210.79999999999,
+              "orders": 642,
+              "avgOrderValue": 145.18816199376946,
+              "turnoverRate": 3.987577639751553
+            },
+            {
+              "weekId": "2026-05-11",
+              "weekRange": "2026-05-11 ~ 2026-05-17",
+              "revenue": 67396.0,
+              "orders": 449,
+              "avgOrderValue": 150.10244988864142,
+              "turnoverRate": 2.8417721518987342
+            },
+            {
+              "weekId": "2026-05-18",
+              "weekRange": "2026-05-18 ~ 2026-05-24",
+              "revenue": 75188.6,
+              "orders": 465,
+              "avgOrderValue": 161.69591397849464,
+              "turnoverRate": 3.4962406015037595
+            },
+            {
+              "weekId": "2026-05-25",
+              "weekRange": "2026-05-25 ~ 2026-05-31",
+              "revenue": 66138.2,
+              "orders": 488,
+              "avgOrderValue": 135.52909836065572,
+              "turnoverRate": 3.5107913669064748
+            },
+            {
+              "weekId": "2026-06-01",
+              "weekRange": "2026-06-01 ~ 2026-06-07",
+              "revenue": 56963.8,
+              "orders": 430,
+              "avgOrderValue": 132.4739534883721,
+              "turnoverRate": 3.208955223880597
+            },
+            {
+              "weekId": "2026-06-08",
+              "weekRange": "2026-06-08 ~ 2026-06-14",
+              "revenue": 60777.0,
+              "orders": 462,
+              "avgOrderValue": 131.55194805194805,
+              "turnoverRate": 3.473684210526316
+            }
+          ],
+          "weeklyTable": [
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-03-02",
+              "revenue": 64910.2,
+              "orders": 521,
+              "table_turnover_rate": 4.168,
+              "avg_order_value": 124.5877159309021,
+              "discount_amount": 94.8,
+              "groupbuy_count": 38,
+              "groupbuy_income": 7318.04,
+              "review_score": 4.3,
+              "waste_amount": 85.59597563073861,
+              "updated_at": "2026-04-21T03:16:52+00:00",
+              "repurchase_rate": 16.87,
+              "repeat_payers": 68.0,
+              "total_payers": 403.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-03-09",
+              "revenue": 84239.8,
+              "orders": 635,
+              "table_turnover_rate": 4.379310344827586,
+              "avg_order_value": 132.66110236220473,
+              "discount_amount": 215.0,
+              "groupbuy_count": 66,
+              "groupbuy_income": 12839.06,
+              "review_score": 4.4,
+              "waste_amount": 111.08559006039567,
+              "updated_at": "2026-04-21T03:16:52+00:00",
+              "repurchase_rate": 14.2,
+              "repeat_payers": 69.0,
+              "total_payers": 486.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-03-16",
+              "revenue": 119878.0,
+              "orders": 905,
+              "table_turnover_rate": 5.0,
+              "avg_order_value": 132.46187845303868,
+              "discount_amount": 282.4,
+              "groupbuy_count": 71,
+              "groupbuy_income": 12223.08,
+              "review_score": 4.4,
+              "waste_amount": 140.12544684907567,
+              "updated_at": "2026-04-21T07:14:10+00:00",
+              "repurchase_rate": 12.99,
+              "repeat_payers": 93.0,
+              "total_payers": 716.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-03-23",
+              "revenue": 114402.2,
+              "orders": 855,
+              "table_turnover_rate": 4.803370786516854,
+              "avg_order_value": 133.80374269005847,
+              "discount_amount": 109.8,
+              "groupbuy_count": 87,
+              "groupbuy_income": 16970.8,
+              "review_score": 4.3,
+              "waste_amount": 151.5982449158959,
+              "updated_at": "2026-04-27T04:17:14+00:00",
+              "repurchase_rate": 14.54,
+              "repeat_payers": 98.0,
+              "total_payers": 674.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-03-30",
+              "revenue": 94319.2,
+              "orders": 677,
+              "table_turnover_rate": 3.9590643274853803,
+              "avg_order_value": 139.31935007385525,
+              "discount_amount": 1048.8,
+              "groupbuy_count": 76,
+              "groupbuy_income": 15646.5,
+              "review_score": 4.3,
+              "waste_amount": 124.98557879019256,
+              "updated_at": "2026-04-27T04:17:14+00:00",
+              "repurchase_rate": 12.43,
+              "repeat_payers": 68.0,
+              "total_payers": 547.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-04-06",
+              "revenue": 117840.0,
+              "orders": 798,
+              "table_turnover_rate": 5.082802547770701,
+              "avg_order_value": 147.66917293233084,
+              "discount_amount": 509.8,
+              "groupbuy_count": 72,
+              "groupbuy_income": 15191.45,
+              "review_score": 4.3,
+              "waste_amount": 0.0,
+              "updated_at": "2026-05-11T02:59:30+00:00",
+              "repurchase_rate": 7.74,
+              "repeat_payers": 47.0,
+              "total_payers": 607.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-04-13",
+              "revenue": 82262.6,
+              "orders": 540,
+              "table_turnover_rate": 3.3962264150943398,
+              "avg_order_value": 152.33814814814815,
+              "discount_amount": 136.4,
+              "groupbuy_count": 72,
+              "groupbuy_income": 15156.3,
+              "review_score": 4.3,
+              "waste_amount": 0.0,
+              "updated_at": "2026-05-18T04:22:49+00:00",
+              "repurchase_rate": 5.41,
+              "repeat_payers": 23.0,
+              "total_payers": 425.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-04-20",
+              "revenue": 92257.4,
+              "orders": 587,
+              "table_turnover_rate": 3.6012269938650308,
+              "avg_order_value": 157.16763202725724,
+              "discount_amount": 658.0,
+              "groupbuy_count": 81,
+              "groupbuy_income": 17947.97,
+              "review_score": 4.660714285714286,
+              "waste_amount": 0.0,
+              "updated_at": "2026-05-25T02:18:48+00:00",
+              "repurchase_rate": 7.27,
+              "repeat_payers": 33.0,
+              "total_payers": 454.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-04-27",
+              "revenue": 90547.0,
+              "orders": 645,
+              "table_turnover_rate": 3.909090909090909,
+              "avg_order_value": 140.3829457364341,
+              "discount_amount": 480.8,
+              "groupbuy_count": 68,
+              "groupbuy_income": 14137.710000000001,
+              "review_score": 4.3,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-01T02:23:23+00:00",
+              "repurchase_rate": 7.3,
+              "repeat_payers": 36.0,
+              "total_payers": 493.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-05-04",
+              "revenue": 93210.79999999999,
+              "orders": 642,
+              "table_turnover_rate": 3.987577639751553,
+              "avg_order_value": 145.18816199376946,
+              "discount_amount": 38.4,
+              "groupbuy_count": 70,
+              "groupbuy_income": 13378.09,
+              "review_score": 4.3,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-08T03:03:22+00:00",
+              "repurchase_rate": 6.85,
+              "repeat_payers": 33.0,
+              "total_payers": 482.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-05-11",
+              "revenue": 67396.0,
+              "orders": 449,
+              "table_turnover_rate": 2.8417721518987342,
+              "avg_order_value": 150.10244988864142,
+              "discount_amount": 171.6,
+              "groupbuy_count": 49,
+              "groupbuy_income": 9299.17,
+              "review_score": 4.3,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-15T02:20:30+00:00",
+              "repurchase_rate": 5.19,
+              "repeat_payers": 18.0,
+              "total_payers": 347.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-05-18",
+              "revenue": 75188.6,
+              "orders": 465,
+              "table_turnover_rate": 3.4962406015037595,
+              "avg_order_value": 161.69591397849464,
+              "discount_amount": 553.6,
+              "groupbuy_count": 50,
+              "groupbuy_income": 9664.54,
+              "review_score": 4.3,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-15T02:20:30+00:00",
+              "repurchase_rate": 6.39,
+              "repeat_payers": 23.0,
+              "total_payers": 360.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-05-25",
+              "revenue": 66138.2,
+              "orders": 488,
+              "table_turnover_rate": 3.5107913669064748,
+              "avg_order_value": 135.52909836065572,
+              "discount_amount": 82.6,
+              "groupbuy_count": 40,
+              "groupbuy_income": 6406.61,
+              "review_score": 4.3,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-15T02:20:30+00:00",
+              "repurchase_rate": 9.57,
+              "repeat_payers": 36.0,
+              "total_payers": 376.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-06-01",
+              "revenue": 56963.8,
+              "orders": 430,
+              "table_turnover_rate": 3.208955223880597,
+              "avg_order_value": 132.4739534883721,
+              "discount_amount": 287.6,
+              "groupbuy_count": 28,
+              "groupbuy_income": 5565.48,
+              "review_score": 4.2,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-15T02:20:30+00:00",
+              "repurchase_rate": 5.43,
+              "repeat_payers": 19.0,
+              "total_payers": 350.0
+            },
+            {
+              "store_id": "紫竹",
+              "week_id": "2026-06-08",
+              "revenue": 60777.0,
+              "orders": 462,
+              "table_turnover_rate": 3.473684210526316,
+              "avg_order_value": 131.55194805194805,
+              "discount_amount": 283.2,
+              "groupbuy_count": 42,
+              "groupbuy_income": 7722.74,
+              "review_score": 4.2,
+              "waste_amount": 0.0,
+              "updated_at": "2026-06-15T02:20:30+00:00",
+              "repurchase_rate": 4.96,
+              "repeat_payers": 18.0,
+              "total_payers": 363.0
             }
           ]
         }
