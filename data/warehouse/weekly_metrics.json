@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": "2026-06-15T02:20:30+00:00",
+  "saved_at": "2026-06-22T02:46:16+00:00",
   "rows": [
     {
       "store_id": "夕佳悦",
@@ -201,7 +201,7 @@
       "groupbuy_income": 3936.02,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-06-15T02:20:30+00:00",
+      "updated_at": "2026-06-22T02:46:16+00:00",
       "repurchase_rate": 2.19,
       "repeat_payers": 4.0,
       "total_payers": 183.0
@@ -218,7 +218,7 @@
       "groupbuy_income": 8334.71,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-06-15T02:20:30+00:00",
+      "updated_at": "2026-06-22T02:46:16+00:00",
       "repurchase_rate": 3.48,
       "repeat_payers": 7.0,
       "total_payers": 201.0
@@ -235,7 +235,7 @@
       "groupbuy_income": 5066.47,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-06-15T02:20:30+00:00",
+      "updated_at": "2026-06-22T02:46:16+00:00",
       "repurchase_rate": 4.84,
       "repeat_payers": 12.0,
       "total_payers": 248.0
@@ -252,10 +252,27 @@
       "groupbuy_income": 3949.56,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-06-15T02:20:30+00:00",
+      "updated_at": "2026-06-22T02:46:16+00:00",
       "repurchase_rate": 3.21,
       "repeat_payers": 7.0,
       "total_payers": 218.0
+    },
+    {
+      "store_id": "夕佳悦",
+      "week_id": "2026-06-15",
+      "revenue": 45861.5,
+      "orders": 412,
+      "table_turnover_rate": 2.921985815602837,
+      "avg_order_value": 111.31432038834951,
+      "discount_amount": 1051.3,
+      "groupbuy_count": 55,
+      "groupbuy_income": 7410.83,
+      "review_score": 4.4,
+      "waste_amount": 0.0,
+      "updated_at": "2026-06-22T02:46:16+00:00",
+      "repurchase_rate": 5.48,
+      "repeat_payers": 17.0,
+      "total_payers": 310.0
     },
     {
       "store_id": "紫竹",
@@ -454,9 +471,9 @@
       "discount_amount": 553.6,
       "groupbuy_count": 50,
       "groupbuy_income": 9664.54,
-      "review_score": 4.3,
+      "review_score": 4.2,
       "waste_amount": 0.0,
-      "updated_at": "2026-06-15T02:20:30+00:00",
+      "updated_at": "2026-06-22T02:46:16+00:00",
       "repurchase_rate": 6.39,
       "repeat_payers": 23.0,
       "total_payers": 360.0
@@ -471,9 +488,9 @@
       "discount_amount": 82.6,
       "groupbuy_count": 40,
       "groupbuy_income": 6406.61,
-      "review_score": 4.3,
+      "review_score": 4.2,
       "waste_amount": 0.0,
-      "updated_at": "2026-06-15T02:20:30+00:00",
+      "updated_at": "2026-06-22T02:46:16+00:00",
       "repurchase_rate": 9.57,
       "repeat_payers": 36.0,
       "total_payers": 376.0
@@ -490,7 +507,7 @@
       "groupbuy_income": 5565.48,
       "review_score": 4.2,
       "waste_amount": 0.0,
-      "updated_at": "2026-06-15T02:20:30+00:00",
+      "updated_at": "2026-06-22T02:46:16+00:00",
       "repurchase_rate": 5.43,
       "repeat_payers": 19.0,
       "total_payers": 350.0
@@ -507,10 +524,27 @@
       "groupbuy_income": 7722.74,
       "review_score": 4.2,
       "waste_amount": 0.0,
-      "updated_at": "2026-06-15T02:20:30+00:00",
+      "updated_at": "2026-06-22T02:46:16+00:00",
       "repurchase_rate": 4.96,
       "repeat_payers": 18.0,
       "total_payers": 363.0
+    },
+    {
+      "store_id": "紫竹",
+      "week_id": "2026-06-15",
+      "revenue": 78540.4,
+      "orders": 566,
+      "table_turnover_rate": 3.7986577181208054,
+      "avg_order_value": 138.76395759717315,
+      "discount_amount": 612.4,
+      "groupbuy_count": 51,
+      "groupbuy_income": 10199.01,
+      "review_score": 4.1,
+      "waste_amount": 0.0,
+      "updated_at": "2026-06-22T02:46:16+00:00",
+      "repurchase_rate": 7.76,
+      "repeat_payers": 34.0,
+      "total_payers": 438.0
     }
   ]
 }
