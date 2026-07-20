@@ -118,6 +118,31 @@ def main() -> int:
     issues = _check_negative_keyword_consistency(payload)
     return_warnings = _check_returns_nonzero(payload, check_weeks)
 
+    # 销售额对账：去除团餐活动后，订单收入 vs 品项/菜品收入
+    from core.sales_kpi import reconcile_revenue
+    from ingestion.pipeline import load_all_stores
+    from core.paths import data_dir
+
+    print("\n[对账] 订单收入 vs 品项收入（已去除团餐活动）")
+    recon_mismatches: list[str] = []
+    bundles = load_all_stores(data_dir())
+    for sid, bundle in sorted(bundles.items()):
+        if bundle.orders is None or bundle.orders.empty:
+            continue
+        weeks = sorted(bundle.orders["week_id"].dropna().astype(str).unique().tolist())
+        for wk in weeks[-3:]:
+            r = reconcile_revenue(bundle.orders, bundle.sales_sold, wk, store_id=sid)
+            flag = "OK" if r.get("matched") else "MISMATCH"
+            meal = r.get("groupMealAmount") or 0
+            print(
+                f"  {sid} {wk}: {flag} | 订单调整后={r['orderRevenueAdjusted']:,.2f} "
+                f"品项调整后={r['salesRevenueAdjusted']:,.2f} | 团餐扣减={meal:,.2f} | 差额={r['diff']:,.2f}"
+            )
+            if not r.get("matched") and not r.get("skipped"):
+                recon_mismatches.append(
+                    f"{sid} {wk}: 差额 {r['diff']} (订单 {r['orderRevenueAdjusted']} vs 品项 {r['salesRevenueAdjusted']})"
+                )
+
     _print_snapshot(payload, check_weeks)
 
     if issues:
@@ -134,12 +159,19 @@ def main() -> int:
     else:
         print("\n[ok] 退/换菜检查通过（非全0）")
 
+    if recon_mismatches:
+        print("\n[问题] 销售对账不一致：")
+        for item in recon_mismatches:
+            print(f"  - {item}")
+    else:
+        print("\n[ok] 销售对账通过（订单收入与品项收入一致）")
+
     print("\n[3/3] 下一步命令（复制执行）")
-    print("git add data/warehouse/ui_payload.json data/warehouse/weekly_metrics.json")
+    print("git add data/warehouse/ui_payload.json data/warehouse/weekly_metrics.json core/")
     print('git commit -m "weekly update data"')
     print("git push origin main")
 
-    if args.strict and (issues or return_warnings):
+    if args.strict and (issues or return_warnings or recon_mismatches):
         return 1
     return 0
 

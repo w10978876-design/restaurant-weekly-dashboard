@@ -17,6 +17,13 @@ from data_processor import generate_summary
 from core.metrics_engine import MetricsEngine, _repurchase_for_week
 from core.paths import data_dir, ui_payload_path
 from core.review_nlp import extract_keywords_with_meta, negative_lexical_signal
+from core.sales_kpi import (
+    adjusted_revenue,
+    full_refund_order_ids,
+    group_meal_order_ids,
+    normalize_order_id,
+    settled_order_ids,
+)
 from core.status_rules import aov_status, orders_status, retention_status, revenue_status
 from core.weeks import parse_business_date, week_id_for_date
 from core.weather_md import (
@@ -580,7 +587,40 @@ def _comparison_week_ids(week_id: str, store_weeks: list[str] | None) -> list[st
     return [(start - timedelta(days=14)).isoformat(), (start - timedelta(days=7)).isoformat(), week_id]
 
 
-def _revenue_for_business_date(orders_df: pd.DataFrame | None, d: date) -> tuple[float, int, int, int]:
+def _revenue_for_business_date(
+    orders_df: pd.DataFrame | None,
+    d: date,
+    sales_df: pd.DataFrame | None = None,
+    raw_orders: pd.DataFrame | None = None,
+) -> tuple[float, int, int, int]:
+    """
+    日营收/订单：
+    - 有 raw_orders 时按新口径（全状态订单收入−团餐；已结账−整单退−团餐）
+    - 否则回退为传入 orders_df（通常为已结账）直接汇总
+    """
+    if raw_orders is not None:
+        rev = float(adjusted_revenue(raw_orders, sales_df, on_date=d))
+        settled = settled_order_ids(raw_orders)
+        # 限制到当日
+        if "business_date" in raw_orders.columns and "订单号" in raw_orders.columns:
+            day_ids = {
+                normalize_order_id(v)
+                for v, bd in zip(raw_orders["订单号"], raw_orders["business_date"])
+                if bd == d and normalize_order_id(v)
+            }
+            settled = settled & day_ids
+            refunds = full_refund_order_ids(raw_orders) & day_ids
+            meals = group_meal_order_ids(sales_df) & day_ids
+            ord_cnt = len(settled - refunds - meals)
+        else:
+            ord_cnt = 0
+        sub = raw_orders[raw_orders["business_date"] == d] if "business_date" in raw_orders.columns else raw_orders.iloc[0:0]
+        if "订单状态" in sub.columns:
+            sub = sub[sub["订单状态"].astype(str) == "已结账"]
+        paid = ord_cnt
+        diners = int(sub["用餐人数"].fillna(0).sum()) if (not sub.empty and "用餐人数" in sub.columns) else ord_cnt * 2
+        return rev, ord_cnt, diners, paid
+
     rev = ord_cnt = diners = paid = 0
     if orders_df is None or orders_df.empty:
         return rev, ord_cnt, diners, paid
@@ -590,15 +630,26 @@ def _revenue_for_business_date(orders_df: pd.DataFrame | None, d: date) -> tuple
     if sub.empty:
         return rev, ord_cnt, diners, paid
     rev = float(sub["order_revenue"].fillna(0).sum())
+    if sales_df is not None:
+        rev = float(adjusted_revenue(orders_df, sales_df, on_date=d))
     ord_cnt = int(sub["订单号"].nunique()) if "订单号" in sub.columns else len(sub)
     paid = ord_cnt
     diners = int(sub["用餐人数"].fillna(0).sum()) if "用餐人数" in sub.columns else ord_cnt * 2
     return rev, ord_cnt, diners, paid
 
 
-def _week_total_revenue(orders_df: pd.DataFrame | None, week_id: str) -> float:
+def _week_total_revenue(
+    orders_df: pd.DataFrame | None,
+    week_id: str,
+    sales_df: pd.DataFrame | None = None,
+    raw_orders: pd.DataFrame | None = None,
+) -> float:
+    if raw_orders is not None:
+        return float(adjusted_revenue(raw_orders, sales_df, week_id=str(week_id)))
     if orders_df is None or orders_df.empty:
         return 0.0
+    if sales_df is not None:
+        return float(adjusted_revenue(orders_df, sales_df, week_id=str(week_id)))
     if "week_id" in orders_df.columns:
         sub = orders_df[orders_df["week_id"].astype(str) == str(week_id)]
         if not sub.empty:
@@ -623,6 +674,8 @@ def _weather_impact_summary(
     orders_df: pd.DataFrame | None,
     weather_detail: dict[date, dict[str, str]],
     store_weeks: list[str] | None,
+    sales_df: pd.DataFrame | None = None,
+    raw_orders: pd.DataFrame | None = None,
 ) -> dict[str, Any]:
     """
     回答「异常天气是否影响营收」：
@@ -636,9 +689,11 @@ def _weather_impact_summary(
         1 for d in cur_days if is_abnormal_weather_detail(weather_detail.get(d, {}))
     )
 
-    this_rev = _week_total_revenue(orders_df, week_id)
+    this_rev = _week_total_revenue(orders_df, week_id, sales_df=sales_df, raw_orders=raw_orders)
     prev_wk = _prior_week_id(week_id, store_weeks)
-    last_rev = _week_total_revenue(orders_df, prev_wk) if prev_wk else 0.0
+    last_rev = (
+        _week_total_revenue(orders_df, prev_wk, sales_df=sales_df, raw_orders=raw_orders) if prev_wk else 0.0
+    )
     wow_pct = _wow(this_rev, last_rev)
     decline_ratio = max(0.0, -wow_pct / 100.0) if wow_pct < 0 else 0.0
 
@@ -648,13 +703,17 @@ def _weather_impact_summary(
     for d in cur_days:
         if not is_abnormal_weather_detail(weather_detail.get(d, {})):
             continue
-        rev, _, _, _ = _revenue_for_business_date(orders_df, d)
+        rev, _, _, _ = _revenue_for_business_date(
+            orders_df, d, sales_df=sales_df, raw_orders=raw_orders
+        )
         if rev > 0:
             revs_ab_cur.append(rev)
         same_day_refs: list[float] = []
         for k in (1, 2):
             ref_d = d - timedelta(weeks=k)
-            ref_rev, _, _, _ = _revenue_for_business_date(orders_df, ref_d)
+            ref_rev, _, _, _ = _revenue_for_business_date(
+                orders_df, ref_d, sales_df=sales_df, raw_orders=raw_orders
+            )
             if ref_rev > 0:
                 same_day_refs.append(ref_rev)
                 reference_same_day_samples += 1
@@ -716,6 +775,8 @@ def _weather_daily(
     weather_map: dict[date, str],
     weather_detail: dict[date, dict[str, str]],
     store_weeks: list[str] | None = None,
+    sales_df: pd.DataFrame | None = None,
+    raw_orders: pd.DataFrame | None = None,
 ) -> tuple[list[dict], dict]:
     start = datetime.strptime(week_id, "%Y-%m-%d").date()
     days = [start + timedelta(days=i) for i in range(7)]
@@ -723,7 +784,9 @@ def _weather_daily(
     daily: list[dict] = []
     for i, d in enumerate(days):
         wx = weather_map.get(d, "")
-        rev, ord_cnt, diners, paid = _revenue_for_business_date(orders_df, d)
+        rev, ord_cnt, diners, paid = _revenue_for_business_date(
+            orders_df, d, sales_df=sales_df, raw_orders=raw_orders
+        )
         typ = _weather_icon_type(wx)
         abnormal = is_abnormal_weather_detail(weather_detail.get(d, {}))
         daily.append(
@@ -739,7 +802,14 @@ def _weather_daily(
                 "paidUsers": paid,
             }
         )
-    summary = _weather_impact_summary(week_id, orders_df, weather_detail, store_weeks)
+    summary = _weather_impact_summary(
+        week_id,
+        orders_df,
+        weather_detail,
+        store_weeks,
+        sales_df=sales_df,
+        raw_orders=raw_orders,
+    )
     return daily, summary
 
 
@@ -1222,7 +1292,15 @@ def build_ui_payload(auto_persist_metrics: bool = False, recompute_from_week_id:
             )
             rat_st = ("触发红线", "text-red-600") if rating_prev - rating >= 0.2 else ("达标", "text-green-600")
 
-            daily, wx_sum = _weather_daily(wk, orders_df, weather_map, weather_detail, weeks)
+            daily, wx_sum = _weather_daily(
+                wk,
+                orders_df,
+                weather_map,
+                weather_detail,
+                weeks,
+                sales_df=bundle.sales_sold,
+                raw_orders=bundle.orders,
+            )
             special = _special_dates(wk, orders_df)
 
             summary_items = generate_summary(

@@ -6,6 +6,7 @@ from datetime import datetime, timezone, timedelta
 import pandas as pd
 
 from core.paths import data_dir, weekly_metrics_path
+from core.sales_kpi import adjusted_order_count, adjusted_revenue, reconcile_revenue
 from core.warehouse import load_weekly_metrics_json, merge_weekly_history, try_save
 from ingestion.pipeline import StoreBundle, load_all_stores
 from ingestion.excel_reader import to_number
@@ -85,14 +86,17 @@ def compute_fresh_weekly_table(bundle: StoreBundle, store_id: str) -> pd.DataFra
     if o is None or o.empty:
         return pd.DataFrame()
 
+    # 翻台率仍基于已结账桌台；销售额/订单数按新口径（全状态收入−团餐；已结账−整单退−团餐）
     df = o.copy()
     if "订单状态" in df.columns:
-        df = df[df["订单状态"].astype(str) == "已结账"]
-    df = df[df["week_id"].notna()].copy()
-    if df.empty:
+        df_settled = df[df["订单状态"].astype(str) == "已结账"].copy()
+    else:
+        df_settled = df.copy()
+    df_settled = df_settled[df_settled["week_id"].notna()].copy()
+    if df_settled.empty and df[df["week_id"].notna()].empty:
         return pd.DataFrame()
 
-    df["table_key"] = df.apply(_table_key_row, axis=1)
+    df_settled["table_key"] = df_settled.apply(_table_key_row, axis=1)
 
     disc_map = pd.Series(dtype=float)
     if bundle.discounts is not None and not bundle.discounts.empty and "订单编号" in bundle.discounts.columns:
@@ -128,16 +132,16 @@ def compute_fresh_weekly_table(bundle: StoreBundle, store_id: str) -> pd.DataFra
             rev_map_mean = r0.groupby("week_id")["score"].mean()
 
     rows: list[dict] = []
-    weeks = sorted(df["week_id"].dropna().unique().tolist())
-    rev_by_week = df.groupby("week_id")["order_revenue"].sum()
+    weeks = sorted(o.loc[o["week_id"].notna(), "week_id"].astype(str).unique().tolist())
+    sales = bundle.sales_sold
     for wk in weeks:
-        g = df[df["week_id"] == wk]
-        revenue = float(g["order_revenue"].fillna(0).sum())
-        orders = int(g["订单号"].nunique())
+        g = df_settled[df_settled["week_id"].astype(str) == str(wk)]
+        revenue = float(adjusted_revenue(o, sales, week_id=str(wk)))
+        orders = int(adjusted_order_count(o, sales, week_id=str(wk)))
         aov = float(revenue / orders) if orders else 0.0
 
-        slots = int(g.groupby("business_date")["table_key"].nunique().sum())
-        turnover = float(orders / max(slots, 1))
+        slots = int(g.groupby("business_date")["table_key"].nunique().sum()) if not g.empty else 0
+        turnover = float(orders / max(slots, 1)) if slots else 0.0
 
         discount_amount = float(disc_map.get(wk, 0.0) or 0.0)
         groupbuy_count = int(gb_count.get(wk, 0) or 0)
@@ -152,6 +156,7 @@ def compute_fresh_weekly_table(bundle: StoreBundle, store_id: str) -> pd.DataFra
             review_score = float(rev_map_mean.loc[wk]) if wk in rev_map_mean.index else float("nan")
 
         rp_rate, rp_rep, rp_tot = _repurchase_for_week(bundle.payments, str(wk))
+        recon = reconcile_revenue(o, sales, str(wk), store_id=store_id)
 
         rows.append(
             {
@@ -169,6 +174,9 @@ def compute_fresh_weekly_table(bundle: StoreBundle, store_id: str) -> pd.DataFra
                 "repeat_payers": int(rp_rep),
                 "total_payers": int(rp_tot),
                 "waste_amount": 0.0,
+                "revenue_reconcile_matched": bool(recon.get("matched", True)),
+                "revenue_reconcile_diff": float(recon.get("diff", 0.0) or 0.0),
+                "group_meal_amount": float(recon.get("groupMealAmount", 0.0) or 0.0),
                 "updated_at": _utc_now_iso(),
             }
         )

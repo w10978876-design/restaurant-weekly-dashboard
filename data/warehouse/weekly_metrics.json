@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": "2026-07-13T02:33:54+00:00",
+  "saved_at": "2026-07-20T06:02:05+00:00",
   "rows": [
     {
       "store_id": "夕佳悦",
@@ -17,7 +17,10 @@
       "updated_at": "2026-04-21T03:16:52+00:00",
       "repurchase_rate": 2.26,
       "repeat_payers": 4.0,
-      "total_payers": 177.0
+      "total_payers": 177.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -34,7 +37,10 @@
       "updated_at": "2026-04-21T03:16:52+00:00",
       "repurchase_rate": 5.56,
       "repeat_payers": 10.0,
-      "total_payers": 180.0
+      "total_payers": 180.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -51,7 +57,10 @@
       "updated_at": "2026-04-21T07:14:10+00:00",
       "repurchase_rate": 3.72,
       "repeat_payers": 9.0,
-      "total_payers": 242.0
+      "total_payers": 242.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -68,7 +77,10 @@
       "updated_at": "2026-04-27T04:17:13+00:00",
       "repurchase_rate": 4.96,
       "repeat_payers": 13.0,
-      "total_payers": 262.0
+      "total_payers": 262.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -85,7 +97,10 @@
       "updated_at": "2026-04-27T04:17:13+00:00",
       "repurchase_rate": 7.17,
       "repeat_payers": 20.0,
-      "total_payers": 279.0
+      "total_payers": 279.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -102,7 +117,10 @@
       "updated_at": "2026-05-11T02:59:30+00:00",
       "repurchase_rate": 2.78,
       "repeat_payers": 9.0,
-      "total_payers": 324.0
+      "total_payers": 324.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -119,7 +137,10 @@
       "updated_at": "2026-05-18T04:22:49+00:00",
       "repurchase_rate": 2.44,
       "repeat_payers": 5.0,
-      "total_payers": 205.0
+      "total_payers": 205.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -136,7 +157,10 @@
       "updated_at": "2026-05-25T02:18:48+00:00",
       "repurchase_rate": 3.05,
       "repeat_payers": 6.0,
-      "total_payers": 197.0
+      "total_payers": 197.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -153,7 +177,10 @@
       "updated_at": "2026-06-01T02:23:23+00:00",
       "repurchase_rate": 3.2,
       "repeat_payers": 11.0,
-      "total_payers": 344.0
+      "total_payers": 344.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -170,7 +197,10 @@
       "updated_at": "2026-06-08T03:03:22+00:00",
       "repurchase_rate": 3.58,
       "repeat_payers": 10.0,
-      "total_payers": 279.0
+      "total_payers": 279.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -187,7 +217,10 @@
       "updated_at": "2026-06-15T02:20:30+00:00",
       "repurchase_rate": 4.15,
       "repeat_payers": 8.0,
-      "total_payers": 193.0
+      "total_payers": 193.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -204,7 +237,10 @@
       "updated_at": "2026-06-22T02:46:16+00:00",
       "repurchase_rate": 2.19,
       "repeat_payers": 4.0,
-      "total_payers": 183.0
+      "total_payers": 183.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -221,7 +257,10 @@
       "updated_at": "2026-06-29T03:15:42+00:00",
       "repurchase_rate": 3.48,
       "repeat_payers": 7.0,
-      "total_payers": 201.0
+      "total_payers": 201.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -238,7 +277,10 @@
       "updated_at": "2026-07-06T01:58:15+00:00",
       "repurchase_rate": 4.84,
       "repeat_payers": 12.0,
-      "total_payers": 248.0
+      "total_payers": 248.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
@@ -255,75 +297,110 @@
       "updated_at": "2026-07-13T02:33:54+00:00",
       "repurchase_rate": 3.21,
       "repeat_payers": 7.0,
-      "total_payers": 218.0
+      "total_payers": 218.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "夕佳悦",
       "week_id": "2026-06-15",
-      "revenue": 45861.5,
+      "revenue": 45405.5,
       "orders": 412,
       "table_turnover_rate": 2.921985815602837,
-      "avg_order_value": 111.31432038834951,
+      "avg_order_value": 110.20752427184466,
       "discount_amount": 1051.3,
       "groupbuy_count": 55,
       "groupbuy_income": 7410.83,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-07-13T02:33:54+00:00",
-      "repurchase_rate": 5.48,
-      "repeat_payers": 17.0,
-      "total_payers": 310.0
+      "updated_at": "2026-07-20T06:02:05+00:00",
+      "repurchase_rate": NaN,
+      "repeat_payers": 0.0,
+      "total_payers": 0.0,
+      "revenue_reconcile_matched": true,
+      "revenue_reconcile_diff": 0.0,
+      "group_meal_amount": 0.0
     },
     {
       "store_id": "夕佳悦",
       "week_id": "2026-06-22",
-      "revenue": 35289.100000000006,
+      "revenue": 34942.1,
       "orders": 342,
       "table_turnover_rate": 2.442857142857143,
-      "avg_order_value": 103.18450292397662,
+      "avg_order_value": 102.16988304093567,
       "discount_amount": 122.3,
       "groupbuy_count": 45,
       "groupbuy_income": 3324.2400000000002,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-07-13T02:33:54+00:00",
-      "repurchase_rate": 5.49,
-      "repeat_payers": 15.0,
-      "total_payers": 273.0
+      "updated_at": "2026-07-20T06:02:05+00:00",
+      "repurchase_rate": NaN,
+      "repeat_payers": 0.0,
+      "total_payers": 0.0,
+      "revenue_reconcile_matched": true,
+      "revenue_reconcile_diff": 0.0,
+      "group_meal_amount": 0.0
     },
     {
       "store_id": "夕佳悦",
       "week_id": "2026-06-29",
-      "revenue": 48861.6,
+      "revenue": 48477.6,
       "orders": 443,
       "table_turnover_rate": 3.119718309859155,
-      "avg_order_value": 110.29706546275395,
+      "avg_order_value": 109.43024830699774,
       "discount_amount": 0.0,
       "groupbuy_count": 62,
       "groupbuy_income": 7585.48,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-07-13T02:33:54+00:00",
-      "repurchase_rate": 4.92,
-      "repeat_payers": 16.0,
-      "total_payers": 325.0
+      "updated_at": "2026-07-20T06:02:05+00:00",
+      "repurchase_rate": NaN,
+      "repeat_payers": 0.0,
+      "total_payers": 0.0,
+      "revenue_reconcile_matched": true,
+      "revenue_reconcile_diff": 0.0,
+      "group_meal_amount": 0.0
     },
     {
       "store_id": "夕佳悦",
       "week_id": "2026-07-06",
-      "revenue": 21351.2,
-      "orders": 199,
-      "table_turnover_rate": 2.397590361445783,
-      "avg_order_value": 107.2924623115578,
+      "revenue": 19189.2,
+      "orders": 198,
+      "table_turnover_rate": 2.3855421686746987,
+      "avg_order_value": 96.91515151515152,
       "discount_amount": 335.8,
       "groupbuy_count": 24,
       "groupbuy_income": 1334.84,
       "review_score": 4.4,
       "waste_amount": 0.0,
-      "updated_at": "2026-07-13T02:33:54+00:00",
-      "repurchase_rate": 7.14,
-      "repeat_payers": 11.0,
-      "total_payers": 154.0
+      "updated_at": "2026-07-20T06:02:05+00:00",
+      "repurchase_rate": NaN,
+      "repeat_payers": 0.0,
+      "total_payers": 0.0,
+      "revenue_reconcile_matched": true,
+      "revenue_reconcile_diff": 0.0,
+      "group_meal_amount": 1520.0
+    },
+    {
+      "store_id": "夕佳悦",
+      "week_id": "2026-07-13",
+      "revenue": 51295.8,
+      "orders": 477,
+      "table_turnover_rate": 3.0,
+      "avg_order_value": 107.53836477987421,
+      "discount_amount": 83.2,
+      "groupbuy_count": 71,
+      "groupbuy_income": 6713.5599999999995,
+      "review_score": 4.4,
+      "waste_amount": 0.0,
+      "updated_at": "2026-07-20T06:02:05+00:00",
+      "repurchase_rate": NaN,
+      "repeat_payers": 0.0,
+      "total_payers": 0.0,
+      "revenue_reconcile_matched": true,
+      "revenue_reconcile_diff": 0.0,
+      "group_meal_amount": 3780.0
     },
     {
       "store_id": "紫竹",
@@ -340,7 +417,10 @@
       "updated_at": "2026-04-21T03:16:52+00:00",
       "repurchase_rate": 16.87,
       "repeat_payers": 68.0,
-      "total_payers": 403.0
+      "total_payers": 403.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -357,7 +437,10 @@
       "updated_at": "2026-04-21T03:16:52+00:00",
       "repurchase_rate": 14.2,
       "repeat_payers": 69.0,
-      "total_payers": 486.0
+      "total_payers": 486.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -374,7 +457,10 @@
       "updated_at": "2026-04-21T07:14:10+00:00",
       "repurchase_rate": 12.99,
       "repeat_payers": 93.0,
-      "total_payers": 716.0
+      "total_payers": 716.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -391,7 +477,10 @@
       "updated_at": "2026-04-27T04:17:14+00:00",
       "repurchase_rate": 14.54,
       "repeat_payers": 98.0,
-      "total_payers": 674.0
+      "total_payers": 674.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -408,7 +497,10 @@
       "updated_at": "2026-04-27T04:17:14+00:00",
       "repurchase_rate": 12.43,
       "repeat_payers": 68.0,
-      "total_payers": 547.0
+      "total_payers": 547.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -425,7 +517,10 @@
       "updated_at": "2026-05-11T02:59:30+00:00",
       "repurchase_rate": 7.74,
       "repeat_payers": 47.0,
-      "total_payers": 607.0
+      "total_payers": 607.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -442,7 +537,10 @@
       "updated_at": "2026-05-18T04:22:49+00:00",
       "repurchase_rate": 5.41,
       "repeat_payers": 23.0,
-      "total_payers": 425.0
+      "total_payers": 425.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -459,7 +557,10 @@
       "updated_at": "2026-05-25T02:18:48+00:00",
       "repurchase_rate": 7.27,
       "repeat_payers": 33.0,
-      "total_payers": 454.0
+      "total_payers": 454.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -476,7 +577,10 @@
       "updated_at": "2026-06-01T02:23:23+00:00",
       "repurchase_rate": 7.3,
       "repeat_payers": 36.0,
-      "total_payers": 493.0
+      "total_payers": 493.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -493,7 +597,10 @@
       "updated_at": "2026-06-08T03:03:22+00:00",
       "repurchase_rate": 6.85,
       "repeat_payers": 33.0,
-      "total_payers": 482.0
+      "total_payers": 482.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -510,7 +617,10 @@
       "updated_at": "2026-06-15T02:20:30+00:00",
       "repurchase_rate": 5.19,
       "repeat_payers": 18.0,
-      "total_payers": 347.0
+      "total_payers": 347.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -527,7 +637,10 @@
       "updated_at": "2026-06-22T02:46:16+00:00",
       "repurchase_rate": 6.39,
       "repeat_payers": 23.0,
-      "total_payers": 360.0
+      "total_payers": 360.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -544,7 +657,10 @@
       "updated_at": "2026-06-29T03:15:42+00:00",
       "repurchase_rate": 9.57,
       "repeat_payers": 36.0,
-      "total_payers": 376.0
+      "total_payers": 376.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -561,7 +677,10 @@
       "updated_at": "2026-07-06T01:58:15+00:00",
       "repurchase_rate": 5.43,
       "repeat_payers": 19.0,
-      "total_payers": 350.0
+      "total_payers": 350.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
@@ -578,63 +697,75 @@
       "updated_at": "2026-07-13T02:33:54+00:00",
       "repurchase_rate": 4.96,
       "repeat_payers": 18.0,
-      "total_payers": 363.0
+      "total_payers": 363.0,
+      "revenue_reconcile_matched": NaN,
+      "revenue_reconcile_diff": NaN,
+      "group_meal_amount": NaN
     },
     {
       "store_id": "紫竹",
       "week_id": "2026-06-15",
-      "revenue": 78540.4,
+      "revenue": 78045.4,
       "orders": 566,
       "table_turnover_rate": 3.7986577181208054,
-      "avg_order_value": 138.76395759717315,
+      "avg_order_value": 137.8893992932862,
       "discount_amount": 612.4,
       "groupbuy_count": 51,
       "groupbuy_income": 10199.01,
       "review_score": 4.1,
       "waste_amount": 0.0,
-      "updated_at": "2026-07-13T02:33:54+00:00",
+      "updated_at": "2026-07-20T06:02:05+00:00",
       "repurchase_rate": 7.76,
       "repeat_payers": 34.0,
-      "total_payers": 438.0
+      "total_payers": 438.0,
+      "revenue_reconcile_matched": true,
+      "revenue_reconcile_diff": 0.0,
+      "group_meal_amount": 0.0
     },
     {
       "store_id": "紫竹",
       "week_id": "2026-06-22",
-      "revenue": 59077.6,
+      "revenue": 58887.6,
       "orders": 443,
       "table_turnover_rate": 3.210144927536232,
-      "avg_order_value": 133.35801354401806,
+      "avg_order_value": 132.9291196388262,
       "discount_amount": 499.8,
       "groupbuy_count": 41,
       "groupbuy_income": 6632.33,
       "review_score": 4.1,
       "waste_amount": 0.0,
-      "updated_at": "2026-07-13T02:33:54+00:00",
+      "updated_at": "2026-07-20T06:02:05+00:00",
       "repurchase_rate": 5.88,
       "repeat_payers": 21.0,
-      "total_payers": 357.0
+      "total_payers": 357.0,
+      "revenue_reconcile_matched": true,
+      "revenue_reconcile_diff": 0.0,
+      "group_meal_amount": 0.0
     },
     {
       "store_id": "紫竹",
       "week_id": "2026-06-29",
-      "revenue": 54066.7,
+      "revenue": 53691.7,
       "orders": 358,
       "table_turnover_rate": 2.8412698412698414,
-      "avg_order_value": 151.02430167597765,
+      "avg_order_value": 149.9768156424581,
       "discount_amount": 0.0,
       "groupbuy_count": 18,
       "groupbuy_income": 3650.07,
       "review_score": 4.1,
       "waste_amount": 0.0,
-      "updated_at": "2026-07-13T02:33:54+00:00",
+      "updated_at": "2026-07-20T06:02:05+00:00",
       "repurchase_rate": 7.09,
       "repeat_payers": 20.0,
-      "total_payers": 282.0
+      "total_payers": 282.0,
+      "revenue_reconcile_matched": true,
+      "revenue_reconcile_diff": 0.0,
+      "group_meal_amount": 0.0
     },
     {
       "store_id": "紫竹",
       "week_id": "2026-07-06",
-      "revenue": 30109.299999999996,
+      "revenue": 30109.3,
       "orders": 234,
       "table_turnover_rate": 2.7209302325581395,
       "avg_order_value": 128.67222222222222,
@@ -643,10 +774,33 @@
       "groupbuy_income": 1893.9,
       "review_score": 4.2,
       "waste_amount": 0.0,
-      "updated_at": "2026-07-13T02:33:54+00:00",
+      "updated_at": "2026-07-20T06:02:05+00:00",
       "repurchase_rate": 3.8,
       "repeat_payers": 7.0,
-      "total_payers": 184.0
+      "total_payers": 184.0,
+      "revenue_reconcile_matched": true,
+      "revenue_reconcile_diff": 0.0,
+      "group_meal_amount": 0.0
+    },
+    {
+      "store_id": "紫竹",
+      "week_id": "2026-07-13",
+      "revenue": 43067.3,
+      "orders": 327,
+      "table_turnover_rate": 2.7478991596638656,
+      "avg_order_value": 131.70428134556576,
+      "discount_amount": 72.8,
+      "groupbuy_count": 22,
+      "groupbuy_income": 3755.86,
+      "review_score": 4.2,
+      "waste_amount": 0.0,
+      "updated_at": "2026-07-20T06:02:05+00:00",
+      "repurchase_rate": 7.11,
+      "repeat_payers": 18.0,
+      "total_payers": 253.0,
+      "revenue_reconcile_matched": true,
+      "revenue_reconcile_diff": 0.0,
+      "group_meal_amount": 0.0
     }
   ]
 }
