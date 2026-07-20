@@ -4,8 +4,9 @@
 1) 销售额 = 订单表全部状态「订单收入（元）」之和
            − 菜品/品项销售明细中品项名称含「团餐活动」的品项收入之和
 2) 订单数 = 已结账订单数
-           − 敏感操作含「整单退」的订单
-           − 品项名称含「团餐活动」的订单
+           − 敏感操作含「整单退」的订单数
+           − 品项名称含「团餐活动」的订单数
+           （三者按数量相减；整单退多在「退款完成」，不在已结账集合内，仍须扣减）
 3) 对账：去除团餐活动后，订单收入合计 vs 品项/菜品收入合计应一致
 """
 from __future__ import annotations
@@ -189,13 +190,15 @@ def adjusted_order_count(
     week_id: str | None = None,
 ) -> int:
     """
-    订单数 = 已结账 − 敏感操作含整单退 − 团餐活动订单。
-    用集合差集，避免「整单退」本身不在已结账集合时被误减。
+    订单数 = 已结账订单数 − 整单退订单数 − 团餐活动订单数。
+
+    按数量相减（非集合差集）。整单退通常状态为「退款完成」，
+    与已结账无交集；若用差集则整单退不会被扣掉。
     """
     settled = settled_order_ids(orders, week_id=week_id)
     refunds = full_refund_order_ids(orders, week_id=week_id)
     meals = group_meal_order_ids(sales, week_id=week_id)
-    return len(settled - refunds - meals)
+    return max(0, len(settled) - len(refunds) - len(meals))
 
 
 def reconcile_revenue(

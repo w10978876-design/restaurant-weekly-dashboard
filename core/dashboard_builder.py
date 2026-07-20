@@ -611,7 +611,8 @@ def _revenue_for_business_date(
             settled = settled & day_ids
             refunds = full_refund_order_ids(raw_orders) & day_ids
             meals = group_meal_order_ids(sales_df) & day_ids
-            ord_cnt = len(settled - refunds - meals)
+            # 与周口径一致：数量相减（整单退不在已结账内，差集会漏扣）
+            ord_cnt = max(0, len(settled) - len(refunds) - len(meals))
         else:
             ord_cnt = 0
         sub = raw_orders[raw_orders["business_date"] == d] if "business_date" in raw_orders.columns else raw_orders.iloc[0:0]
